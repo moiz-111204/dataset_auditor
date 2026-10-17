@@ -15,3 +15,6 @@ Every open-source library this project depends on directly, with the pinned vers
 | Pydantic | 2.14.1 | MIT | Data models and validation |
 | pytest | 9.1.1 | MIT | Test runner |
 | HTTPX | 0.28.1 | BSD-3-Clause | HTTP client for tests |
+| Presidio Analyzer (Microsoft) | 2.2.364 | MIT | ML/NER-based PII detection |
+| spaCy | 3.8.16 | MIT | NLP engine used by Presidio |
+| en_core_web_sm (spaCy model) | 3.8.0 | MIT | English NER model used by Presidio |
