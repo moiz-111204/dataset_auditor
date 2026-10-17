@@ -1,0 +1,301 @@
+response_id,region,product_category,satisfaction_score,would_recommend,purchase_frequency
+R0001,West,Clothing,6.0,Yes,Monthly
+R0002,West,Clothing,4.0,Yes,Quarterly
+R0003,West,Clothing,5.0,No,Quarterly
+R0004,East,Sports,5.0,No,Weekly
+R0005,West,Home & Garden,2.0,Yes,Weekly
+R0006,East,Sports,9.0,No,Rarely
+R0007,East,Books,1.0,No,Weekly
+R0008,West,Electronics,1.0,Yes,Rarely
+R0009,West,Electronics,3.0,Yes,Rarely
+R0010,North,Electronics,2.0,Yes,Monthly
+R0011,West,Sports,1.0,Yes,Rarely
+R0012,East,Electronics,4.0,Yes,Quarterly
+R0013,West,Sports,4.0,Yes,Monthly
+R0014,East,Clothing,2.0,Yes,Weekly
+R0015,West,Books,9.0,Yes,Rarely
+R0016,South,Sports,9.0,No,Quarterly
+R0017,North,Sports,8.0,No,Monthly
+R0018,North,Sports,6.0,Yes,Quarterly
+R0019,South,Books,10.0,Yes,Monthly
+R0020,North,Home & Garden,4.0,Yes,Quarterly
+R0021,South,Electronics,5.0,Yes,Rarely
+R0022,North,Sports,1.0,Yes,Monthly
+R0023,North,Sports,8.0,Yes,Quarterly
+R0024,East,Books,1.0,Yes,Monthly
+R0025,West,Electronics,7.0,No,Monthly
+R0026,North,Sports,8.0,Yes,Monthly
+R0027,East,Home & Garden,3.0,No,Rarely
+R0028,East,Books,7.0,Yes,Rarely
+R0029,East,Clothing,4.0,Yes,Quarterly
+R0030,North,Electronics,4.0,No,Weekly
+R0031,East,Electronics,6.0,Yes,Rarely
+R0032,North,Electronics,3.0,No,Quarterly
+R0033,North,Sports,8.0,No,Quarterly
+R0034,South,Sports,4.0,No,Rarely
+R0035,West,Books,5.0,Yes,Weekly
+R0036,North,Books,9.0,Yes,Rarely
+R0037,West,Books,3.0,Yes,Quarterly
+R0038,West,Home & Garden,5.0,Yes,Rarely
+R0039,West,Books,10.0,Yes,Monthly
+R0040,South,Home & Garden,4.0,No,Weekly
+R0041,North,Clothing,2.0,No,Rarely
+R0042,North,Home & Garden,3.0,Yes,Rarely
+R0043,West,Clothing,10.0,Yes,Rarely
+R0044,North,Sports,8.0,No,Rarely
+R0045,East,Home & Garden,9.0,No,Quarterly
+R0046,South,Electronics,3.0,Yes,Quarterly
+R0047,West,Books,9.0,Yes,Monthly
+R0048,East,Electronics,4.0,No,Rarely
+R0049,East,Home & Garden,8.0,No,Weekly
+R0050,West,Clothing,9.0,No,Weekly
+R0051,West,Books,3.0,Yes,Rarely
+R0052,South,Books,,Yes,Monthly
+R0053,East,Clothing,7.0,Yes,Rarely
+R0054,East,Electronics,8.0,Yes,Rarely
+R0055,West,Books,8.0,No,Monthly
+R0056,South,Electronics,2.0,Yes,Quarterly
+R0057,South,Books,8.0,No,Quarterly
+R0058,West,Home & Garden,3.0,No,Weekly
+R0059,West,Sports,3.0,No,Weekly
+R0060,East,Home & Garden,2.0,No,Quarterly
+R0061,North,Home & Garden,2.0,No,Quarterly
+R0062,South,Electronics,10.0,Yes,Quarterly
+R0063,South,Electronics,4.0,Yes,Quarterly
+R0064,East,Home & Garden,4.0,Yes,Rarely
+R0065,East,Home & Garden,5.0,No,Weekly
+R0066,West,Clothing,8.0,No,Quarterly
+R0067,North,Sports,6.0,Yes,Weekly
+R0068,South,Sports,6.0,Yes,Rarely
+R0069,East,Sports,9.0,Yes,Quarterly
+R0070,West,Sports,5.0,Yes,Weekly
+R0071,North,Books,8.0,No,Rarely
+R0072,West,Home & Garden,10.0,Yes,Rarely
+R0073,North,Clothing,7.0,No,Rarely
+R0074,North,Home & Garden,1.0,No,Weekly
+R0075,West,Clothing,3.0,Yes,Rarely
+R0076,West,Sports,7.0,Yes,Monthly
+R0077,West,Electronics,5.0,No,Weekly
+R0078,East,Clothing,3.0,No,Monthly
+R0079,East,Sports,4.0,Yes,Monthly
+R0080,East,Books,1.0,Yes,Rarely
+R0081,East,Home & Garden,3.0,No,Quarterly
+R0082,East,Home & Garden,8.0,No,Quarterly
+R0083,South,Electronics,1.0,No,Weekly
+R0084,West,Home & Garden,9.0,No,Quarterly
+R0085,South,Clothing,4.0,No,Quarterly
+R0086,East,Books,9.0,Yes,Quarterly
+R0087,East,Home & Garden,3.0,No,Rarely
+R0088,East,Books,9.0,Yes,Monthly
+R0089,East,Sports,6.0,No,Rarely
+R0090,North,Electronics,9.0,No,Monthly
+R0091,South,Electronics,1.0,No,Quarterly
+R0092,South,Sports,8.0,Yes,Weekly
+R0093,South,Clothing,3.0,No,Rarely
+R0094,West,Books,4.0,No,Weekly
+R0095,West,Sports,1.0,No,Weekly
+R0096,East,Books,10.0,No,Rarely
+R0097,South,Books,7.0,Yes,Rarely
+R0098,North,Home & Garden,10.0,Yes,Weekly
+R0099,West,Sports,6.0,No,Weekly
+R0100,West,Clothing,2.0,No,Weekly
+R0101,South,Home & Garden,4.0,No,Rarely
+R0102,West,Clothing,5.0,No,Monthly
+R0103,West,Clothing,2.0,Yes,Weekly
+R0104,East,Electronics,10.0,Yes,Quarterly
+R0105,North,Electronics,10.0,No,Quarterly
+R0106,North,Books,6.0,Yes,Weekly
+R0107,West,Clothing,,No,Quarterly
+R0108,East,Clothing,8.0,No,Quarterly
+R0109,North,Home & Garden,7.0,No,Rarely
+R0110,North,Sports,1.0,Yes,Monthly
+R0111,West,Books,6.0,No,Quarterly
+R0112,South,Home & Garden,8.0,Yes,Weekly
+R0113,South,Electronics,9.0,Yes,Monthly
+R0114,East,Sports,6.0,Yes,Rarely
+R0115,South,Clothing,9.0,Yes,Quarterly
+R0116,West,Books,6.0,No,Quarterly
+R0117,East,Home & Garden,4.0,No,Monthly
+R0118,South,Electronics,5.0,Yes,Quarterly
+R0119,South,Electronics,7.0,No,Weekly
+R0120,West,Electronics,9.0,Yes,Quarterly
+R0121,East,Books,3.0,No,Rarely
+R0122,West,Electronics,3.0,No,Weekly
+R0123,South,Electronics,7.0,No,Monthly
+R0124,North,Home & Garden,8.0,Yes,Monthly
+R0125,West,Clothing,4.0,Yes,Quarterly
+R0126,North,Books,7.0,Yes,Rarely
+R0127,West,Electronics,1.0,No,Quarterly
+R0128,East,Clothing,3.0,No,Weekly
+R0129,North,Books,10.0,Yes,Quarterly
+R0130,West,Electronics,6.0,Yes,Monthly
+R0131,North,Clothing,9.0,No,Weekly
+R0132,South,Sports,3.0,Yes,Quarterly
+R0133,South,Books,3.0,No,Weekly
+R0134,East,Electronics,10.0,No,Rarely
+R0135,East,Home & Garden,10.0,Yes,Quarterly
+R0136,East,Books,9.0,Yes,Quarterly
+R0137,South,Sports,4.0,Yes,Monthly
+R0138,East,Sports,9.0,Yes,Monthly
+R0139,North,Sports,5.0,No,Monthly
+R0140,East,Sports,9.0,No,Weekly
+R0141,North,Books,9.0,Yes,Rarely
+R0142,North,Clothing,5.0,Yes,Weekly
+R0143,East,Clothing,4.0,Yes,Monthly
+R0144,North,Clothing,10.0,Yes,Rarely
+R0145,West,Clothing,5.0,No,Monthly
+R0146,North,Electronics,5.0,No,Rarely
+R0147,North,Sports,7.0,No,Weekly
+R0148,West,Electronics,10.0,Yes,Rarely
+R0149,North,Books,2.0,No,Quarterly
+R0150,West,Books,10.0,Yes,Weekly
+R0151,South,Sports,5.0,No,Quarterly
+R0152,West,Electronics,1.0,No,Monthly
+R0153,West,Books,4.0,No,Monthly
+R0154,North,Home & Garden,5.0,Yes,Weekly
+R0155,South,Electronics,7.0,Yes,Weekly
+R0156,East,Home & Garden,6.0,No,Monthly
+R0157,West,Books,2.0,Yes,Monthly
+R0158,North,Sports,5.0,No,Rarely
+R0159,North,Home & Garden,3.0,Yes,Rarely
+R0160,South,Sports,3.0,No,Weekly
+R0161,North,Clothing,8.0,Yes,Weekly
+R0162,South,Sports,9.0,No,Rarely
+R0163,North,Sports,2.0,Yes,Rarely
+R0164,West,Clothing,7.0,Yes,Weekly
+R0165,West,Clothing,5.0,Yes,Rarely
+R0166,North,Electronics,4.0,Yes,Monthly
+R0167,East,Clothing,8.0,No,Monthly
+R0168,East,Electronics,3.0,No,Weekly
+R0169,East,Clothing,8.0,No,Weekly
+R0170,West,Clothing,5.0,No,Rarely
+R0171,East,Clothing,1.0,No,Weekly
+R0172,East,Clothing,8.0,Yes,Monthly
+R0173,North,Home & Garden,9.0,No,Monthly
+R0174,North,Home & Garden,6.0,Yes,Quarterly
+R0175,East,Books,8.0,No,Monthly
+R0176,West,Books,2.0,Yes,Quarterly
+R0177,South,Home & Garden,4.0,No,Rarely
+R0178,East,Books,4.0,Yes,Monthly
+R0179,North,Books,8.0,Yes,Monthly
+R0180,South,Home & Garden,4.0,Yes,Quarterly
+R0181,West,Clothing,8.0,Yes,Quarterly
+R0182,East,Home & Garden,4.0,Yes,Monthly
+R0183,North,Home & Garden,7.0,Yes,Monthly
+R0184,West,Books,3.0,Yes,Monthly
+R0185,West,Electronics,6.0,No,Rarely
+R0186,South,Clothing,1.0,Yes,Weekly
+R0187,South,Clothing,8.0,No,Quarterly
+R0188,East,Sports,,Yes,Quarterly
+R0189,West,Home & Garden,10.0,No,Monthly
+R0190,South,Books,9.0,Yes,Quarterly
+R0191,North,Books,6.0,Yes,Rarely
+R0192,North,Clothing,10.0,No,Monthly
+R0193,West,Clothing,9.0,No,Monthly
+R0194,West,Sports,2.0,Yes,Quarterly
+R0195,West,Sports,8.0,Yes,Weekly
+R0196,North,Electronics,4.0,Yes,Weekly
+R0197,North,Home & Garden,9.0,Yes,Weekly
+R0198,South,Clothing,9.0,Yes,Monthly
+R0199,North,Books,10.0,No,Monthly
+R0200,South,Books,5.0,Yes,Weekly
+R0201,East,Electronics,2.0,No,Weekly
+R0202,South,Books,2.0,Yes,Rarely
+R0203,North,Clothing,2.0,Yes,Weekly
+R0204,South,Electronics,10.0,Yes,Rarely
+R0205,East,Books,6.0,Yes,Weekly
+R0206,East,Sports,4.0,Yes,Weekly
+R0207,South,Books,5.0,No,Rarely
+R0208,South,Sports,2.0,No,Monthly
+R0209,East,Home & Garden,6.0,Yes,Monthly
+R0210,North,Electronics,5.0,Yes,Weekly
+R0211,West,Clothing,8.0,No,Rarely
+R0212,West,Home & Garden,1.0,Yes,Quarterly
+R0213,North,Electronics,10.0,Yes,Rarely
+R0214,West,Electronics,1.0,No,Weekly
+R0215,North,Sports,5.0,Yes,Rarely
+R0216,South,Clothing,4.0,Yes,Rarely
+R0217,East,Home & Garden,8.0,Yes,Quarterly
+R0218,South,Books,7.0,No,Weekly
+R0219,North,Home & Garden,2.0,Yes,Rarely
+R0220,North,Electronics,5.0,No,Quarterly
+R0221,East,Sports,6.0,Yes,Rarely
+R0222,North,Sports,5.0,Yes,Weekly
+R0223,South,Home & Garden,1.0,Yes,Monthly
+R0224,South,Home & Garden,2.0,No,Weekly
+R0225,West,Sports,6.0,Yes,Monthly
+R0226,West,Books,3.0,No,Quarterly
+R0227,West,Home & Garden,6.0,Yes,Weekly
+R0228,East,Home & Garden,2.0,Yes,Quarterly
+R0229,East,Books,8.0,Yes,Quarterly
+R0230,South,Books,2.0,Yes,Monthly
+R0231,North,Electronics,7.0,Yes,Weekly
+R0232,West,Books,9.0,No,Rarely
+R0233,South,Books,4.0,No,Rarely
+R0234,South,Home & Garden,2.0,No,Quarterly
+R0235,North,Home & Garden,1.0,No,Monthly
+R0236,South,Books,4.0,Yes,Monthly
+R0237,East,Home & Garden,2.0,No,Monthly
+R0238,South,Sports,9.0,Yes,Quarterly
+R0239,East,Books,10.0,No,Quarterly
+R0240,North,Books,10.0,No,Quarterly
+R0241,North,Home & Garden,10.0,Yes,Rarely
+R0242,West,Sports,6.0,No,Rarely
+R0243,South,Electronics,4.0,No,Weekly
+R0244,South,Books,5.0,Yes,Quarterly
+R0245,South,Electronics,3.0,No,Quarterly
+R0246,East,Clothing,9.0,Yes,Monthly
+R0247,East,Home & Garden,5.0,Yes,Quarterly
+R0248,South,Home & Garden,4.0,Yes,Monthly
+R0249,West,Electronics,7.0,No,Quarterly
+R0250,West,Clothing,4.0,Yes,Weekly
+R0251,North,Home & Garden,4.0,No,Monthly
+R0252,East,Home & Garden,3.0,Yes,Weekly
+R0253,West,Sports,1.0,Yes,Monthly
+R0254,South,Electronics,1.0,No,Monthly
+R0255,North,Books,5.0,Yes,Quarterly
+R0256,North,Electronics,10.0,No,Rarely
+R0257,East,Electronics,3.0,Yes,Quarterly
+R0258,West,Electronics,7.0,No,Weekly
+R0259,North,Electronics,4.0,No,Quarterly
+R0260,East,Sports,4.0,Yes,Weekly
+R0261,South,Books,2.0,Yes,Rarely
+R0262,South,Sports,6.0,Yes,Rarely
+R0263,East,Home & Garden,7.0,No,Rarely
+R0264,West,Clothing,4.0,No,Monthly
+R0265,North,Electronics,6.0,Yes,Weekly
+R0266,North,Electronics,5.0,Yes,Quarterly
+R0267,South,Electronics,3.0,No,Monthly
+R0268,South,Sports,7.0,Yes,Quarterly
+R0269,East,Clothing,6.0,No,Rarely
+R0270,East,Clothing,1.0,No,Monthly
+R0271,North,Sports,5.0,Yes,Rarely
+R0272,South,Home & Garden,4.0,Yes,Weekly
+R0273,East,Clothing,8.0,Yes,Weekly
+R0274,South,Books,4.0,Yes,Monthly
+R0275,East,Books,10.0,No,Rarely
+R0276,South,Clothing,7.0,No,Monthly
+R0277,South,Books,2.0,No,Rarely
+R0278,North,Electronics,5.0,Yes,Weekly
+R0279,North,Electronics,9.0,Yes,Monthly
+R0280,North,Books,3.0,No,Quarterly
+R0281,East,Books,8.0,Yes,Weekly
+R0282,North,Clothing,8.0,Yes,Monthly
+R0283,East,Books,7.0,Yes,Quarterly
+R0284,West,Electronics,1.0,No,Weekly
+R0285,East,Home & Garden,4.0,No,Monthly
+R0286,East,Books,4.0,Yes,Quarterly
+R0287,North,Sports,4.0,No,Rarely
+R0288,South,Books,9.0,Yes,Rarely
+R0289,West,Clothing,1.0,Yes,Weekly
+R0290,South,Clothing,6.0,Yes,Weekly
+R0291,West,Home & Garden,10.0,No,Monthly
+R0292,East,Sports,9.0,Yes,Monthly
+R0293,South,Clothing,7.0,Yes,Weekly
+R0294,North,Sports,10.0,Yes,Weekly
+R0295,North,Clothing,5.0,No,Monthly
+R0296,South,Clothing,7.0,No,Monthly
+R0297,South,Electronics,6.0,Yes,Quarterly
+R0298,East,Books,1.0,No,Rarely
+R0299,East,Electronics,1.0,Yes,Weekly
+R0300,South,Clothing,9.0,Yes,Monthly

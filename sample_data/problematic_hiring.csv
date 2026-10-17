@@ -1,0 +1,501 @@
+applicant_id,first_name,last_name,email,phone,ssn,gender,race,age,zip_code,education,years_experience,interview_score,income,hired
+A0001,Daniel,Valdez,daniel.valdez0@example.com,(206) 555-0176,910-78-6805,Male,Hispanic,58,30003,Master's,35,85.4,,0
+A0002,Sofia,Zhang,sofia.zhang1@example.com,(312) 555-0147,999-86-1002,Female,Hispanic,24,30001,Bachelor's,2,47.1,,0
+A0003,Samuel,Walker,samuel.walker2@example.com,(404) 555-0141,902-25-4264,Male,Asian,38,40001,PhD,13,54.6,51500.0,1
+A0004,Aarav,Garcia,aarav.garcia3@example.com,(305) 555-0153,666-82-8417,Male,Black,41,20001,Bachelor's,15,57.6,62500.0,1
+A0005,Elena,Okafor,elena.okafor4@example.com,(206) 555-0162,666-51-4462,Female,Black,55,20001,High school,29,69.2,66500.0,0
+A0006,Ivan,Valdez,ivan.valdez5@example.com,(206) 555-0177,955-25-4702,Male,Hispanic,27,30003,,0,65.6,,0
+A0007,Rahul,Haddad,rahul.haddad6@example.com,(404) 555-0129,666-04-2874,Male,White,40,20002,Bachelor's,16,86.8,64000.0,1
+A0008,Ben,Rossi,ben.rossi7@example.com,(404) 555-0162,964-73-9913,Male,Hispanic,28,30001,High school,2,81.5,44400.0,0
+A0009,Uma,Adeyemi,uma.adeyemi8@example.com,(713) 555-0132,666-33-3704,Female,White,55,10002,High school,29,75.9,,0
+A0010,Hana,Walker,hana.walker9@example.com,(617) 555-0165,666-71-1242,Female,White,48,10004,Bachelor's,25,71.7,73700.0,0
+A0011,Dana,Patel,dana.patel10@example.com,(415) 555-0128,000-20-6070,Female,White,42,10004,,15,74.7,,0
+A0012,Victor,Tanaka,victor.tanaka11@example.com,(305) 555-0141,666-29-5767,Male,Hispanic,38,10003,,16,59.7,67500.0,0
+A0013,Carlos,Valdez,carlos.valdez12@example.com,(206) 555-0103,666-16-0768,Male,White,28,10003,High school,3,80.3,82200.0,0
+A0014,Daniel,Fischer,daniel.fischer13@example.com,(212) 555-0184,000-48-5458,Male,White,60,20002,Bachelor's,33,56.7,93900.0,0
+A0015,Yara,Lopez,yara.lopez14@example.com,(312) 555-0179,666-18-0209,Female,White,49,10004,Bachelor's,24,80.0,78200.0,0
+A0016,Maya,Walker,maya.walker15@example.com,(404) 555-0148,971-28-2047,Female,White,35,10002,Bachelor's,8,84.2,,0
+A0017,Liam,Evans,liam.evans16@example.com,(404) 555-0142,000-23-4945,Male,White,39,10003,Bachelor's,17,72.5,,1
+A0018,Rosa,Valdez,rosa.valdez17@example.com,(404) 555-0123,978-96-3574,Female,Hispanic,52,30001,High school,27,67.9,,0
+A0019,Pedro,Haddad,pedro.haddad18@example.com,(617) 555-0138,666-05-3885,Male,White,52,10004,Bachelor's,26,74.8,86800.0,1
+A0020,Omar,Okafor,omar.okafor19@example.com,(305) 555-0104,666-16-7416,Male,Hispanic,41,30003,Bachelor's,16,35.7,52900.0,0
+A0021,Aarav,Nguyen,aarav.nguyen20@example.com,(305) 555-0102,984-09-1177,Male,Hispanic,34,30003,Bachelor's,7,73.6,45900.0,1
+A0022,Nadia,Rossi,nadia.rossi21@example.com,(415) 555-0159,996-59-3216,Female,White,49,10002,High school,25,68.6,,0
+A0023,Gabriel,Valdez,gabriel.valdez22@example.com,(312) 555-0149,666-84-5294,Male,White,49,10002,High school,23,69.4,56000.0,0
+A0024,Tomas,Johnson,tomas.johnson23@example.com,(404) 555-0182,902-77-2981,Male,Black,47,40002,High school,23,78.5,54000.0,0
+A0025,Mateo,Evans,mateo.evans24@example.com,(212) 555-0159,000-84-4475,Male,White,25,10004,Bachelor's,0,69.1,47400.0,1
+A0026,Chloe,Kim,chloe.kim25@example.com,(713) 555-0106,952-07-2060,Female,White,41,10002,Bachelor's,19,56.3,,1
+A0027,Wen,Patel,wen.patel26@example.com,(206) 555-0152,666-03-7029,Female,Asian,47,40001,Master's,24,68.3,60700.0,0
+A0028,Grace,Tanaka,grace.tanaka27@example.com,(206) 555-0129,913-79-8244,Female,Asian,61,40001,Bachelor's,39,70.8,73700.0,0
+A0029,Grace,Tanaka,grace.tanaka28@example.com,(415) 555-0173,000-88-5588,Female,Hispanic,44,30002,Bachelor's,18,71.4,,0
+A0030,Yusuf,Ito,yusuf.ito29@example.com,(206) 555-0116,000-62-5801,Male,White,36,10002,Bachelor's,13,71.9,,0
+A0031,Samuel,Young,samuel.young30@example.com,(312) 555-0158,929-14-7194,Male,Black,45,20002,High school,22,82.5,,0
+A0032,Victor,Chen,victor.chen31@example.com,(305) 555-0120,666-11-5533,Male,Hispanic,29,30001,Bachelor's,2,57.0,57000.0,0
+A0033,Priya,Diaz,priya.diaz32@example.com,(312) 555-0180,666-27-6261,Female,White,25,10004,Bachelor's,1,72.1,,0
+A0034,Wen,Adeyemi,wen.adeyemi33@example.com,(206) 555-0190,666-59-6459,Female,Black,50,20002,Bachelor's,28,85.5,69900.0,0
+A0035,Chloe,Young,chloe.young34@example.com,(305) 555-0195,979-77-7958,Female,White,63,10004,,41,49.2,90500.0,0
+A0036,Olivia,Evans,olivia.evans35@example.com,(312) 555-0127,000-29-5331,Female,White,57,10004,Master's,34,72.2,86600.0,0
+A0037,Hana,Patel,hana.patel36@example.com,(312) 555-0105,946-01-1390,Female,Black,46,20003,,19,63.0,63300.0,1
+A0038,Jasmine,Valdez,jasmine.valdez37@example.com,(305) 555-0166,974-30-3110,Female,White,23,10004,High school,0,65.6,,0
+A0039,Fatima,Tanaka,fatima.tanaka38@example.com,(212) 555-0119,666-17-5005,Female,White,63,10004,Bachelor's,36,59.1,71000.0,0
+A0040,Ethan,Young,ethan.young39@example.com,(312) 555-0140,981-81-6438,Male,Hispanic,40,10001,Master's,17,68.0,,1
+A0041,Keiko,Brooks,keiko.brooks40@example.com,(617) 555-0128,000-05-1141,Female,Asian,34,40001,Bachelor's,10,92.1,66200.0,0
+A0042,Yusuf,Kim,yusuf.kim41@example.com,(404) 555-0121,666-25-8541,Male,Black,59,20003,Master's,37,54.8,86600.0,0
+A0043,Pedro,Nguyen,pedro.nguyen42@example.com,(713) 555-0143,666-25-0949,Male,Hispanic,53,30002,Bachelor's,29,56.0,79600.0,1
+A0044,Imani,Singh,imani.singh43@example.com,(617) 555-0182,000-55-0207,Female,Asian,53,40001,PhD,28,54.4,76600.0,0
+A0045,Kofi,Quinn,kofi.quinn44@example.com,(404) 555-0100,666-39-6359,Male,White,33,10001,PhD,7,90.7,54900.0,1
+A0046,Mateo,Okafor,mateo.okafor45@example.com,(617) 555-0111,965-83-2283,Male,White,63,10001,High school,39,64.5,91500.0,0
+A0047,Fatima,Haddad,fatima.haddad46@example.com,(617) 555-0161,666-59-7990,Female,White,41,10001,Bachelor's,15,69.7,72700.0,1
+A0048,Maya,Chen,maya.chen47@example.com,(617) 555-0130,666-81-8921,Female,White,44,10002,Bachelor's,19,65.2,76000.0,0
+A0049,Quentin,Lopez,quentin.lopez48@example.com,(415) 555-0129,666-27-1680,Male,Hispanic,53,30002,High school,30,58.7,,0
+A0050,Fatima,Garcia,fatima.garcia49@example.com,(415) 555-0137,666-67-5313,Female,White,49,10004,Bachelor's,22,67.2,,0
+A0051,Olivia,Okafor,olivia.okafor50@example.com,(206) 555-0109,936-65-9084,Female,White,29,10004,PhD,5,99.5,55200.0,0
+A0052,Sofia,Usman,sofia.usman51@example.com,(212) 555-0151,000-46-5069,Female,White,34,10002,High school,12,86.7,,0
+A0053,Mateo,Okafor,mateo.okafor52@example.com,(206) 555-0125,945-05-5278,Male,White,37,10003,Bachelor's,10,59.8,60400.0,1
+A0054,Hiro,Patel,hiro.patel53@example.com,(312) 555-0162,000-64-8013,Male,Asian,61,40001,Master's,34,77.8,81600.0,0
+A0055,Noah,Brooks,noah.brooks54@example.com,(617) 555-0173,000-08-4216,Male,White,52,10001,Bachelor's,30,60.0,66200.0,1
+A0056,Tomas,Quinn,tomas.quinn55@example.com,(312) 555-0112,000-31-8601,Male,White,37,20003,Bachelor's,10,48.7,,1
+A0057,Fatima,Lopez,fatima.lopez56@example.com,(713) 555-0139,000-16-9835,Female,White,52,30003,PhD,25,82.2,104600.0,0
+A0058,Noah,Diaz,noah.diaz57@example.com,(206) 555-0150,000-31-9694,Male,White,53,10004,Bachelor's,27,83.9,,1
+A0059,Rosa,Fischer,rosa.fischer58@example.com,(415) 555-0115,000-24-0750,Female,Black,38,20003,High school,15,82.6,,0
+A0060,Hana,Usman,hana.usman59@example.com,(312) 555-0175,000-29-3484,Female,White,38,10004,High school,13,64.4,54300.0,0
+A0061,Jamal,Xu,jamal.xu60@example.com,(312) 555-0150,666-80-2973,Male,White,59,10002,PhD,34,68.0,,0
+A0062,Wen,Nguyen,wen.nguyen61@example.com,(305) 555-0189,666-05-7375,Female,White,45,10004,Bachelor's,20,79.0,,0
+A0063,Ivan,Zhang,ivan.zhang62@example.com,(415) 555-0110,666-99-1789,Male,Hispanic,28,30002,Bachelor's,3,74.7,,0
+A0064,Omar,Evans,omar.evans63@example.com,(305) 555-0168,996-22-6785,Male,Black,52,20003,High school,27,65.3,66600.0,0
+A0065,Daniel,Haddad,daniel.haddad64@example.com,(415) 555-0159,666-35-8352,Male,Black,46,20003,Bachelor's,21,50.6,47900.0,0
+A0066,Yusuf,Young,yusuf.young65@example.com,(312) 555-0170,000-66-9065,Male,Black,43,20002,PhD,17,71.4,,0
+A0067,Omar,Evans,omar.evans66@example.com,(206) 555-0129,000-54-2519,Male,Hispanic,52,30003,Bachelor's,27,82.9,,0
+A0068,Tara,Rossi,tara.rossi67@example.com,(617) 555-0133,666-34-6245,Female,White,60,10004,PhD,38,55.6,89800.0,0
+A0069,Olivia,Fischer,olivia.fischer68@example.com,(212) 555-0112,966-37-5706,Female,White,35,10003,,13,77.7,,0
+A0070,Imani,Ito,imani.ito69@example.com,(404) 555-0145,666-38-5347,Female,Black,39,20001,Bachelor's,12,74.0,54400.0,1
+A0071,Imani,Mensah,imani.mensah70@example.com,(312) 555-0104,995-48-6461,Female,White,29,10004,Master's,2,79.0,29800.0,0
+A0072,Rosa,Johnson,rosa.johnson71@example.com,(415) 555-0198,666-69-6828,Female,Hispanic,49,30002,Bachelor's,24,80.5,80400.0,0
+A0073,Victor,Walker,victor.walker72@example.com,(617) 555-0199,666-90-9787,Male,White,38,10003,Bachelor's,15,61.7,52800.0,1
+A0074,Dana,Zhang,dana.zhang73@example.com,(617) 555-0176,000-38-7647,Female,Hispanic,36,30001,Master's,10,50.6,72600.0,0
+A0075,Valeria,Nguyen,valeria.nguyen74@example.com,(305) 555-0102,958-81-0633,Female,Hispanic,51,30003,,29,63.6,70700.0,0
+A0076,Uma,Nguyen,uma.nguyen75@example.com,(212) 555-0192,666-82-5078,Female,Black,39,20002,Bachelor's,15,80.7,,0
+A0077,Chloe,Brooks,chloe.brooks76@example.com,(404) 555-0113,000-12-5953,Female,Asian,41,40002,PhD,18,63.5,,0
+A0078,Carlos,Garcia,carlos.garcia77@example.com,(206) 555-0192,666-16-5099,Male,Black,40,20002,High school,18,61.7,73300.0,0
+A0079,Quentin,Brooks,quentin.brooks78@example.com,(404) 555-0129,000-50-6169,Male,Hispanic,32,30002,Bachelor's,6,48.1,,0
+A0080,Victor,Walker,victor.walker79@example.com,(305) 555-0164,965-85-3798,Male,White,27,10001,High school,2,91.0,43800.0,1
+A0081,Jamal,Fischer,jamal.fischer80@example.com,(404) 555-0114,000-85-3867,Male,White,56,10003,Bachelor's,33,79.9,75300.0,1
+A0082,Priya,Ito,priya.ito81@example.com,(713) 555-0102,976-70-9202,Female,Black,25,20003,High school,0,79.2,32700.0,0
+A0083,Zane,Valdez,zane.valdez82@example.com,(415) 555-0101,000-62-5406,Male,White,35,10002,Bachelor's,13,81.6,64500.0,0
+A0084,Hana,Singh,hana.singh83@example.com,(617) 555-0181,912-06-9907,Female,White,50,10004,High school,26,76.9,,0
+A0085,Fatima,Quinn,fatima.quinn84@example.com,(206) 555-0131,666-82-5140,Female,Asian,27,40002,Bachelor's,2,67.1,44500.0,0
+A0086,Zoe,Brooks,zoe.brooks85@example.com,(617) 555-0136,974-94-4640,Female,Black,49,20003,Bachelor's,25,68.0,,0
+A0087,Gabriel,Okafor,gabriel.okafor86@example.com,(206) 555-0126,666-89-7326,Male,White,52,10001,Bachelor's,26,64.9,75000.0,0
+A0088,Lena,Okafor,lena.okafor87@example.com,(212) 555-0150,666-87-1284,Female,White,49,10002,Bachelor's,26,100.0,78500.0,1
+A0089,Keiko,Ito,keiko.ito88@example.com,(305) 555-0147,000-87-7889,Female,White,34,10002,Master's,12,76.7,58000.0,1
+A0090,Mateo,Tanaka,mateo.tanaka89@example.com,(312) 555-0104,915-12-5680,Male,White,22,40002,,0,64.4,62000.0,1
+A0091,Grace,Young,grace.young90@example.com,(404) 555-0176,000-18-4229,Female,Asian,59,40001,Bachelor's,32,75.6,,0
+A0092,Quentin,Garcia,quentin.garcia91@example.com,(312) 555-0107,000-46-2596,Male,White,35,10003,Master's,11,57.9,63300.0,0
+A0093,Rosa,Ito,rosa.ito92@example.com,(312) 555-0137,000-03-9150,Female,White,55,20001,Bachelor's,33,88.1,88800.0,0
+A0094,Elena,Ito,elena.ito93@example.com,(305) 555-0115,666-87-4613,Female,Black,30,10001,High school,3,62.1,,0
+A0095,Lena,Valdez,lena.valdez94@example.com,(305) 555-0100,000-29-7398,Female,White,28,10004,,4,76.0,,0
+A0096,Ben,Chen,ben.chen95@example.com,(206) 555-0128,922-43-4039,Male,White,54,10001,Bachelor's,31,82.8,59800.0,0
+A0097,Fatima,Xu,fatima.xu96@example.com,(404) 555-0147,945-01-7507,Female,Hispanic,61,30003,High school,36,74.6,,0
+A0098,Zoe,Usman,zoe.usman97@example.com,(415) 555-0124,977-99-7822,Female,Black,58,20001,Bachelor's,35,71.1,86100.0,0
+A0099,Maya,Mensah,maya.mensah98@example.com,(305) 555-0140,666-39-8271,Female,Asian,53,40001,High school,26,70.1,,0
+A0100,Omar,Patel,omar.patel99@example.com,(415) 555-0173,666-10-3173,Male,Black,32,20002,High school,9,69.3,44900.0,0
+A0101,Wei,Xu,wei.xu100@example.com,(713) 555-0166,666-50-7165,Male,White,60,10004,Master's,35,63.1,,0
+A0102,Rahul,Usman,rahul.usman101@example.com,(617) 555-0106,000-54-0547,Male,Hispanic,50,10001,,25,64.6,76000.0,0
+A0103,Uma,Haddad,uma.haddad102@example.com,(212) 555-0103,984-23-2633,Female,Asian,29,40002,Master's,6,87.8,,0
+A0104,Rahul,Brooks,rahul.brooks103@example.com,(713) 555-0151,666-04-9363,Male,Hispanic,27,30001,PhD,3,68.7,28100.0,0
+A0105,Liam,Rossi,liam.rossi104@example.com,(206) 555-0189,666-57-2369,Male,Asian,58,10003,Bachelor's,36,60.6,,0
+A0106,Pedro,Diaz,pedro.diaz105@example.com,(312) 555-0195,000-88-7403,Male,Hispanic,33,30001,Master's,8,63.8,33000.0,1
+A0107,Grace,Chen,grace.chen106@example.com,(404) 555-0161,963-40-2817,Female,Hispanic,54,30002,Master's,28,83.2,,0
+A0108,Wen,Zhang,wen.zhang107@example.com,(713) 555-0117,915-40-8294,Female,White,27,30003,PhD,0,78.1,,0
+A0109,Elena,Mensah,elena.mensah108@example.com,(312) 555-0101,933-87-3081,Female,Hispanic,33,30002,Bachelor's,10,76.7,,1
+A0110,Wei,Quinn,wei.quinn109@example.com,(206) 555-0143,948-23-0237,Male,White,33,10004,,10,66.9,42400.0,0
+A0111,Wen,Fischer,wen.fischer110@example.com,(312) 555-0113,666-14-3334,Female,Black,33,20001,Bachelor's,8,76.9,51200.0,0
+A0112,Dana,Chen,dana.chen111@example.com,(212) 555-0164,000-05-4239,Female,Black,50,20002,Bachelor's,24,62.3,,0
+A0113,Sofia,Brooks,sofia.brooks112@example.com,(206) 555-0163,000-19-1023,Female,Asian,60,10003,,33,66.9,,0
+A0114,Zane,Johnson,zane.johnson113@example.com,(212) 555-0104,000-52-7053,Male,Asian,60,40002,Bachelor's,38,81.6,76300.0,1
+A0115,Nadia,Adeyemi,nadia.adeyemi114@example.com,(212) 555-0175,666-36-8888,Female,White,53,10002,High school,30,80.5,69300.0,0
+A0116,Ivan,Kim,ivan.kim115@example.com,(206) 555-0129,000-85-0684,Male,Hispanic,30,30002,PhD,7,58.2,72900.0,0
+A0117,Wei,Ito,wei.ito116@example.com,(212) 555-0131,000-04-1170,Male,Hispanic,62,30001,Bachelor's,39,59.7,78600.0,0
+A0118,Mateo,Nguyen,mateo.nguyen117@example.com,(305) 555-0114,666-09-9423,Male,White,44,10002,High school,20,71.3,74700.0,1
+A0119,Chloe,Patel,chloe.patel118@example.com,(305) 555-0146,909-80-5208,Female,White,44,10003,High school,17,90.7,45600.0,0
+A0120,Farid,Ito,farid.ito119@example.com,(312) 555-0193,000-24-8505,Male,White,51,10004,High school,29,47.0,72000.0,0
+A0121,Quentin,Lopez,quentin.lopez120@example.com,(713) 555-0167,000-73-6836,Male,Hispanic,54,40001,Bachelor's,28,73.3,53300.0,0
+A0122,Kofi,Chen,kofi.chen121@example.com,(212) 555-0137,000-12-0509,Male,White,62,10003,High school,37,53.5,,0
+A0123,Fatima,Haddad,fatima.haddad122@example.com,(206) 555-0164,000-61-1762,Female,Asian,46,40002,Bachelor's,21,62.4,77000.0,0
+A0124,Uma,Zhang,uma.zhang123@example.com,(212) 555-0160,997-38-4287,Female,White,47,10003,High school,21,65.6,,0
+A0125,Chloe,Zhang,chloe.zhang124@example.com,(404) 555-0178,000-54-0228,Female,Asian,53,40001,Bachelor's,31,65.0,72100.0,0
+A0126,Farid,Mensah,farid.mensah125@example.com,(312) 555-0191,666-14-5357,Male,White,32,20003,Bachelor's,6,63.6,44400.0,0
+A0127,Lena,Young,lena.young126@example.com,(206) 555-0105,955-20-5474,Female,Hispanic,34,10001,Bachelor's,11,70.1,55300.0,0
+A0128,Amara,Nguyen,amara.nguyen127@example.com,(312) 555-0192,000-83-7233,Female,White,48,10001,Bachelor's,23,63.6,,1
+A0129,Jasmine,Diaz,jasmine.diaz128@example.com,(312) 555-0109,942-96-2369,Female,Black,24,20003,,0,52.5,,0
+A0130,Wei,Walker,wei.walker129@example.com,(617) 555-0152,000-13-0432,Male,Hispanic,35,30001,High school,10,79.4,25500.0,0
+A0131,Yara,Kim,yara.kim130@example.com,(713) 555-0165,936-60-6166,Female,Asian,52,40001,,29,79.0,64100.0,1
+A0132,Victor,Patel,victor.patel131@example.com,(404) 555-0175,666-38-4794,Male,Hispanic,62,30003,Master's,38,80.1,84100.0,0
+A0133,Hiro,Quinn,hiro.quinn132@example.com,(212) 555-0108,000-95-5584,Male,White,43,10004,,19,51.5,63900.0,0
+A0134,Bianca,Ito,bianca.ito133@example.com,(212) 555-0139,000-76-4726,Female,White,38,10001,PhD,16,73.6,67200.0,1
+A0135,Tomas,Tanaka,tomas.tanaka134@example.com,(415) 555-0193,938-14-5332,Male,White,40,10003,Bachelor's,14,78.1,,1
+A0136,Imani,Nguyen,imani.nguyen135@example.com,(415) 555-0103,666-01-2299,Female,White,50,40001,Bachelor's,28,57.6,,0
+A0137,Rahul,Johnson,rahul.johnson136@example.com,(404) 555-0126,666-37-1325,Male,Black,44,20001,Bachelor's,20,70.1,,0
+A0138,Chloe,Haddad,chloe.haddad137@example.com,(404) 555-0177,000-34-9877,Female,Hispanic,22,30001,Master's,0,68.6,45100.0,1
+A0139,Quentin,Tanaka,quentin.tanaka138@example.com,(404) 555-0181,000-32-5087,Male,Hispanic,44,30002,Master's,22,92.1,,0
+A0140,Olivia,Garcia,olivia.garcia139@example.com,(312) 555-0162,924-01-9480,Female,Hispanic,38,30003,Master's,11,93.1,,0
+A0141,Yara,Diaz,yara.diaz140@example.com,(617) 555-0162,000-12-1031,Female,Hispanic,51,30001,Master's,27,50.0,71500.0,0
+A0142,Carlos,Walker,carlos.walker141@example.com,(206) 555-0150,000-64-3112,Male,Hispanic,58,30002,Bachelor's,36,99.9,82600.0,0
+A0143,Jamal,Ito,jamal.ito142@example.com,(415) 555-0191,000-27-2754,Male,White,62,10001,Master's,37,59.0,,0
+A0144,Zane,Quinn,zane.quinn143@example.com,(206) 555-0188,932-25-2733,Male,White,47,10003,Master's,22,81.8,,0
+A0145,Jasmine,Singh,jasmine.singh144@example.com,(312) 555-0183,666-19-8681,Female,Black,37,20003,,12,81.6,70300.0,0
+A0146,Priya,Valdez,priya.valdez145@example.com,(415) 555-0146,000-45-6913,Female,Hispanic,40,30001,PhD,14,58.1,,0
+A0147,Dana,Quinn,dana.quinn146@example.com,(305) 555-0135,918-16-7817,Female,White,29,10003,High school,5,75.9,,1
+A0148,Rahul,Singh,rahul.singh147@example.com,(415) 555-0191,666-64-2656,Male,Black,61,20003,,35,68.7,77000.0,0
+A0149,Grace,Valdez,grace.valdez148@example.com,(404) 555-0131,961-65-3969,Female,Black,57,20002,Master's,33,76.7,,0
+A0150,Nadia,Young,nadia.young149@example.com,(415) 555-0122,977-33-7334,Female,White,57,10002,High school,32,72.8,73700.0,0
+A0151,Wei,Brooks,wei.brooks150@example.com,(212) 555-0155,991-73-7665,Male,White,35,10004,Bachelor's,13,84.4,70000.0,1
+A0152,Pedro,Tanaka,pedro.tanaka151@example.com,(415) 555-0184,000-72-1995,Male,Hispanic,35,20002,High school,10,70.9,,0
+A0153,Lena,Evans,lena.evans152@example.com,(312) 555-0163,935-29-8436,Female,Black,57,20002,Master's,34,68.0,,0
+A0154,Ethan,Xu,ethan.xu153@example.com,(713) 555-0161,000-10-5482,Male,White,44,10002,Master's,18,83.2,50700.0,0
+A0155,Imani,Brooks,imani.brooks154@example.com,(212) 555-0146,666-05-2681,Female,Hispanic,51,30003,Bachelor's,25,77.0,,0
+A0156,Victor,Garcia,victor.garcia155@example.com,(206) 555-0134,000-93-1523,Male,White,42,10003,Master's,15,78.8,87200.0,1
+A0157,Fatima,Evans,fatima.evans156@example.com,(305) 555-0152,000-56-9209,Female,Hispanic,40,30002,High school,13,62.0,57600.0,0
+A0158,Pedro,Patel,pedro.patel157@example.com,(415) 555-0103,000-57-2790,Male,White,48,10001,Bachelor's,26,57.5,62100.0,0
+A0159,Liam,Adeyemi,liam.adeyemi158@example.com,(312) 555-0147,989-65-6390,Male,Black,56,20002,Bachelor's,34,63.2,95800.0,0
+A0160,Hiro,Adeyemi,hiro.adeyemi159@example.com,(617) 555-0187,960-46-9697,Male,White,36,10004,High school,9,62.6,59500.0,0
+A0161,Sofia,Nguyen,sofia.nguyen160@example.com,(305) 555-0115,000-70-6622,Female,White,55,10004,,31,79.4,82800.0,0
+A0162,Ivan,Zhang,ivan.zhang161@example.com,(713) 555-0145,666-43-5620,Male,Hispanic,32,30003,Bachelor's,10,81.7,55300.0,1
+A0163,Grace,Nguyen,grace.nguyen162@example.com,(212) 555-0166,939-43-7836,Female,White,38,10004,Bachelor's,15,68.1,,0
+A0164,Maya,Lopez,maya.lopez163@example.com,(713) 555-0108,000-99-5265,Female,White,60,10002,Bachelor's,33,87.2,,1
+A0165,Samuel,Rossi,samuel.rossi164@example.com,(617) 555-0173,666-36-9721,Male,White,62,10004,Master's,38,86.4,65600.0,0
+A0166,Valeria,Okafor,valeria.okafor165@example.com,(415) 555-0135,937-43-0227,Female,Hispanic,60,30002,Bachelor's,38,72.9,,0
+A0167,Pedro,Kim,pedro.kim166@example.com,(212) 555-0120,903-53-3876,Male,Hispanic,35,30003,Master's,9,60.1,59700.0,0
+A0168,Pedro,Patel,pedro.patel167@example.com,(404) 555-0162,666-66-6854,Male,Asian,57,30002,Bachelor's,34,88.9,100800.0,0
+A0169,Tara,Adeyemi,tara.adeyemi168@example.com,(312) 555-0148,000-73-0219,Female,White,61,10003,Bachelor's,37,69.3,82300.0,0
+A0170,Gabriel,Garcia,gabriel.garcia169@example.com,(312) 555-0144,000-26-7077,Male,White,63,10002,,41,71.5,,0
+A0171,Grace,Rossi,grace.rossi170@example.com,(312) 555-0161,962-61-0479,Female,White,22,10001,Bachelor's,0,65.9,,0
+A0172,Liam,Ito,liam.ito171@example.com,(713) 555-0163,000-14-8785,Male,Black,53,20003,,29,59.3,107000.0,1
+A0173,Priya,Brooks,priya.brooks172@example.com,(617) 555-0128,666-49-7695,Female,Asian,63,40002,Bachelor's,36,52.4,,0
+A0174,Pedro,Diaz,pedro.diaz173@example.com,(312) 555-0121,000-42-4733,Male,Hispanic,54,30003,High school,30,77.6,65300.0,0
+A0175,Dana,Walker,dana.walker174@example.com,(617) 555-0145,666-15-9788,Female,Black,31,20002,Bachelor's,8,60.6,,0
+A0176,Tara,Ito,tara.ito175@example.com,(206) 555-0105,945-98-0517,Female,White,54,10003,,32,100.0,67900.0,1
+A0177,Imani,Adeyemi,imani.adeyemi176@example.com,(415) 555-0185,666-50-3100,Female,Asian,26,30002,,3,57.0,34500.0,0
+A0178,Taylor,Singh,taylor.singh177@example.com,(404) 555-0193,666-19-2885,Non-binary,White,42,10002,Master's,18,54.9,60000.0,1
+A0179,Rahul,Nguyen,rahul.nguyen178@example.com,(415) 555-0113,914-68-3875,Male,White,48,30003,Bachelor's,26,76.1,72500.0,1
+A0180,Zane,Lopez,zane.lopez179@example.com,(312) 555-0113,000-29-9244,Male,White,41,10001,PhD,17,88.4,40800.0,1
+A0181,Pedro,Xu,pedro.xu180@example.com,(404) 555-0188,000-84-5203,Male,White,51,10002,Master's,24,70.8,55800.0,0
+A0182,Mateo,Ito,mateo.ito181@example.com,(305) 555-0172,666-75-3451,Male,White,32,20003,,6,76.9,,0
+A0183,Ethan,Okafor,ethan.okafor182@example.com,(415) 555-0147,666-60-9029,Male,White,47,10001,Master's,22,47.9,62900.0,0
+A0184,Jasmine,Tanaka,jasmine.tanaka183@example.com,(305) 555-0181,000-16-6649,Female,White,49,10003,High school,22,61.9,,0
+A0185,Victor,Patel,victor.patel184@example.com,(713) 555-0183,666-69-3767,Male,Black,48,20003,Bachelor's,22,57.1,53200.0,0
+A0186,Jamal,Fischer,jamal.fischer185@example.com,(415) 555-0141,666-44-4054,Male,White,34,10002,High school,9,47.3,64700.0,0
+A0187,Bianca,Rossi,bianca.rossi186@example.com,(305) 555-0137,944-22-2758,Female,White,34,10001,Master's,7,71.4,,0
+A0188,Fatima,Tanaka,fatima.tanaka187@example.com,(305) 555-0145,000-15-5663,Female,Asian,32,40001,Bachelor's,10,43.1,,0
+A0189,Omar,Diaz,omar.diaz188@example.com,(415) 555-0121,666-12-8538,Male,Hispanic,41,30003,Bachelor's,15,54.1,40900.0,0
+A0190,Priya,Evans,priya.evans189@example.com,(713) 555-0147,000-31-2275,Female,Black,46,20003,PhD,23,63.6,,1
+A0191,Zane,Rossi,zane.rossi190@example.com,(415) 555-0174,666-43-4610,Male,White,37,10001,,11,60.0,,1
+A0192,Yara,Diaz,yara.diaz191@example.com,(212) 555-0109,990-49-9630,Female,Hispanic,39,30003,Bachelor's,12,74.8,,0
+A0193,Maya,Walker,maya.walker192@example.com,(404) 555-0166,981-23-4384,Female,White,34,10001,Master's,10,73.7,60800.0,0
+A0194,Noah,Chen,noah.chen193@example.com,(713) 555-0101,000-08-6224,Male,White,31,10002,High school,9,80.7,62900.0,0
+A0195,Uma,Zhang,uma.zhang194@example.com,(713) 555-0143,942-67-0852,Female,Asian,49,40001,Bachelor's,25,79.0,,0
+A0196,Bianca,Rossi,bianca.rossi195@example.com,(713) 555-0104,666-57-9656,Female,Black,56,20002,Master's,32,83.7,64500.0,1
+A0197,Omar,Lopez,omar.lopez196@example.com,(713) 555-0157,000-18-4264,Male,Hispanic,34,30002,High school,7,70.0,48400.0,0
+A0198,Liam,Garcia,liam.garcia197@example.com,(415) 555-0105,000-79-1428,Male,Black,58,20002,,31,73.6,61400.0,0
+A0199,Tara,Ito,tara.ito198@example.com,(404) 555-0170,666-10-2557,Female,Black,45,20001,,20,76.1,,0
+A0200,Uma,Tanaka,uma.tanaka199@example.com,(713) 555-0176,666-96-3543,Female,White,29,10002,Bachelor's,2,71.7,54600.0,1
+A0201,Pedro,Tanaka,pedro.tanaka200@example.com,(206) 555-0113,000-38-1747,Male,White,37,10001,,13,65.2,46200.0,1
+A0202,Pedro,Fischer,pedro.fischer201@example.com,(617) 555-0188,000-21-4638,Male,White,22,10002,PhD,0,66.0,51800.0,0
+A0203,Quentin,Okafor,quentin.okafor202@example.com,(415) 555-0197,000-36-2950,Male,White,23,10004,Master's,0,60.2,32400.0,0
+A0204,Nadia,Zhang,nadia.zhang203@example.com,(212) 555-0133,666-92-9868,Female,Hispanic,36,30001,High school,10,75.1,60600.0,0
+A0205,Fatima,Garcia,fatima.garcia204@example.com,(415) 555-0161,965-11-9494,Female,White,41,20001,,16,68.9,56500.0,0
+A0206,Grace,Singh,grace.singh205@example.com,(312) 555-0122,948-25-0955,Female,Black,55,20002,Bachelor's,31,62.0,,0
+A0207,Sofia,Evans,sofia.evans206@example.com,(206) 555-0128,666-14-6585,Female,Hispanic,27,30002,Master's,1,62.1,52800.0,0
+A0208,Omar,Valdez,omar.valdez207@example.com,(404) 555-0187,666-70-7204,Male,Hispanic,57,30003,Bachelor's,31,55.5,90700.0,0
+A0209,Fatima,Evans,fatima.evans208@example.com,(415) 555-0155,666-83-1848,Female,White,31,30003,High school,7,81.7,,0
+A0210,Wei,Haddad,wei.haddad209@example.com,(415) 555-0134,000-80-4699,Male,White,27,10004,,5,70.9,53200.0,0
+A0211,Zane,Lopez,zane.lopez210@example.com,(206) 555-0129,000-03-8144,Male,Asian,51,40002,PhD,29,59.6,62300.0,0
+A0212,Pedro,Johnson,pedro.johnson211@example.com,(312) 555-0125,000-22-6164,Male,Black,54,20001,,32,79.7,71800.0,0
+A0213,Fatima,Evans,fatima.evans212@example.com,(404) 555-0125,959-03-0694,Female,Hispanic,47,30002,Master's,23,63.3,,0
+A0214,Yusuf,Quinn,yusuf.quinn213@example.com,(415) 555-0162,666-72-6630,Male,Asian,26,40001,Bachelor's,1,53.1,40200.0,0
+A0215,Farid,Adeyemi,farid.adeyemi214@example.com,(212) 555-0126,666-65-1914,Male,Hispanic,26,30003,PhD,0,82.3,33400.0,0
+A0216,Kofi,Zhang,kofi.zhang215@example.com,(312) 555-0192,666-06-3906,Male,White,38,10003,High school,15,63.6,44500.0,0
+A0217,Valeria,Brooks,valeria.brooks216@example.com,(404) 555-0175,976-27-7569,Female,Black,40,20003,High school,14,65.1,32500.0,0
+A0218,Maya,Ito,maya.ito217@example.com,(312) 555-0161,666-09-9970,Female,White,63,10001,,38,70.5,69500.0,0
+A0219,Farid,Young,farid.young218@example.com,(206) 555-0186,000-56-7803,Male,Black,34,20003,PhD,12,83.7,,0
+A0220,Bianca,Evans,bianca.evans219@example.com,(312) 555-0173,000-96-2688,Female,Asian,30,40002,Bachelor's,6,70.2,,0
+A0221,Imani,Brooks,imani.brooks220@example.com,(312) 555-0156,666-89-5000,Female,Black,61,10002,Bachelor's,38,55.6,,0
+A0222,Rosa,Tanaka,rosa.tanaka221@example.com,(404) 555-0106,971-92-8564,Female,White,28,10002,Bachelor's,1,76.5,,0
+A0223,Rahul,Brooks,rahul.brooks222@example.com,(312) 555-0181,990-99-6431,Male,White,23,10004,,0,64.2,40400.0,0
+A0224,Farid,Xu,farid.xu223@example.com,(212) 555-0168,000-79-3162,Male,Asian,39,30001,High school,13,92.7,63600.0,0
+A0225,Dana,Lopez,dana.lopez224@example.com,(713) 555-0134,980-64-7643,Female,White,38,10004,Master's,13,70.0,67400.0,0
+A0226,Quentin,Walker,quentin.walker225@example.com,(305) 555-0184,666-96-8168,Male,White,48,10003,,24,43.2,,1
+A0227,Dana,Garcia,dana.garcia226@example.com,(415) 555-0100,920-50-8438,Female,White,58,10001,Master's,35,74.3,,0
+A0228,Ben,Diaz,ben.diaz227@example.com,(312) 555-0110,666-17-3387,Male,White,61,10001,High school,35,93.3,76700.0,0
+A0229,Liam,Zhang,liam.zhang228@example.com,(404) 555-0159,972-09-0769,Male,White,34,30003,,12,88.9,39400.0,1
+A0230,Nadia,Tanaka,nadia.tanaka229@example.com,(206) 555-0123,666-85-0683,Female,Black,63,20002,Bachelor's,40,92.0,,0
+A0231,Fatima,Xu,fatima.xu230@example.com,(305) 555-0172,000-71-8578,Female,White,48,10003,Bachelor's,26,57.8,,0
+A0232,Fatima,Ito,fatima.ito231@example.com,(305) 555-0146,000-84-0415,Female,White,24,10001,Bachelor's,0,80.9,,1
+A0233,Farid,Kim,farid.kim232@example.com,(206) 555-0154,995-16-1390,Male,White,61,10004,High school,38,61.3,,0
+A0234,Ivan,Patel,ivan.patel233@example.com,(617) 555-0159,000-51-0660,Male,White,27,10004,PhD,4,72.7,33600.0,0
+A0235,Aarav,Lopez,aarav.lopez234@example.com,(415) 555-0195,666-70-8807,Male,White,46,10002,Master's,22,54.7,84000.0,0
+A0236,Aarav,Garcia,aarav.garcia235@example.com,(206) 555-0173,666-60-9849,Male,Black,55,20003,Master's,28,62.3,102300.0,0
+A0237,Imani,Johnson,imani.johnson236@example.com,(206) 555-0144,000-38-7367,Female,White,32,10004,,7,61.9,48600.0,0
+A0238,Aarav,Patel,aarav.patel237@example.com,(404) 555-0120,000-11-6086,Male,White,33,10004,Bachelor's,7,80.8,38500.0,1
+A0239,Hana,Adeyemi,hana.adeyemi238@example.com,(713) 555-0106,666-19-8498,Female,White,41,10001,Bachelor's,14,79.6,,0
+A0240,Nadia,Ito,nadia.ito239@example.com,(415) 555-0157,984-58-2615,Female,White,59,10002,Bachelor's,32,73.3,,1
+A0241,Aarav,Haddad,aarav.haddad240@example.com,(617) 555-0194,000-25-4504,Male,White,31,10004,Bachelor's,7,53.8,50500.0,0
+A0242,Omar,Brooks,omar.brooks241@example.com,(713) 555-0141,000-95-2683,Male,White,49,10004,High school,22,66.3,60000.0,0
+A0243,Olivia,Diaz,olivia.diaz242@example.com,(617) 555-0161,666-47-8450,Female,Hispanic,41,30003,,14,61.0,,0
+A0244,Noah,Mensah,noah.mensah243@example.com,(305) 555-0127,974-38-2652,Male,White,26,10004,Bachelor's,0,80.4,52700.0,1
+A0245,Pedro,Chen,pedro.chen244@example.com,(713) 555-0157,666-34-4601,Male,Black,51,20002,Bachelor's,27,84.1,76200.0,0
+A0246,Tomas,Ito,tomas.ito245@example.com,(212) 555-0191,666-71-5272,Male,White,56,20003,,33,82.7,,0
+A0247,Ben,Okafor,ben.okafor246@example.com,(713) 555-0124,987-90-0930,Male,White,46,10001,Bachelor's,21,60.9,53700.0,1
+A0248,Elena,Walker,elena.walker247@example.com,(206) 555-0167,666-45-4120,Female,White,29,10001,Bachelor's,2,37.1,57800.0,0
+A0249,Hana,Chen,hana.chen248@example.com,(404) 555-0103,928-64-9669,Female,Hispanic,28,30003,Bachelor's,1,48.8,49100.0,0
+A0250,Rosa,Lopez,rosa.lopez249@example.com,(617) 555-0118,666-72-5024,Female,Hispanic,39,30001,Bachelor's,14,87.1,71300.0,0
+A0251,Victor,Chen,victor.chen250@example.com,(713) 555-0150,949-69-9117,Male,White,43,10001,Bachelor's,21,65.2,76400.0,0
+A0252,Yusuf,Lopez,yusuf.lopez251@example.com,(617) 555-0198,666-92-1024,Male,White,45,10002,,21,61.0,49800.0,0
+A0253,Nadia,Mensah,nadia.mensah252@example.com,(713) 555-0141,666-43-7816,Female,White,32,10003,Bachelor's,6,89.7,36200.0,0
+A0254,Jasmine,Usman,jasmine.usman253@example.com,(212) 555-0128,927-50-3490,Female,White,43,10002,Bachelor's,18,85.2,,0
+A0255,Jasmine,Lopez,jasmine.lopez254@example.com,(404) 555-0145,666-94-1027,Female,Black,34,20002,PhD,10,70.3,44300.0,0
+A0256,Ben,Young,ben.young255@example.com,(404) 555-0153,950-47-5660,Male,White,50,10003,Bachelor's,26,66.5,80500.0,0
+A0257,Liam,Diaz,liam.diaz256@example.com,(713) 555-0142,000-64-9199,Male,White,55,10002,Master's,33,68.4,81900.0,0
+A0258,Maya,Brooks,maya.brooks257@example.com,(713) 555-0106,666-13-9447,Female,Asian,49,40001,Master's,26,72.7,84600.0,0
+A0259,Elena,Adeyemi,elena.adeyemi258@example.com,(212) 555-0147,986-36-6253,Female,White,22,10001,High school,0,89.2,,0
+A0260,Samuel,Johnson,samuel.johnson259@example.com,(713) 555-0155,000-21-3839,Male,White,63,10001,Bachelor's,40,75.1,86500.0,1
+A0261,Uma,Fischer,uma.fischer260@example.com,(617) 555-0129,000-70-4578,Female,Hispanic,22,30003,Bachelor's,0,78.7,,0
+A0262,Hiro,Chen,hiro.chen261@example.com,(206) 555-0160,000-06-3121,Male,White,63,10001,PhD,41,84.0,90500.0,0
+A0263,Wen,Garcia,wen.garcia262@example.com,(212) 555-0145,000-70-8433,Female,White,23,10001,Bachelor's,0,56.0,48800.0,0
+A0264,Chloe,Zhang,chloe.zhang263@example.com,(206) 555-0178,666-21-3622,Female,White,43,10001,,19,79.1,,1
+A0265,Wei,Usman,wei.usman264@example.com,(415) 555-0192,929-87-2524,Male,Asian,26,40001,Bachelor's,0,66.5,49400.0,1
+A0266,Tara,Adeyemi,tara.adeyemi265@example.com,(206) 555-0143,929-46-5131,Female,White,25,30003,High school,0,39.8,,0
+A0267,Fatima,Xu,fatima.xu266@example.com,(206) 555-0187,000-87-3652,Female,White,50,10003,Master's,25,44.5,,0
+A0268,Priya,Fischer,priya.fischer267@example.com,(312) 555-0115,666-75-6116,Female,White,52,10002,Bachelor's,27,57.8,80700.0,1
+A0269,Hana,Kim,hana.kim268@example.com,(617) 555-0108,000-87-5196,Female,White,26,10002,Master's,0,76.4,62800.0,1
+A0270,Uma,Ito,uma.ito269@example.com,(305) 555-0197,000-13-9199,Female,Black,63,10002,Master's,38,71.4,,0
+A0271,Dana,Kim,dana.kim270@example.com,(713) 555-0197,666-20-4189,Female,White,35,10004,Bachelor's,12,72.2,,1
+A0272,Fatima,Tanaka,fatima.tanaka271@example.com,(212) 555-0163,666-62-9852,Female,Black,35,20001,Bachelor's,11,93.4,34300.0,0
+A0273,Hana,Singh,hana.singh272@example.com,(617) 555-0127,000-14-3772,Female,Black,34,20001,Master's,11,54.8,,0
+A0274,Ethan,Patel,ethan.patel273@example.com,(415) 555-0154,000-76-4601,Male,Hispanic,41,30001,Master's,17,69.7,62800.0,1
+A0275,Hiro,Quinn,hiro.quinn274@example.com,(206) 555-0116,666-16-0215,Male,White,29,10002,Master's,4,73.7,42900.0,0
+A0276,Olivia,Singh,olivia.singh275@example.com,(713) 555-0192,666-81-8772,Female,Hispanic,39,30003,High school,16,61.2,,0
+A0277,Priya,Evans,priya.evans276@example.com,(212) 555-0187,000-21-1068,Female,Black,30,30001,Bachelor's,7,70.3,53500.0,0
+A0278,Noah,Kim,noah.kim277@example.com,(713) 555-0134,000-52-1519,Male,White,24,10004,High school,0,50.8,,0
+A0279,Ethan,Chen,ethan.chen278@example.com,(206) 555-0161,000-72-6357,Male,Hispanic,37,30002,Master's,13,86.9,60000.0,0
+A0280,Ethan,Singh,ethan.singh279@example.com,(305) 555-0108,000-21-4557,Male,Hispanic,50,30001,Bachelor's,27,61.8,48300.0,0
+A0281,Yara,Lopez,yara.lopez280@example.com,(212) 555-0164,000-21-4215,Female,White,54,10001,,28,94.4,64100.0,0
+A0282,Grace,Quinn,grace.quinn281@example.com,(415) 555-0123,666-76-5266,Female,Asian,36,40002,,10,69.6,68800.0,0
+A0283,Chloe,Okafor,chloe.okafor282@example.com,(617) 555-0172,666-94-5204,Female,White,35,10001,Bachelor's,9,82.3,48600.0,0
+A0284,Keiko,Haddad,keiko.haddad283@example.com,(312) 555-0197,953-16-0960,Female,Black,55,30003,Master's,29,69.4,,0
+A0285,Aarav,Diaz,aarav.diaz284@example.com,(617) 555-0115,000-21-1195,Male,Asian,50,40002,High school,23,69.6,84400.0,0
+A0286,Imani,Zhang,imani.zhang285@example.com,(212) 555-0185,666-69-1181,Female,White,56,10002,High school,31,63.0,92000.0,0
+A0287,Valeria,Haddad,valeria.haddad286@example.com,(212) 555-0141,666-53-6949,Female,Hispanic,60,30003,Master's,37,71.4,,0
+A0288,Grace,Chen,grace.chen287@example.com,(206) 555-0151,666-78-2596,Female,White,56,10003,Master's,29,73.8,,0
+A0289,Quentin,Haddad,quentin.haddad288@example.com,(415) 555-0110,908-03-2837,Male,Hispanic,61,30002,High school,38,60.6,79300.0,0
+A0290,Lena,Xu,lena.xu289@example.com,(206) 555-0149,000-40-1296,Female,Black,39,20001,Bachelor's,16,68.5,,0
+A0291,Ivan,Garcia,ivan.garcia290@example.com,(212) 555-0118,946-14-9265,Male,White,38,10002,PhD,12,62.7,46900.0,0
+A0292,Priya,Zhang,priya.zhang291@example.com,(713) 555-0116,666-44-3167,Female,White,35,10003,Master's,8,97.6,42700.0,0
+A0293,Omar,Lopez,omar.lopez292@example.com,(617) 555-0112,666-91-5208,Male,White,31,10004,Bachelor's,7,68.9,,0
+A0294,Hana,Walker,hana.walker293@example.com,(305) 555-0163,666-39-1206,Female,White,53,10002,Bachelor's,27,88.5,59900.0,0
+A0295,Farid,Quinn,farid.quinn294@example.com,(305) 555-0105,950-32-8714,Male,White,52,30003,Bachelor's,25,67.7,51700.0,0
+A0296,Yusuf,Brooks,yusuf.brooks295@example.com,(617) 555-0126,000-57-7475,Male,White,55,10001,High school,29,73.1,76700.0,0
+A0297,Ethan,Nguyen,ethan.nguyen296@example.com,(713) 555-0182,949-91-6273,Male,White,29,10002,Master's,7,54.1,57100.0,0
+A0298,Zane,Kim,zane.kim297@example.com,(312) 555-0176,983-81-8523,Male,White,42,10003,,17,64.6,,0
+A0299,Liam,Fischer,liam.fischer298@example.com,(713) 555-0182,000-16-2497,Male,Hispanic,31,30002,,8,72.5,47200.0,0
+A0300,Zane,Okafor,zane.okafor299@example.com,(212) 555-0199,666-47-0091,Male,Hispanic,59,30003,Master's,32,89.0,80400.0,0
+A0301,Ivan,Chen,ivan.chen300@example.com,(617) 555-0128,666-76-1128,Male,Hispanic,33,10002,PhD,11,72.7,61700.0,1
+A0302,Nadia,Singh,nadia.singh301@example.com,(312) 555-0198,000-29-9233,Female,White,28,10004,Master's,1,86.6,45900.0,0
+A0303,Omar,Valdez,omar.valdez302@example.com,(404) 555-0113,666-28-2649,Male,Hispanic,45,30002,Bachelor's,22,77.7,,0
+A0304,Ivan,Chen,ivan.chen303@example.com,(617) 555-0173,966-74-7370,Male,Black,58,20002,Bachelor's,34,89.5,87900.0,0
+A0305,Farid,Mensah,farid.mensah304@example.com,(713) 555-0118,000-72-8087,Male,White,60,10003,Bachelor's,37,69.3,,0
+A0306,Maya,Rossi,maya.rossi305@example.com,(415) 555-0136,000-71-9210,Female,White,26,10002,Bachelor's,0,98.7,44900.0,0
+A0307,Priya,Brooks,priya.brooks306@example.com,(415) 555-0196,000-74-3318,Female,Black,35,20002,Bachelor's,11,64.2,53600.0,0
+A0308,Gabriel,Kim,gabriel.kim307@example.com,(312) 555-0170,971-27-0423,Male,White,28,10004,Bachelor's,2,60.8,33400.0,0
+A0309,Tara,Garcia,tara.garcia308@example.com,(404) 555-0179,666-85-3580,Female,Black,34,20002,Bachelor's,12,55.5,49100.0,0
+A0310,Priya,Brooks,priya.brooks309@example.com,(305) 555-0115,924-73-6184,Female,Asian,44,40002,Master's,20,98.0,58500.0,0
+A0311,Dana,Usman,dana.usman310@example.com,(312) 555-0178,995-86-7990,Female,White,33,10001,PhD,6,79.8,39900.0,0
+A0312,Yara,Lopez,yara.lopez311@example.com,(206) 555-0174,000-61-7649,Female,White,24,10002,High school,0,66.0,53300.0,0
+A0313,Bianca,Tanaka,bianca.tanaka312@example.com,(617) 555-0152,999-57-5757,Female,Asian,43,40002,Bachelor's,20,85.0,80400.0,0
+A0314,Priya,Patel,priya.patel313@example.com,(212) 555-0129,000-05-9048,Female,Black,24,20003,High school,0,78.3,37100.0,0
+A0315,Keiko,Walker,keiko.walker314@example.com,(713) 555-0112,000-42-4836,Female,White,31,10004,,7,93.6,57700.0,0
+A0316,Priya,Zhang,priya.zhang315@example.com,(312) 555-0104,666-35-6948,Female,Hispanic,22,30003,,0,51.4,,0
+A0317,Tara,Patel,tara.patel316@example.com,(312) 555-0199,000-47-9912,Female,Hispanic,25,30002,High school,0,66.8,44300.0,1
+A0318,Quentin,Johnson,quentin.johnson317@example.com,(206) 555-0194,986-73-0044,Male,Black,40,20001,Master's,18,64.4,55900.0,0
+A0319,Priya,Kim,priya.kim318@example.com,(415) 555-0159,997-88-9089,Female,Black,57,20003,,31,46.3,,0
+A0320,Victor,Valdez,victor.valdez319@example.com,(404) 555-0135,000-66-4590,Male,White,54,10001,Master's,31,82.7,67800.0,0
+A0321,Quentin,Lopez,quentin.lopez320@example.com,(206) 555-0169,000-99-3634,Male,White,26,40001,High school,3,66.8,62800.0,0
+A0322,Uma,Nguyen,uma.nguyen321@example.com,(305) 555-0196,666-66-3321,Female,Black,23,20001,,0,78.9,,0
+A0323,Jasmine,Fischer,jasmine.fischer322@example.com,(713) 555-0158,666-16-3250,Female,White,36,10003,Bachelor's,10,98.3,,0
+A0324,Ethan,Zhang,ethan.zhang323@example.com,(305) 555-0168,000-02-6565,Male,Black,49,20003,High school,25,65.8,55500.0,0
+A0325,Farid,Quinn,farid.quinn324@example.com,(415) 555-0163,000-47-1836,Male,Hispanic,53,10004,,26,64.9,74400.0,0
+A0326,Omar,Ito,omar.ito325@example.com,(713) 555-0122,000-59-6736,Male,White,56,10001,PhD,32,71.4,87500.0,0
+A0327,Mateo,Patel,mateo.patel326@example.com,(713) 555-0162,000-33-2645,Male,Black,36,20003,High school,11,81.8,61200.0,0
+A0328,Ben,Kim,ben.kim327@example.com,(404) 555-0158,666-87-9190,Male,White,29,10001,High school,6,63.2,80300.0,0
+A0329,Ethan,Evans,ethan.evans328@example.com,(312) 555-0198,000-05-8991,Male,Hispanic,23,30002,Bachelor's,0,62.4,65200.0,0
+A0330,Zoe,Walker,zoe.walker329@example.com,(713) 555-0128,000-05-6806,Female,White,28,10004,,4,82.7,47900.0,0
+A0331,Rahul,Xu,rahul.xu330@example.com,(305) 555-0138,958-57-7603,Male,Black,24,20002,,0,74.5,44200.0,1
+A0332,Tara,Valdez,tara.valdez331@example.com,(415) 555-0183,000-15-7800,Female,Black,58,20003,Bachelor's,32,45.5,82400.0,0
+A0333,Ethan,Johnson,ethan.johnson332@example.com,(305) 555-0152,000-75-2045,Male,White,33,10001,Master's,9,55.3,46000.0,0
+A0334,Ben,Garcia,ben.garcia333@example.com,(415) 555-0186,000-47-6368,Male,Black,56,20002,High school,29,88.0,,0
+A0335,Grace,Brooks,grace.brooks334@example.com,(312) 555-0174,973-65-7564,Female,Hispanic,45,30001,Bachelor's,20,74.8,70300.0,0
+A0336,Victor,Tanaka,victor.tanaka335@example.com,(713) 555-0185,666-31-0651,Male,Black,44,20003,Bachelor's,22,60.9,70900.0,0
+A0337,Maya,Ito,maya.ito336@example.com,(617) 555-0183,000-45-3570,Female,Hispanic,41,30003,Master's,15,68.0,,0
+A0338,Samuel,Xu,samuel.xu337@example.com,(212) 555-0175,904-22-1005,Male,Asian,56,40002,,31,70.2,96600.0,0
+A0339,Lena,Walker,lena.walker338@example.com,(212) 555-0164,000-99-1890,Female,White,23,10003,Bachelor's,0,78.8,,1
+A0340,Liam,Diaz,liam.diaz339@example.com,(312) 555-0196,000-03-0129,Male,Black,25,40001,High school,1,53.7,47500.0,0
+A0341,Olivia,Xu,olivia.xu340@example.com,(305) 555-0110,000-09-2914,Female,White,39,10004,High school,16,59.9,,0
+A0342,Zane,Diaz,zane.diaz341@example.com,(404) 555-0125,666-99-3069,Male,Hispanic,38,30001,,13,73.3,,0
+A0343,Kofi,Mensah,kofi.mensah342@example.com,(713) 555-0108,970-06-5013,Male,Black,44,20001,Master's,19,68.8,61200.0,1
+A0344,Omar,Mensah,omar.mensah343@example.com,(212) 555-0124,666-17-4651,Male,White,52,10001,Bachelor's,28,76.9,73300.0,1
+A0345,Yusuf,Young,yusuf.young344@example.com,(713) 555-0154,912-59-0346,Male,White,46,10002,Master's,23,55.2,71000.0,1
+A0346,Ivan,Rossi,ivan.rossi345@example.com,(305) 555-0116,950-74-2730,Male,Hispanic,32,30001,High school,8,74.3,59500.0,1
+A0347,Victor,Walker,victor.walker346@example.com,(206) 555-0100,000-25-1550,Male,White,35,10003,Master's,11,83.1,41600.0,1
+A0348,Maya,Patel,maya.patel347@example.com,(415) 555-0117,992-52-6679,Female,Black,53,20002,Master's,29,75.8,55600.0,0
+A0349,Wei,Valdez,wei.valdez348@example.com,(212) 555-0158,000-84-9642,Male,White,30,10002,High school,7,71.7,43700.0,1
+A0350,Lena,Walker,lena.walker349@example.com,(404) 555-0166,000-56-0431,Female,Asian,43,40002,High school,18,68.8,,0
+A0351,Pedro,Walker,pedro.walker350@example.com,(305) 555-0159,972-28-2944,Male,White,44,10004,High school,21,60.0,59200.0,0
+A0352,Hana,Kim,hana.kim351@example.com,(212) 555-0134,666-24-0843,Female,White,53,10003,,28,69.1,80800.0,0
+A0353,Pedro,Johnson,pedro.johnson352@example.com,(305) 555-0104,983-08-8029,Male,Hispanic,52,30001,High school,30,85.1,73000.0,0
+A0354,Hiro,Zhang,hiro.zhang353@example.com,(212) 555-0183,000-38-4367,Male,Asian,41,40001,Bachelor's,17,68.6,65700.0,1
+A0355,Olivia,Tanaka,olivia.tanaka354@example.com,(212) 555-0195,985-15-5841,Female,White,34,10004,Bachelor's,8,59.3,,1
+A0356,Samuel,Xu,samuel.xu355@example.com,(305) 555-0166,666-23-1289,Male,White,37,10002,Master's,11,64.1,52400.0,1
+A0357,Kofi,Patel,kofi.patel356@example.com,(713) 555-0108,666-35-1093,Male,Hispanic,39,30003,Bachelor's,13,72.4,66700.0,0
+A0358,Kofi,Young,kofi.young357@example.com,(617) 555-0180,666-94-5979,Male,Hispanic,31,30003,Bachelor's,5,65.5,59600.0,0
+A0359,Hiro,Singh,hiro.singh358@example.com,(404) 555-0144,943-69-7179,Male,White,48,10003,PhD,26,75.8,62700.0,1
+A0360,Rahul,Tanaka,rahul.tanaka359@example.com,(305) 555-0177,957-50-6221,Male,Black,30,20003,High school,6,76.3,55300.0,0
+A0361,Omar,Evans,omar.evans360@example.com,(212) 555-0162,961-89-2943,Male,Hispanic,49,30001,Master's,24,80.7,,0
+A0362,Maya,Okafor,maya.okafor361@example.com,(713) 555-0154,000-53-8987,Female,Hispanic,53,30001,High school,27,87.1,,0
+A0363,Amara,Tanaka,amara.tanaka362@example.com,(305) 555-0188,000-61-3578,Female,Hispanic,62,30002,Bachelor's,37,82.0,73000.0,0
+A0364,Chloe,Tanaka,chloe.tanaka363@example.com,(713) 555-0132,000-62-1984,Female,Black,26,20003,Master's,0,58.8,,0
+A0365,Aarav,Young,aarav.young364@example.com,(404) 555-0196,944-76-4144,Male,White,53,10001,Bachelor's,30,59.2,76100.0,0
+A0366,Valeria,Ito,valeria.ito365@example.com,(206) 555-0164,000-96-3521,Female,Asian,25,40001,Bachelor's,3,69.1,,0
+A0367,Victor,Haddad,victor.haddad366@example.com,(212) 555-0140,982-60-6105,Male,Hispanic,36,30002,Bachelor's,14,64.6,,1
+A0368,Ben,Zhang,ben.zhang367@example.com,(312) 555-0151,000-18-3437,Male,Hispanic,29,30002,,4,56.3,34300.0,1
+A0369,Bianca,Zhang,bianca.zhang368@example.com,(305) 555-0122,947-26-5648,Female,White,28,10002,Bachelor's,3,64.7,,0
+A0370,Samuel,Evans,samuel.evans369@example.com,(404) 555-0112,000-96-8503,Male,White,29,10003,Bachelor's,6,64.3,51600.0,0
+A0371,Mateo,Johnson,mateo.johnson370@example.com,(212) 555-0197,000-51-6747,Male,Hispanic,23,30002,Bachelor's,0,61.9,46000.0,0
+A0372,Hana,Young,hana.young371@example.com,(212) 555-0173,925-69-4073,Female,White,56,10001,Bachelor's,30,66.2,68200.0,0
+A0373,Olivia,Fischer,olivia.fischer372@example.com,(305) 555-0133,000-80-9869,Female,Asian,24,40001,,0,84.1,,1
+A0374,Fatima,Usman,fatima.usman373@example.com,(212) 555-0130,999-35-7811,Female,White,38,10001,Bachelor's,15,72.4,,0
+A0375,Elena,Chen,elena.chen374@example.com,(212) 555-0167,924-27-4029,Female,Hispanic,51,30003,Bachelor's,25,99.7,,0
+A0376,Imani,Evans,imani.evans375@example.com,(404) 555-0199,000-40-5502,Female,Hispanic,63,30003,High school,37,72.0,80100.0,0
+A0377,Wei,Usman,wei.usman376@example.com,(305) 555-0177,901-12-9984,Male,White,57,10002,Master's,34,66.5,83400.0,0
+A0378,Tara,Patel,tara.patel377@example.com,(404) 555-0176,666-16-8244,Female,White,27,10003,Bachelor's,4,70.0,,0
+A0379,Elena,Okafor,elena.okafor378@example.com,(206) 555-0199,000-11-6091,Female,Black,63,20002,High school,39,73.1,,1
+A0380,Noah,Walker,noah.walker379@example.com,(415) 555-0141,000-22-5453,Male,Black,49,20002,Bachelor's,24,75.2,74100.0,0
+A0381,Wei,Haddad,wei.haddad380@example.com,(404) 555-0131,000-02-4992,Male,White,29,40002,Master's,7,94.9,64700.0,1
+A0382,Yusuf,Nguyen,yusuf.nguyen381@example.com,(415) 555-0115,666-26-4244,Male,Black,40,20002,High school,13,59.9,68300.0,1
+A0383,Samuel,Patel,samuel.patel382@example.com,(415) 555-0159,000-12-1818,Male,Asian,60,40002,High school,36,80.3,,0
+A0384,Dana,Tanaka,dana.tanaka383@example.com,(404) 555-0113,998-13-3014,Female,White,38,10003,High school,14,72.5,59400.0,0
+A0385,Fatima,Ito,fatima.ito384@example.com,(206) 555-0176,000-85-9405,Female,White,29,10003,High school,7,51.1,,0
+A0386,Jordan,Quinn,jordan.quinn385@example.com,(404) 555-0175,000-27-5825,Non-binary,White,58,20002,Master's,31,79.2,88700.0,0
+A0387,Daniel,Lopez,daniel.lopez386@example.com,(312) 555-0148,666-28-2489,Male,White,62,10003,PhD,39,85.2,75300.0,0
+A0388,Ethan,Okafor,ethan.okafor387@example.com,(404) 555-0190,000-43-6175,Male,White,62,20002,,35,59.7,72000.0,0
+A0389,Hana,Walker,hana.walker388@example.com,(713) 555-0196,000-91-9900,Female,White,62,10003,Master's,38,69.9,,0
+A0390,Noah,Kim,noah.kim389@example.com,(206) 555-0106,666-58-3705,Male,Black,58,20001,High school,31,49.3,80900.0,0
+A0391,Jamal,Rossi,jamal.rossi390@example.com,(404) 555-0116,666-70-6626,Male,White,41,10003,Bachelor's,18,54.9,54300.0,1
+A0392,Keiko,Young,keiko.young391@example.com,(617) 555-0123,666-06-6265,Female,Asian,30,40001,Master's,8,82.6,54300.0,0
+A0393,Farid,Tanaka,farid.tanaka392@example.com,(206) 555-0102,666-58-2240,Male,White,47,10003,Bachelor's,21,64.4,65800.0,1
+A0394,Daniel,Zhang,daniel.zhang393@example.com,(206) 555-0186,666-27-4898,Male,White,31,10003,High school,5,56.7,25900.0,1
+A0395,Zoe,Patel,zoe.patel394@example.com,(305) 555-0130,912-70-3266,Female,Hispanic,41,30003,Bachelor's,16,72.8,,0
+A0396,Olivia,Haddad,olivia.haddad395@example.com,(404) 555-0136,000-39-6514,Female,Hispanic,49,10002,PhD,27,63.7,,0
+A0397,Farid,Zhang,farid.zhang396@example.com,(206) 555-0150,902-82-5941,Male,White,61,10002,Bachelor's,34,64.4,76700.0,1
+A0398,Uma,Quinn,uma.quinn397@example.com,(212) 555-0100,920-34-7359,Female,White,34,10003,High school,10,78.9,,0
+A0399,Uma,Garcia,uma.garcia398@example.com,(312) 555-0193,000-10-0152,Female,White,32,10002,,5,56.1,,0
+A0400,Zoe,Ito,zoe.ito399@example.com,(404) 555-0141,000-03-9384,Female,Black,52,20002,Bachelor's,25,59.1,60600.0,0
+A0401,Dana,Garcia,dana.garcia400@example.com,(404) 555-0104,000-31-7422,Female,White,22,10001,Bachelor's,0,71.8,,0
+A0402,Pedro,Valdez,pedro.valdez401@example.com,(404) 555-0123,666-98-6298,Male,White,45,10004,Master's,19,81.6,,1
+A0403,Zane,Chen,zane.chen402@example.com,(212) 555-0175,666-52-2911,Male,White,53,10002,Master's,27,84.9,,0
+A0404,Uma,Tanaka,uma.tanaka403@example.com,(617) 555-0129,952-38-1333,Female,White,45,40001,,20,62.0,,0
+A0405,Jordan,Okafor,jordan.okafor404@example.com,(305) 555-0133,959-95-5422,Non-binary,Asian,38,40002,,16,81.2,75700.0,1
+A0406,Wei,Brooks,wei.brooks405@example.com,(305) 555-0119,000-42-4190,Male,Black,56,20001,High school,32,60.6,87100.0,0
+A0407,Keiko,Patel,keiko.patel406@example.com,(212) 555-0132,933-88-3266,Female,White,37,10003,Bachelor's,11,91.9,,0
+A0408,Liam,Tanaka,liam.tanaka407@example.com,(713) 555-0122,913-85-9349,Male,White,51,20003,,25,56.4,66100.0,0
+A0409,Nadia,Singh,nadia.singh408@example.com,(312) 555-0174,925-71-7900,Female,White,41,10002,Bachelor's,16,85.9,74700.0,0
+A0410,Sam,Nguyen,sam.nguyen409@example.com,(617) 555-0143,980-48-0760,Non-binary,White,23,10003,PhD,0,62.1,47800.0,1
+A0411,Carlos,Ito,carlos.ito410@example.com,(312) 555-0101,919-84-0111,Male,Hispanic,44,30002,,22,94.2,58000.0,1
+A0412,Mateo,Evans,mateo.evans411@example.com,(212) 555-0168,000-32-6388,Male,Hispanic,24,30003,PhD,0,77.1,27400.0,0
+A0413,Uma,Adeyemi,uma.adeyemi412@example.com,(212) 555-0124,666-44-6416,Female,Asian,61,40002,Bachelor's,36,57.8,,0
+A0414,Noah,Johnson,noah.johnson413@example.com,(404) 555-0134,000-14-3412,Male,Asian,47,40002,,20,63.7,75100.0,1
+A0415,Grace,Quinn,grace.quinn414@example.com,(206) 555-0134,943-89-6488,Female,Asian,37,40001,Bachelor's,14,79.4,87900.0,0
+A0416,Bianca,Adeyemi,bianca.adeyemi415@example.com,(404) 555-0182,000-46-5870,Female,Asian,42,40002,High school,19,82.6,,0
+A0417,Nadia,Zhang,nadia.zhang416@example.com,(617) 555-0168,000-88-4932,Female,White,48,20003,,24,69.2,,1
+A0418,Quentin,Patel,quentin.patel417@example.com,(617) 555-0194,000-82-5430,Male,White,32,10004,,9,70.5,41900.0,0
+A0419,Nadia,Haddad,nadia.haddad418@example.com,(415) 555-0183,000-35-0271,Female,White,34,10003,High school,9,79.1,62700.0,1
+A0420,Zane,Zhang,zane.zhang419@example.com,(713) 555-0164,994-88-3537,Male,Black,39,20002,PhD,14,71.6,39400.0,0
+A0421,Omar,Evans,omar.evans420@example.com,(415) 555-0183,666-48-5889,Male,White,32,10003,High school,6,54.5,60000.0,0
+A0422,Maya,Young,maya.young421@example.com,(206) 555-0181,945-06-1927,Female,Hispanic,53,30002,High school,26,60.2,,0
+A0423,Bianca,Haddad,bianca.haddad422@example.com,(305) 555-0115,989-81-3688,Female,Black,26,20003,Master's,4,72.8,,1
+A0424,Nadia,Johnson,nadia.johnson423@example.com,(404) 555-0184,000-28-7264,Female,Black,56,20002,High school,33,84.6,75100.0,0
+A0425,Ethan,Lopez,ethan.lopez424@example.com,(312) 555-0198,666-13-4964,Male,White,36,10002,Master's,13,89.4,66500.0,0
+A0426,Rahul,Zhang,rahul.zhang425@example.com,(713) 555-0132,666-56-9145,Male,White,45,10001,Master's,22,79.4,69900.0,0
+A0427,Dana,Garcia,dana.garcia426@example.com,(312) 555-0136,000-62-4802,Female,White,28,10001,High school,2,73.4,,0
+A0428,Wei,Zhang,wei.zhang427@example.com,(212) 555-0169,000-13-3420,Male,Hispanic,38,30001,Bachelor's,16,79.0,84600.0,1
+A0429,Hana,Johnson,hana.johnson428@example.com,(206) 555-0166,945-49-4372,Female,Black,53,20001,Bachelor's,31,62.0,,0
+A0430,Kofi,Haddad,kofi.haddad429@example.com,(713) 555-0136,666-53-5838,Male,Hispanic,33,30001,Master's,6,68.2,,1
+A0431,Daniel,Quinn,daniel.quinn430@example.com,(206) 555-0187,666-16-1528,Male,White,27,10002,Master's,0,60.1,19000.0,0
+A0432,Farid,Singh,farid.singh431@example.com,(212) 555-0138,666-85-8831,Male,White,43,10003,Master's,20,55.0,,0
+A0433,Yusuf,Ito,yusuf.ito432@example.com,(404) 555-0186,000-63-0384,Male,White,28,10001,Bachelor's,5,74.0,70100.0,1
+A0434,Gabriel,Diaz,gabriel.diaz433@example.com,(404) 555-0118,666-84-6254,Male,Hispanic,35,30001,Bachelor's,10,72.2,,0
+A0435,Maya,Kim,maya.kim434@example.com,(617) 555-0113,666-84-5251,Female,Hispanic,40,30001,Bachelor's,15,78.3,,1
+A0436,Zoe,Okafor,zoe.okafor435@example.com,(305) 555-0151,666-45-8401,Female,White,45,10004,PhD,18,76.6,70900.0,1
+A0437,Olivia,Brooks,olivia.brooks436@example.com,(312) 555-0109,000-38-3920,Female,Asian,48,40001,Bachelor's,24,72.9,,0
+A0438,Aarav,Chen,aarav.chen437@example.com,(206) 555-0181,000-13-3241,Male,White,50,10002,Bachelor's,28,76.7,79800.0,0
+A0439,Ivan,Xu,ivan.xu438@example.com,(404) 555-0197,000-39-3201,Male,Hispanic,57,30002,Bachelor's,33,69.5,68000.0,0
+A0440,Jamal,Adeyemi,jamal.adeyemi439@example.com,(305) 555-0178,000-28-1436,Male,White,24,30003,Master's,0,75.0,40700.0,0
+A0441,Gabriel,Kim,gabriel.kim440@example.com,(305) 555-0199,000-58-6653,Male,White,37,10003,PhD,12,61.3,72300.0,0
+A0442,Fatima,Tanaka,fatima.tanaka441@example.com,(617) 555-0175,666-54-7608,Female,Hispanic,22,10003,High school,0,74.4,,1
+A0443,Mateo,Ito,mateo.ito442@example.com,(305) 555-0111,000-79-4624,Male,White,22,10003,High school,0,78.0,39500.0,1
+A0444,Jasmine,Mensah,jasmine.mensah443@example.com,(206) 555-0133,666-97-1407,Female,White,30,10001,Bachelor's,4,62.0,42800.0,0
+A0445,Hana,Chen,hana.chen444@example.com,(312) 555-0117,901-60-2191,Female,White,47,10001,,24,70.6,,0
+A0446,Jamal,Usman,jamal.usman445@example.com,(212) 555-0189,666-33-2898,Male,White,59,10003,Bachelor's,35,62.5,88300.0,0
+A0447,Jordan,Quinn,jordan.quinn446@example.com,(305) 555-0110,000-36-3051,Non-binary,Hispanic,54,40001,High school,28,63.7,61200.0,0
+A0448,Farid,Walker,farid.walker447@example.com,(206) 555-0166,906-01-9597,Male,Hispanic,49,30002,Bachelor's,25,56.5,74800.0,0
+A0449,Keiko,Walker,keiko.walker448@example.com,(713) 555-0160,666-10-3669,Female,Hispanic,54,30003,Bachelor's,30,85.2,84000.0,0
+A0450,Yusuf,Johnson,yusuf.johnson449@example.com,(404) 555-0151,000-53-7718,Male,White,29,10002,,6,82.8,,0
+A0451,Maya,Brooks,maya.brooks450@example.com,(206) 555-0157,000-69-1865,Female,Black,57,20001,Bachelor's,34,76.4,,0
+A0452,Omar,Johnson,omar.johnson451@example.com,(617) 555-0189,666-27-0285,Male,White,59,10002,,33,93.7,74000.0,0
+A0453,Zane,Diaz,zane.diaz452@example.com,(617) 555-0179,666-91-4804,Male,White,25,10002,Bachelor's,0,67.7,45400.0,0
+A0454,Olivia,Nguyen,olivia.nguyen453@example.com,(713) 555-0168,943-09-3617,Female,White,41,10002,,15,100.0,49800.0,0
+A0455,Fatima,Diaz,fatima.diaz454@example.com,(305) 555-0173,000-88-2841,Female,Asian,56,40002,,33,67.3,,0
+A0456,Jasmine,Xu,jasmine.xu455@example.com,(713) 555-0161,941-25-9681,Female,Hispanic,41,30003,Bachelor's,19,73.1,,0
+A0457,Riley,Patel,riley.patel456@example.com,(713) 555-0133,000-59-5941,Non-binary,Hispanic,57,30001,Bachelor's,35,65.2,83700.0,0
+A0458,Lena,Garcia,lena.garcia457@example.com,(206) 555-0187,990-68-6597,Female,Black,61,20001,,37,74.5,,0
+A0459,Daniel,Xu,daniel.xu458@example.com,(206) 555-0177,931-64-0241,Male,White,41,10003,Bachelor's,16,80.0,49800.0,0
+A0460,Carlos,Usman,carlos.usman459@example.com,(305) 555-0136,666-48-4861,Male,Black,24,20001,Bachelor's,0,68.6,40700.0,0
+A0461,Ivan,Lopez,ivan.lopez460@example.com,(212) 555-0133,000-39-0392,Male,Black,36,20002,Master's,9,91.3,72700.0,0
+A0462,Wen,Diaz,wen.diaz461@example.com,(305) 555-0181,000-58-8932,Female,White,31,10002,Bachelor's,9,72.9,58500.0,0
+A0463,Rahul,Ito,rahul.ito462@example.com,(713) 555-0177,946-97-0538,Male,White,41,10001,High school,15,73.2,,0
+A0464,Valeria,Patel,valeria.patel463@example.com,(212) 555-0164,666-39-8304,Female,White,46,30003,Bachelor's,23,59.1,,0
+A0465,Ethan,Tanaka,ethan.tanaka464@example.com,(206) 555-0150,000-55-2019,Male,Asian,41,40002,High school,18,75.0,62400.0,1
+A0466,Jamal,Garcia,jamal.garcia465@example.com,(206) 555-0149,666-72-2782,Male,White,30,10004,,5,68.4,93900.0,0
+A0467,Noah,Tanaka,noah.tanaka466@example.com,(713) 555-0160,000-39-5802,Male,Asian,34,20003,Master's,12,62.7,62200.0,0
+A0468,Kofi,Haddad,kofi.haddad467@example.com,(305) 555-0124,000-07-5773,Male,White,50,10004,Bachelor's,26,60.7,66800.0,0
+A0469,Keiko,Garcia,keiko.garcia468@example.com,(415) 555-0141,000-50-0951,Female,Black,23,20003,Bachelor's,0,100.0,,0
+A0470,Ivan,Lopez,ivan.lopez469@example.com,(312) 555-0133,666-72-7138,Male,White,30,40002,Bachelor's,7,66.8,,0
+A0471,Bianca,Evans,bianca.evans470@example.com,(415) 555-0131,000-84-3497,Female,White,59,10003,Bachelor's,34,52.5,,0
+A0472,Valeria,Kim,valeria.kim471@example.com,(617) 555-0150,937-33-0749,Female,White,26,10003,,2,61.6,,1
+A0473,Yara,Johnson,yara.johnson472@example.com,(206) 555-0130,666-58-1433,Female,White,39,10001,Master's,13,69.4,58300.0,0
+A0474,Bianca,Haddad,bianca.haddad473@example.com,(305) 555-0147,000-55-5079,Female,Asian,30,40002,Bachelor's,7,76.6,33500.0,0
+A0475,Jasmine,Usman,jasmine.usman474@example.com,(206) 555-0111,977-19-1147,Female,White,26,10003,Bachelor's,4,76.7,,0
+A0476,Maya,Ito,maya.ito475@example.com,(312) 555-0145,955-16-4874,Female,Black,39,20002,High school,14,78.1,,0
+A0477,Tara,Singh,tara.singh476@example.com,(415) 555-0149,000-66-2955,Female,White,43,10003,High school,20,62.3,70500.0,0
+A0478,Zane,Singh,zane.singh477@example.com,(312) 555-0147,949-38-0212,Male,White,29,10001,,3,74.1,40600.0,1
+A0479,Jamal,Rossi,jamal.rossi478@example.com,(206) 555-0172,000-77-7628,Male,Black,25,20002,Bachelor's,3,59.5,42500.0,1
+A0480,Sofia,Haddad,sofia.haddad479@example.com,(312) 555-0134,000-95-6809,Female,White,27,10002,PhD,2,62.6,43100.0,0
+A0481,Yara,Valdez,yara.valdez480@example.com,(713) 555-0151,942-79-7603,Female,Asian,49,40002,Bachelor's,22,59.0,72100.0,0
+A0482,Uma,Garcia,uma.garcia481@example.com,(305) 555-0139,666-29-0785,Female,Hispanic,58,30003,,36,55.7,,0
+A0483,Gabriel,Haddad,gabriel.haddad482@example.com,(206) 555-0188,000-11-7270,Male,Hispanic,29,30003,High school,6,82.8,66000.0,0
+A0484,Uma,Walker,uma.walker483@example.com,(415) 555-0182,666-20-7709,Female,White,35,10001,Bachelor's,8,78.3,,0
+A0485,Jasmine,Ito,jasmine.ito484@example.com,(415) 555-0133,666-19-1236,Female,White,36,10003,Master's,11,81.7,41900.0,0
+A0486,Amara,Singh,amara.singh485@example.com,(206) 555-0162,000-96-3678,Female,Asian,37,40002,Bachelor's,14,70.5,44700.0,0
+A0487,Tara,Brooks,tara.brooks486@example.com,(713) 555-0123,965-93-3206,Female,White,32,10004,Master's,9,79.3,62500.0,1
+A0488,Valeria,Patel,valeria.patel487@example.com,(212) 555-0190,666-04-7683,Female,White,24,10004,Master's,0,48.9,31900.0,1
+A0489,Ivan,Walker,ivan.walker488@example.com,(305) 555-0188,666-56-7354,Male,White,44,10004,High school,17,80.4,60600.0,0
+A0490,Kofi,Singh,kofi.singh489@example.com,(713) 555-0188,666-86-7264,Male,Hispanic,37,30001,Bachelor's,13,72.1,63300.0,0
+A0491,Ivan,Patel,ivan.patel490@example.com,(617) 555-0107,000-74-7506,Male,Black,36,10002,PhD,12,77.5,45100.0,0
+A0492,Carlos,Walker,carlos.walker491@example.com,(312) 555-0127,666-62-1212,Male,Hispanic,33,30001,Bachelor's,7,74.6,42000.0,0
+A0493,Zane,Haddad,zane.haddad492@example.com,(617) 555-0193,925-97-2701,Male,Hispanic,61,20003,High school,38,58.2,81100.0,0
+A0494,Amara,Johnson,amara.johnson493@example.com,(415) 555-0161,940-17-2612,Female,White,47,10001,PhD,24,52.0,,0
+A0495,Noah,Brooks,noah.brooks494@example.com,(415) 555-0164,000-63-3482,Male,Asian,39,40002,Master's,13,61.5,72400.0,1
+A0496,Aarav,Singh,aarav.singh495@example.com,(713) 555-0115,998-89-7263,Male,White,30,10002,Bachelor's,7,76.8,61600.0,0
+A0497,Rosa,Singh,rosa.singh496@example.com,(617) 555-0110,666-99-0954,Female,Black,55,20003,Bachelor's,29,78.3,,0
+A0498,Wei,Tanaka,wei.tanaka497@example.com,(404) 555-0170,000-34-2556,Male,White,59,10004,,35,53.6,,0
+A0499,Priya,Tanaka,priya.tanaka498@example.com,(404) 555-0187,960-08-6016,Female,Asian,23,40001,Master's,0,58.2,,0
+A0500,Omar,Diaz,omar.diaz499@example.com,(312) 555-0170,000-42-5813,Male,White,61,10004,Bachelor's,39,61.3,,1

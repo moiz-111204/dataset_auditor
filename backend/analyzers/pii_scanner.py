@@ -224,6 +224,11 @@ def detector_status() -> dict:
     }
 
 
+def _plausible_name(span: str) -> bool:
+    """The small spaCy model sometimes tags codes such as 'R0168' as PERSON; names have no digits."""
+    return not any(ch.isdigit() for ch in span) and re.search(r"[^\W\d_]{2,}", span) is not None
+
+
 def _ner_matches(engine, values: pd.Series) -> dict[str, set[str]]:
     """Run NER on up to NER_SAMPLE_SIZE distinct values; return matched values per PII type."""
     uniques = pd.Series(pd.unique(values))
@@ -240,6 +245,8 @@ def _ner_matches(engine, values: pd.Series) -> dict[str, set[str]]:
     for text, found in zip(sample, results):
         for res in found:
             key = PRESIDIO_ENTITY_MAP.get(res.entity_type)
+            if key == "person_name" and not _plausible_name(text[res.start:res.end]):
+                continue
             if key:
                 hits.setdefault(key, set()).add(text)
     threshold = max(NER_MIN_VALUES, NER_MIN_FRACTION * len(sample))
@@ -308,9 +315,11 @@ def _build_finding(key: str, columns: dict[str, dict], row_count: int) -> Findin
     pct = round(100 * total / row_count, 1) if row_count else 0.0
     names = list(columns)
     methods = sorted({m for e in columns.values() for m in e["methods"]})
+    ner_only = [c for c, e in columns.items() if e["methods"] == {"presidio_ner"}]
     ner_note = (
-        " Counts from the NER layer come from a sample of values, so they are a lower bound."
-        if "presidio_ner" in methods else ""
+        f" Counts for {', '.join(ner_only)} come from the NER layer, which reads a sample of "
+        f"values, so they are a lower bound."
+        if ner_only else ""
     )
     return Finding(
         severity=pii.severity,
