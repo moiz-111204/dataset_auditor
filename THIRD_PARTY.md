@@ -24,7 +24,7 @@ Every open-source library this project depends on directly, with the pinned vers
 
 | Library | Version | License | Used for |
 |---|---|---|---|
-| Chart.js | 4.4.4 | MIT | Bar charts in the dashboard (loaded from cdn.jsdelivr.net) |
+| Chart.js | 4.4.4 | MIT | Bar charts in the dashboard (`dist/chart.umd.js` loaded from cdn.jsdelivr.net with an SRI integrity hash) |
 
 ## Models and services
 
