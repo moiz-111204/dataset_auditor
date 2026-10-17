@@ -24,6 +24,7 @@ from dataclasses import dataclass
 import pandas as pd
 
 from backend.models.schemas import Finding
+from backend.utils import SEVERITY_ORDER, normalize_column_name
 
 logger = logging.getLogger(__name__)
 
@@ -73,7 +74,6 @@ PII_TYPES: dict[str, PIIType] = {
     ]
 }
 
-_SEVERITY_ORDER = {"critical": 0, "high": 1, "medium": 2, "low": 3}
 
 # --- Layer 1: regex and heuristic rules -------------------------------------------------
 
@@ -107,10 +107,6 @@ DOB_COLUMN_RE = re.compile(r"^(?:dob|d_o_b|birth_?date|date_?of_?birth|birthday|
 ADDRESS_COLUMN_RE = re.compile(
     r"^(?:(?:street|home|mailing|postal|billing|shipping)_?)?address(?:_?line_?\d)?$"
 )
-
-
-def normalize_column_name(name: object) -> str:
-    return re.sub(r"[^a-z0-9]+", "_", str(name).strip().lower()).strip("_")
 
 
 def luhn_valid(digits: str) -> bool:
@@ -297,7 +293,7 @@ def scan_pii(df: pd.DataFrame) -> list[Finding]:
                 record(key, column, full_mask(values.isin(matched)), "presidio_ner")
 
     findings = [_build_finding(key, columns, len(df)) for key, columns in hits.items()]
-    findings.sort(key=lambda f: (_SEVERITY_ORDER[f.severity], f.title))
+    findings.sort(key=lambda f: (SEVERITY_ORDER[f.severity], f.title))
     return findings
 
 
