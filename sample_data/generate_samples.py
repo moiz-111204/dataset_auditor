@@ -123,8 +123,9 @@ def main() -> None:
     rng = np.random.default_rng(SEED)
     hiring = problematic_hiring(rng)
     survey = clean_survey(rng)
-    hiring.to_csv(OUT_DIR / "problematic_hiring.csv", index=False)
-    survey.to_csv(OUT_DIR / "clean_survey.csv", index=False)
+    # Explicit "\n" so the files are byte-identical on Windows, macOS and Linux.
+    hiring.to_csv(OUT_DIR / "problematic_hiring.csv", index=False, lineterminator="\n")
+    survey.to_csv(OUT_DIR / "clean_survey.csv", index=False, lineterminator="\n")
     print(f"problematic_hiring.csv: {len(hiring)} rows, hired share {hiring['hired'].mean():.1%}")
     for g, rate in hiring.groupby("gender")["hired"].mean().items():
         print(f"  hired rate {g}: {rate:.1%}")
