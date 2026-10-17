@@ -18,6 +18,7 @@ from backend.analyzers.bias_detector import (
 )
 from backend.analyzers.missing_data import analyze_missing, missing_by_column
 from backend.analyzers.pii_scanner import detector_status, scan_pii
+from backend.ai.explainer import explain_findings, llm_settings
 from backend.models.schemas import AnalysisReport, AnalysisSettings, Finding
 
 logger = logging.getLogger(__name__)
@@ -150,7 +151,12 @@ def analyze_dataframe(
     findings += scan_pii(df)
 
     score, level = risk_score(findings)
+    explained = explain_findings(findings, context={
+        "row_count": len(df), "column_count": df.shape[1], "risk_score": score, "risk_level": level,
+    })
+    findings = explained.findings
     severities = ["critical", "high", "medium", "low"]
+    llm = llm_settings()
     summary = {
         "total_issues": len(findings),
         "issues_by_severity": {s: sum(f.severity == s for f in findings) for s in severities},
@@ -158,6 +164,11 @@ def analyze_dataframe(
             c: sum(f.category == c for f in findings) for c in ["bias", "missing_data", "pii"]
         },
         "pii_detectors": detector_status(),
+        "ai": {
+            "enabled": explained.ai_enabled,
+            "model": llm["model"] if explained.ai_enabled else None,
+            "fallback_reason": explained.fallback_reason,
+        },
         "charts": build_charts(df, resolved),
     }
     return AnalysisReport(
@@ -170,7 +181,9 @@ def analyze_dataframe(
         summary_stats=summary,
         risk_score=score,
         risk_level=level,
-        ai_enabled=False,
+        ai_enabled=explained.ai_enabled,
+        overall_summary=explained.overall_summary,
+        priority_actions=explained.priority_actions,
     )
 
 

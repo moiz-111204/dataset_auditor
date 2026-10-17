@@ -18,3 +18,4 @@ Every open-source library this project depends on directly, with the pinned vers
 | Presidio Analyzer (Microsoft) | 2.2.364 | MIT | ML/NER-based PII detection |
 | spaCy | 3.8.16 | MIT | NLP engine used by Presidio |
 | en_core_web_sm (spaCy model) | 3.8.0 | MIT | English NER model used by Presidio |
+| Anthropic Python SDK | 1.15.0 | MIT | Calling the Claude API for plain-language explanations |

@@ -19,6 +19,7 @@ class Finding(BaseModel):
     details: dict[str, Any] = Field(default_factory=dict)
     columns: list[str] = Field(default_factory=list)
     explanation: str = ""  # filled later by the AI layer
+    recommendation: str = ""  # filled later by the AI layer
     explanation_source: Literal["llm", "template"] = "template"
 
 
@@ -39,3 +40,5 @@ class AnalysisReport(BaseModel):
     risk_score: int = 0
     risk_level: str = "Low"
     ai_enabled: bool = False
+    overall_summary: str = ""
+    priority_actions: list[str] = Field(default_factory=list)
