@@ -1,0 +1,27 @@
+# Render Blueprint: one free web service on Render's native Python runtime (no Docker).
+# Python version comes from .python-version. Render sets PORT itself; the app reads it.
+# Secrets are never stored here: Render asks for the `sync: false` values in its dashboard
+# when the Blueprint is first created.
+services:
+  - type: web
+    name: dataset-auditor
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: pip install -r requirements.txt
+    startCommand: python backend/app.py
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
+    envVars:
+      # Trust X-Forwarded-For from Render's proxy so the rate limit sees client IPs.
+      - key: FORWARDED_ALLOW_IPS
+        value: "*"
+      # Presidio + spaCy fit in the free 512 MB instance; set to "false" to run regex rules only.
+      - key: PII_NER_ENABLED
+        value: "true"
+      # Optional. Leave empty for template explanations.
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      # Optional. Empty means the default model (claude-opus-5-5).
+      - key: LLM_MODEL
+        sync: false
