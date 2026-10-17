@@ -158,6 +158,7 @@ def analyze_dataframe(
     severities = ["critical", "high", "medium", "low"]
     llm = llm_settings()
     summary = {
+        "columns": [str(c) for c in df.columns],
         "total_issues": len(findings),
         "issues_by_severity": {s: sum(f.severity == s for f in findings) for s in severities},
         "issues_by_category": {

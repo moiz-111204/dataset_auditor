@@ -355,7 +355,8 @@ def template_summary(findings: list[Finding], context: dict) -> tuple[str, list[
              "Evaluate the trained model separately for each relevant group.",
              "Re-run this audit whenever the data changes."],
         )
-    cats = sorted({f.category.replace("_", " ") for f in findings})
+    names = {"bias": "bias", "missing_data": "missing data", "pii": "personal data (PII)"}
+    cats = sorted({names.get(f.category, f.category) for f in findings})
     worst = sorted(findings, key=lambda f: SEVERITY_ORDER[f.severity])
     summary = (
         f"The audit found {len(findings)} issue(s) before training: {counts['critical']} critical, "

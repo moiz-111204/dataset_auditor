@@ -1,3 +1,173 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><title>Dataset Bias &amp; Privacy Auditor</title></head>
-<body><h1>Dataset Bias &amp; Privacy Auditor</h1></body></html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dataset Bias &amp; Privacy Auditor</title>
+  <meta name="description" content="Screen a CSV dataset for bias, missing data and personal data before training a model.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231c5cab'/%3E%3Cpath d='M9 17l4.5 4.5L23 11' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <div class="brand">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" rx="8"></rect>
+          <path d="M9 17l4.5 4.5L23 11"></path>
+        </svg>
+        <div>
+          <h1>Dataset Bias &amp; Privacy Auditor</h1>
+          <p class="tagline">Catch bias, gaps and personal data before they are baked into a model.</p>
+        </div>
+      </div>
+      <button id="theme-toggle" class="icon-btn" type="button" aria-label="Switch to dark theme">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <section class="card upload-card" aria-labelledby="upload-title">
+      <div class="upload-intro">
+        <h2 id="upload-title">Audit a dataset</h2>
+        <p>Upload a CSV file (up to 10 MB and 50,000 rows). The auditor checks class balance, outcome
+          gaps between groups, proxy features, missing data and personal data, then writes a data card.</p>
+        <p class="privacy-note">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>
+          <span>Your file is analyzed in memory and never stored.</span>
+        </p>
+      </div>
+
+      <div class="upload-actions">
+        <input type="file" id="file-input" accept=".csv,text/csv" class="visually-hidden" tabindex="-1">
+        <button type="button" id="dropzone" class="dropzone" aria-describedby="dropzone-hint">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4"></path><path d="M7 9l5-5 5 5"></path><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"></path></svg>
+          <span class="dropzone-title">Drop a CSV file here or <span class="link-like">choose a file</span></span>
+          <span id="dropzone-hint" class="dropzone-hint">.csv only &middot; max 10 MB</span>
+        </button>
+        <div class="samples">
+          <span class="samples-label">Or try sample data:</span>
+          <div id="sample-buttons" class="sample-buttons"></div>
+        </div>
+      </div>
+
+      <div id="status" class="status" role="status" aria-live="polite" hidden>
+        <span class="spinner" aria-hidden="true"></span>
+        <span id="status-text">Analyzing&hellip;</span>
+      </div>
+      <div id="error" class="error" role="alert" hidden></div>
+    </section>
+
+    <section id="settings" class="card" aria-labelledby="settings-title" hidden>
+      <div class="section-head">
+        <h2 id="settings-title">Analysis settings</h2>
+        <p class="muted">Detected from column names. Correct them and re-run. Leave both empty to auto-detect again.</p>
+      </div>
+      <div class="settings-grid">
+        <div class="field">
+          <label for="label-select">Outcome (label) column</label>
+          <select id="label-select"></select>
+        </div>
+        <fieldset class="field">
+          <legend>Protected attributes</legend>
+          <div id="protected-list" class="checkbox-list"></div>
+        </fieldset>
+      </div>
+      <button id="rerun-btn" class="btn btn-primary" type="button">Re-run analysis</button>
+    </section>
+
+    <section id="results" aria-labelledby="results-title" hidden>
+      <h2 id="results-title" class="visually-hidden" tabindex="-1">Results</h2>
+      <div class="overview">
+        <div class="card gauge-card">
+          <svg class="gauge" viewBox="0 0 120 70" role="img" aria-labelledby="gauge-label">
+            <path class="gauge-track" d="M 10 62 A 50 50 0 0 1 110 62" pathLength="100"></path>
+            <path id="gauge-arc" class="gauge-arc" d="M 10 62 A 50 50 0 0 1 110 62" pathLength="100" stroke-dasharray="0 100"></path>
+          </svg>
+          <div class="gauge-readout">
+            <span id="risk-score" class="risk-score">0</span><span class="risk-max">/100</span>
+          </div>
+          <p id="gauge-label" class="risk-level">Risk</p>
+          <span id="ai-badge" class="ai-badge"></span>
+        </div>
+
+        <div class="card summary-card">
+          <p id="dataset-meta" class="muted dataset-meta"></p>
+          <p class="headline"><span id="issue-count">0</span> <span id="issue-word">issues</span> found before training</p>
+          <ul id="severity-badges" class="severity-badges" aria-label="Issues by severity"></ul>
+          <p id="overall-summary" class="overall-summary"></p>
+          <h3 class="small-heading">Top priority actions</h3>
+          <ol id="priority-actions" class="priority-actions"></ol>
+          <div class="downloads">
+            <a id="download-html" class="btn btn-primary" href="#" download>Download data card (HTML)</a>
+            <a id="download-md" class="btn btn-secondary" href="#" download>Download data card (Markdown)</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card tabs-card">
+        <div class="tablist" role="tablist" aria-label="Findings by category">
+          <button role="tab" type="button" id="tab-bias" aria-controls="panel-bias" aria-selected="true">Bias <span class="tab-count" id="count-bias">0</span></button>
+          <button role="tab" type="button" id="tab-missing" aria-controls="panel-missing" aria-selected="false" tabindex="-1">Missing data <span class="tab-count" id="count-missing">0</span></button>
+          <button role="tab" type="button" id="tab-pii" aria-controls="panel-pii" aria-selected="false" tabindex="-1">PII <span class="tab-count" id="count-pii">0</span></button>
+        </div>
+
+        <div role="tabpanel" id="panel-bias" aria-labelledby="tab-bias" tabindex="0" class="tabpanel">
+          <div class="chart-grid">
+            <figure class="chart-box">
+              <figcaption><h3 class="chart-title">Class distribution</h3><p id="class-caption" class="muted chart-sub"></p></figcaption>
+              <div class="chart-wrap"><canvas id="class-chart" aria-label="Bar chart of label class counts" role="img"></canvas></div>
+              <p id="class-empty" class="empty" hidden></p>
+              <details class="table-toggle"><summary>View as table</summary><div class="table-wrap" id="class-table"></div></details>
+            </figure>
+            <figure class="chart-box">
+              <figcaption>
+                <div class="chart-title-row">
+                  <h3 class="chart-title">Positive-outcome rate by group</h3>
+                  <label class="inline-select" id="group-select-wrap" hidden>
+                    <span class="visually-hidden">Protected attribute</span>
+                    <select id="group-select"></select>
+                  </label>
+                </div>
+                <p id="group-caption" class="muted chart-sub"></p>
+              </figcaption>
+              <div class="chart-wrap"><canvas id="group-chart" aria-label="Bar chart of positive-outcome rate per group" role="img"></canvas></div>
+              <ul id="group-legend" class="chart-legend"></ul>
+              <p id="group-empty" class="empty" hidden></p>
+              <details class="table-toggle"><summary>View as table</summary><div class="table-wrap" id="group-table"></div></details>
+            </figure>
+          </div>
+          <div id="findings-bias" class="findings"></div>
+        </div>
+
+        <div role="tabpanel" id="panel-missing" aria-labelledby="tab-missing" tabindex="0" class="tabpanel" hidden>
+          <figure class="chart-box chart-box-wide">
+            <figcaption><h3 class="chart-title">Missing values by column</h3><p class="muted chart-sub">Share of rows with no value. Flag levels: over 5% medium, over 20% high, over 50% critical.</p></figcaption>
+            <div class="chart-wrap" id="missing-wrap"><canvas id="missing-chart" aria-label="Bar chart of missing share per column" role="img"></canvas></div>
+            <p id="missing-empty" class="empty" hidden></p>
+            <details class="table-toggle"><summary>View as table</summary><div class="table-wrap" id="missing-table"></div></details>
+          </figure>
+          <div id="findings-missing" class="findings"></div>
+        </div>
+
+        <div role="tabpanel" id="panel-pii" aria-labelledby="tab-pii" tabindex="0" class="tabpanel" hidden>
+          <p id="pii-detectors" class="muted"></p>
+          <div class="table-wrap" id="pii-table"></div>
+          <div id="findings-pii" class="findings"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>A screening aid, not a compliance guarantee. Findings point to things worth checking; they do not prove a dataset is fair or safe.</p>
+    </div>
+  </footer>
+</body>
+</html>

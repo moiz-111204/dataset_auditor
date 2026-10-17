@@ -204,7 +204,10 @@ def require_session(session_id: str):
 def sample_files() -> dict[str, Path]:
     if not SAMPLE_DIR.is_dir():
         return {}
-    return {p.name: p for p in sorted(SAMPLE_DIR.glob("*.csv")) if p.is_file()}
+    order = list(SAMPLE_DESCRIPTIONS)  # known samples first, in a fixed order
+    paths = sorted(SAMPLE_DIR.glob("*.csv"),
+                   key=lambda p: (order.index(p.name) if p.name in order else len(order), p.name))
+    return {p.name: p for p in paths if p.is_file()}
 
 
 async def analyze_and_store(data: bytes, name: str, settings: AnalysisSettings | None):
