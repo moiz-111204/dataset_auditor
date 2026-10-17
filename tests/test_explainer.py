@@ -189,3 +189,15 @@ def test_report_marks_template_source_without_key():
     assert report.summary_stats["ai"]["fallback_reason"] == "no API key configured"
     assert report.overall_summary and report.priority_actions
     assert all(f.explanation and f.explanation_source == "template" for f in report.findings)
+
+
+def test_templates_cover_every_finding_type():
+    small = Finding(severity="low", category="bias", title="Too few rows", description="d",
+                    columns=["race", "hired"],
+                    details={"check": "demographic_disparity", "protected_column": "race",
+                             "label_column": "hired", "ignored_groups": {"A": 5}})
+    broken = Finding(severity="low", category="bias", title="t", description="original text",
+                     details={"check": "class_imbalance"})  # missing keys
+    result = explain_findings([small, broken], CONTEXT)
+    assert "Too few rows per group in 'race'" in result.findings[0].explanation
+    assert result.findings[1].explanation == "original text"

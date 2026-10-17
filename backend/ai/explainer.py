@@ -233,10 +233,25 @@ def _parse_response(response, expected_ids: set[str]) -> LLMResponse:
 
 def template_text(f: Finding) -> tuple[str, str]:
     """Built-in explanation and recommendation for one finding."""
+    try:
+        return _template_text(f)
+    except (KeyError, TypeError, ValueError):
+        return (f.description, "Review this issue before training.")
+
+
+def _template_text(f: Finding) -> tuple[str, str]:
     d = f.details
     check = d.get("check") or ("pii_scan" if f.category == "pii" else "")
     cols = ", ".join(f"'{c}'" for c in f.columns) or "the dataset"
 
+    if check == "demographic_disparity" and "flagged_groups" not in d:
+        return (
+            f"Too few rows per group in '{d.get('protected_column')}' to compare outcomes "
+            f"reliably. A model can still treat small groups unfairly; the data just cannot show "
+            f"it yet.",
+            "Collect more data for under-represented groups, or evaluate the trained model on a "
+            "dedicated test set that covers them.",
+        )
     if check == "class_imbalance":
         return (
             f"Only {fmt_pct(d['minority_share'])} of labelled rows belong to the rarest class "
