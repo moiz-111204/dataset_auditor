@@ -2,7 +2,7 @@
 
 > Screen a dataset for bias, missing data and personal data **before** it is used to train a model.
 
-- **Live demo:** TODO: add the deployed URL (Prompt 12)
+- **Live demo:** TODO: add the Render URL after deploying (see [Deployment](#deployment))
 - **Demo video:** TODO: add the video link
 - **Hackathon:** NYLP AI Hackathon 2026
 
@@ -58,6 +58,7 @@ for the dataset). It answers three questions:
 | AI explanations | Anthropic Python SDK (Claude API), optional |
 | Frontend | Vanilla HTML, CSS and JavaScript, Chart.js 4 from a CDN; no build step |
 | Tests | pytest, HTTPX, FastAPI TestClient |
+| Deployment | Render Blueprint (`render.yaml`), native Python 3.12 runtime, free plan |
 
 ## AI / API Usage
 
@@ -247,9 +248,10 @@ python -m pytest
 ```
 
 The suite has unit tests per analyzer, the explainer (mocked API client), the data card, every API
-endpoint, the sample datasets, and an end-to-end test (`tests/test_e2e.py`) that starts the real
-server on a free port and uses it over HTTP. Tests never call the real Claude API. Manual checks
-are recorded in `tests/MANUAL_TEST_LOG.md`.
+endpoint, the sample datasets, the Render Blueprint (`tests/test_deploy_config.py`), and an
+end-to-end test (`tests/test_e2e.py`) that starts the real server on a free port and uses it
+over HTTP. Tests never call the real Claude API. Manual checks are recorded in
+`tests/MANUAL_TEST_LOG.md`.
 
 ### Sample data
 
@@ -264,6 +266,81 @@ fictional 555-01xx range and SSN-style IDs start with 000, 666 or 9xx, which are
   the men's rate) and the low overall rate.
 - `clean_survey.csv` (300 rows): no PII, no protected attributes, balanced classes, under 2%
   missing. It produces no findings.
+
+## Deployment
+
+The repository is set up for a **free Render web service** on Render's native Python runtime.
+The Blueprint file [`render.yaml`](render.yaml) describes it, and no Docker image is needed.
+
+### Why Render
+
+Free-tier terms checked on 17 Oct 2026 in Render's and Hugging Face's documentation:
+
+| | Render free web service | Hugging Face Spaces (Docker SDK) |
+|---|---|---|
+| Price | Free; 750 instance hours per workspace per month | CPU Basic hardware has no hourly cost, but creating a Docker Space needs a paid PRO plan on a personal account |
+| Resources | 512 MB RAM, 0.1 CPU | 2 vCPU, 16 GB RAM |
+| When idle | Spins down after 15 minutes without traffic; the next visit waits about a minute | Goes to sleep after an unspecified period without use |
+| Setup | Connect the GitHub repository; Render reads `render.yaml` | Push to a Space repository with a Dockerfile and `sdk: docker` |
+
+Render was chosen because it needs no paid plan, deploys straight from the GitHub repository,
+and runs the same `python backend/app.py` command used locally. Hugging Face would give far
+more memory, but its Docker Spaces now require PRO.
+
+### Memory and the Presidio NER layer
+
+Presidio + spaCy stay **on** (`PII_NER_ENABLED=true`). Measured locally on Windows 11 with
+Python 3.12 (working set of the server process, no API key):
+
+| Configuration | After startup | Peak |
+|---|---|---|
+| NER on | 228 MB | 245 MB with both samples; 325 MB with four uploads of a 5.6 MB, 49,000-row CSV |
+| NER off (`PII_NER_ENABLED=false`) | 141 MB | 144 MB with both samples |
+
+That fits under the 512 MB limit. These are Windows numbers, not measurements from Render's
+Linux containers, so check the service's **Metrics** page after the first deploy. If the
+service runs out of memory or is too slow on 0.1 CPU, set `PII_NER_ENABLED=false` in the
+Render dashboard. The trade-off: the regex and column-name rules still run, and on both
+bundled samples they give exactly the same findings, but names and other entities inside
+free-text columns (such as "Spoke with John Smith") are no longer found. The PII tab,
+`/api/health` and the data card show which detectors ran.
+
+Sessions also use memory: each one keeps its DataFrame for 30 minutes (about 12 MB for the
+5.6 MB test file, up to 50 sessions), so many large uploads in a short time could still exhaust
+512 MB. A restart clears all sessions.
+
+### What `render.yaml` sets
+
+- **Build:** `pip install -r requirements.txt`, which also downloads the spaCy model
+  `en_core_web_sm` 3.8.0 from its GitHub release.
+- **Start:** `python backend/app.py`. Render provides `PORT`, and the app listens on
+  `0.0.0.0:$PORT`.
+- **Python 3.12**, pinned in [`.python-version`](.python-version) (Render's default for new
+  services is a newer version).
+- **Health check:** `/api/health`.
+- **`FORWARDED_ALLOW_IPS=*`:** Render's proxy sits in front of the app, so uvicorn takes the
+  client address from `X-Forwarded-For`. Without this, every visitor would be counted under the
+  proxy's own address and share its rate limit. With `*`, uvicorn uses the first address in that
+  header, which a client can set itself, so the per-IP rate limit is best effort on the live
+  site.
+- **`ANTHROPIC_API_KEY` and `LLM_MODEL`** are marked `sync: false`: Render asks for them in its
+  dashboard when the Blueprint is created, and they are never stored in the repository. Both
+  are optional. With no key the live site uses template explanations; an empty `LLM_MODEL`
+  means `claude-opus-5-5`.
+
+### Deploy steps
+
+1. Push this repository to GitHub.
+2. In the Render dashboard choose **New > Blueprint**, find the repository and click
+   **Connect**. Name the Blueprint and pick the `main` branch.
+3. Enter `ANTHROPIC_API_KEY` and `LLM_MODEL` when asked (or leave them empty), then click
+   **Deploy Blueprint**.
+4. When the build finishes and the health check passes, open the `onrender.com` URL that Render
+   shows for the `dataset-auditor` service.
+
+Every push to `main` then redeploys automatically. Render may restart free services at any
+time, which clears the in-memory sessions, and Render's own docs advise against using free
+instances in production.
 
 ## Screenshots
 

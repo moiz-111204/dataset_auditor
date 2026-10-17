@@ -21,5 +21,22 @@ Environment for the 2026-10-17 run: Windows 11, Python 3.12.10, local server
 | Light and dark themes | OS setting plus the theme toggle | Pass: both themes render; charts redraw with theme colours | 2026-10-17 |
 | Run without an API key | No `ANTHROPIC_API_KEY` | Pass: "Template explanations" badge; every finding has an explanation and a recommendation | 2026-10-17 |
 | Run with an API key | Set `ANTHROPIC_API_KEY` in `.env`, restart, analyze the hiring sample | Pending: no key was available during development. Expected: "AI explanations" badge and `ai_enabled: true` | |
-| Incognito window | Open the app in a private window | Pending (to run against the deployed URL) | |
+| Incognito window | Open the app in a private window | Pending (to run against the deployed URL; see "Live deployment" below) | |
 | Two tabs, separate sessions | Analyze different files in two tabs, download each card | Pass (automated): `test_sessions_are_isolated`; the session id lives only in page memory. In-browser: Pending | 2026-10-17 |
+
+## Live deployment (Render)
+
+Run these against the live URL after deploying (see "Deployment" in the README) and replace
+**Pending** with the real result and date.
+
+| Check | How | Result | Date |
+|---|---|---|---|
+| Clean build as on Render | Fresh `git clone`, new Python 3.12 venv, `pip install -r requirements.txt`, then `python backend/app.py` with `PORT=10000` and `FORWARDED_ALLOW_IPS=*` | Pass on Windows 11 (Render builds on Linux, so this is not the real build): `en_core_web_sm-3.8.0` installed from its GitHub wheel; `/api/health` showed Presidio NER on with `en_core_web_sm`; hiring sample 16 findings, risk 100; clean survey 0 findings; all four data cards downloaded with no SSN-shaped value in them; with `RATE_LIMIT_PER_MINUTE=3`, four requests with one `X-Forwarded-For` address gave 200, 200, 200, 429 and a different address got 200 | 2026-10-17 |
+| Render build | Render's build log for the first deploy | Pending. Expected: Python 3.12 and `en_core_web_sm-3.8.0` installed, health check on `/api/health` passes | |
+| `/api/health` on the live URL | Open `<live URL>/api/health` | Pending. Expected: `"status": "ok"`, `presidio_ner: true` (unless `PII_NER_ENABLED=false` was set), `ai_enabled` true only if a key was entered | |
+| Incognito window | Open the live URL in a private window | Pending | |
+| Phone | Open the live URL on a real phone (mobile data or Wi-Fi) | Pending | |
+| Both samples on the live site | Click "Problematic hiring" and "Clean survey" | Pending. Expected: hiring 16 issues, risk 100/100 Critical; clean survey 0 issues, risk 0/100 Low | |
+| Both data cards on the live site | Download the HTML and Markdown cards after the hiring sample | Pending. Expected: both download; PII columns show "withheld (PII)" | |
+| Memory on Render | Service **Metrics** page after running both samples | Pending. Must stay under 512 MB; if not, set `PII_NER_ENABLED=false` | |
+| Cold start | Open the live URL after more than 15 minutes without traffic | Pending. Expected: about a minute's wait, then the dashboard loads | |
