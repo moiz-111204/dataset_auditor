@@ -48,6 +48,10 @@ def test_proxy_headers_are_trusted():
     assert re.search(r'value: "\*"', entry)
 
 
+def test_session_cap_is_lowered_for_the_free_instance():
+    assert re.search(r'value: "10"', env_entry("MAX_SESSIONS"))
+
+
 def test_secrets_are_prompted_in_the_dashboard_not_stored():
     for key in ("ANTHROPIC_API_KEY", "LLM_MODEL"):
         entry = env_entry(key)

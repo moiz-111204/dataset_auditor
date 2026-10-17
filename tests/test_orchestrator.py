@@ -6,7 +6,7 @@ import pytest
 
 from backend.models.schemas import AnalysisSettings, Finding
 from backend.orchestrator import (
-    MAX_ROWS, DatasetError, analyze_dataframe, load_csv, risk_score, run_analysis,
+    MAX_COLUMNS, MAX_ROWS, DatasetError, analyze_dataframe, load_csv, risk_score, run_analysis,
 )
 
 
@@ -132,6 +132,20 @@ def test_too_many_rows_rejected():
     with pytest.raises(DatasetError, match="limit") as exc:
         load_csv(data)
     assert exc.value.status_code == 413
+
+
+def test_too_many_columns_rejected():
+    header = ",".join(f"c{i}" for i in range(MAX_COLUMNS + 1))
+    row = ",".join("1" for _ in range(MAX_COLUMNS + 1))
+    with pytest.raises(DatasetError, match=f"{MAX_COLUMNS + 1} columns; the limit is {MAX_COLUMNS}") as exc:
+        load_csv(f"{header}\n{row}\n".encode())
+    assert exc.value.status_code == 413
+
+
+def test_column_limit_is_inclusive():
+    header = ",".join(f"c{i}" for i in range(MAX_COLUMNS))
+    row = ",".join("1" for _ in range(MAX_COLUMNS))
+    assert load_csv(f"{header}\n{row}\n".encode()).shape[1] == MAX_COLUMNS
 
 
 def test_oversized_file_rejected():

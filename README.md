@@ -30,7 +30,8 @@ for the dataset). It answers three questions:
 
 ## Features
 
-- Drag-and-drop CSV upload (up to 10 MB / 50,000 rows) and two bundled synthetic samples.
+- Drag-and-drop CSV upload (up to 10 MB, 50,000 rows and 100 columns) and two bundled synthetic
+  samples.
 - Auto-detection of the label column and protected attributes from column names, with a
   settings panel to correct them and re-run the analysis on the same in-memory data.
 - Bias checks: class imbalance, four-fifths (80%) rule for outcome rates per group (numeric
@@ -132,8 +133,11 @@ flowchart LR
    into a temporary file on disk (`tests/test_api.py::test_upload_stays_in_memory` checks this).
    Files must end in `.csv` and must not look binary.
 2. **Load.** Bytes are decoded as UTF-8, UTF-8 with BOM, then Latin-1 and parsed with pandas.
-   Empty files, header-only files, malformed CSV, files over 10 MB and files over 50,000 rows are
-   rejected with a clear message. Duplicate column names are renamed `name.1`, `name.2`.
+   Empty files, header-only files, malformed CSV, files over 10 MB, over 50,000 rows or over 100
+   columns are rejected with a clear message. The column count is read from the header before the
+   full parse: some checks compare every pair of columns, so time grows with the square of the
+   column count (1,600 columns took over four minutes on a desktop PC). Duplicate column names
+   are renamed `name.1`, `name.2`.
 3. **Settings detection** (`bias_detector.detect_settings`). Protected attributes are columns whose
    name contains a word such as gender, sex, race, ethnicity, age, religion, disability,
    nationality or marital (matched as whole words, so `page_views` and `wage` are not "age").
@@ -171,9 +175,10 @@ Level: **Critical** above 75, **High** above 50, **Medium** above 25, otherwise 
 
 Each analysis is stored in memory under a random `uuid4` session id together with its DataFrame,
 settings and report (`backend/session_store.py`). Sessions expire 30 minutes after last use and
-at most 50 are kept (the least recently used is dropped). There is no global "latest result":
-every request names its session, and the browser keeps the id only in page memory, so two tabs
-never see each other's results. Restarting the server clears everything.
+at most `MAX_SESSIONS` are kept (default 50; the least recently used is dropped). There is no
+global "latest result": every request names its session, and the browser keeps the id only in
+page memory, so two tabs never see each other's results. Restarting the server clears
+everything.
 
 ### API
 
@@ -188,7 +193,7 @@ never see each other's results. Restarting the server clears everything.
 | GET | `/api/health` | Status, whether AI is enabled, which PII detectors are active (never the key) |
 
 Errors are JSON `{"detail": "..."}` with 400 (malformed/empty CSV, unknown column), 404 (unknown or
-expired session), 413 (over 10 MB or 50,000 rows), 415 (not a CSV), 422 (invalid settings body) or
+expired session), 413 (over 10 MB, 50,000 rows or 100 columns), 415 (not a CSV), 422 (invalid settings body) or
 429 (rate limit, with `Retry-After`). Request bodies are never logged; unexpected errors are logged
 by exception type only, because exception messages can echo cell values.
 
@@ -238,6 +243,7 @@ python backend/app.py
 | `LLM_EFFORT` | `low` | Effort level sent to the model (empty to omit) |
 | `PII_NER_ENABLED` | `true` | `false` skips Presidio/spaCy (saves memory; regex rules still run) |
 | `RATE_LIMIT_PER_MINUTE` | `30` | Requests per minute per client IP on `/api/*` (health excluded) |
+| `MAX_SESSIONS` | `50` | Analyses kept in memory at once; lower it on small hosts (`render.yaml` sets 10) |
 | `FORWARDED_ALLOW_IPS` | `127.0.0.1` | Proxies whose `X-Forwarded-For` is trusted (set `*` behind a host's proxy) |
 | `DEV_CORS` / `CORS_ORIGINS` | `false` | Development only: allow a separately served frontend |
 
@@ -305,9 +311,10 @@ bundled samples they give exactly the same findings, but names and other entitie
 free-text columns (such as "Spoke with John Smith") are no longer found. The PII tab,
 `/api/health` and the data card show which detectors ran.
 
-Sessions also use memory: each one keeps its DataFrame for 30 minutes (about 12 MB for the
-5.6 MB test file, up to 50 sessions), so many large uploads in a short time could still exhaust
-512 MB. A restart clears all sessions.
+Sessions also use memory: each one keeps its DataFrame for 30 minutes. A 5.6 MB test file kept
+about 12 MB; a dense 8.6 MB, 50,000-row file of short text kept about 27 MB and peaked at 439 MB
+while it was analysed. With the default of 50 sessions, large uploads in a short time could
+exhaust 512 MB, so `render.yaml` sets `MAX_SESSIONS=10`. A restart clears all sessions.
 
 ### What `render.yaml` sets
 
@@ -318,6 +325,7 @@ Sessions also use memory: each one keeps its DataFrame for 30 minutes (about 12 
 - **Python 3.12**, pinned in [`.python-version`](.python-version) (Render's default for new
   services is a newer version).
 - **Health check:** `/api/health`.
+- **`MAX_SESSIONS=10`:** at most 10 analyses are kept in memory, instead of the default 50.
 - **`FORWARDED_ALLOW_IPS=*`:** Render's proxy sits in front of the app, so uvicorn takes the
   client address from `X-Forwarded-For`. Without this, every visitor would be counted under the
   proxy's own address and share its rate limit. With `*`, uvicorn uses the first address in that
@@ -326,7 +334,8 @@ Sessions also use memory: each one keeps its DataFrame for 30 minutes (about 12 
 - **`ANTHROPIC_API_KEY` and `LLM_MODEL`** are marked `sync: false`: Render asks for them in its
   dashboard when the Blueprint is created, and they are never stored in the repository. Both
   are optional. With no key the live site uses template explanations; an empty `LLM_MODEL`
-  means `claude-opus-5-5`.
+  means `claude-opus-5-5`. If you do add a key, set a monthly spend limit for it in the Anthropic
+  Console: anyone with the live URL can trigger analyses, and the rate limit can be bypassed.
 
 ### Deploy steps
 
@@ -370,7 +379,7 @@ TODO: add screenshots of the upload page, results dashboard, each tab and a data
   small data, and Cramer's V / eta can be inflated by many categories.
 - **Not covered:** label quality, measurement bias, sampling bias against the real population,
   consent and data provenance, and intersectional groups (for example older women).
-- **Limits:** 10 MB / 50,000 rows per file; comma-separated files only; sessions live in one
+- **Limits:** 10 MB / 50,000 rows / 100 columns per file; comma-separated files only; sessions live in one
   server process's memory and are lost on restart.
 - **AI explanations** are generated text: they are based only on the aggregate numbers they are
   given and can still be imprecise. The numbers in the finding description are the source of truth.

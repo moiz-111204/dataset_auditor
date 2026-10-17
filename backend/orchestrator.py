@@ -25,6 +25,10 @@ logger = logging.getLogger(__name__)
 
 MAX_BYTES = 10 * 1024 * 1024
 MAX_ROWS = 50_000
+# Some checks compare every pair of columns, so analysis time grows with the square of the
+# column count: 1,600 columns took over four minutes. The cap keeps one upload from tying up
+# the server.
+MAX_COLUMNS = 100
 ENCODINGS = ["utf-8", "utf-8-sig", "latin-1"]
 
 SCORE_RULES = {  # severity: (points each, cap)
@@ -78,7 +82,14 @@ def load_csv(data: bytes) -> pd.DataFrame:
         raise DatasetError("The file is empty.")
     text, _ = _decode(data)
     try:
+        # Read the header alone first, so a very wide file is rejected before the full parse.
+        n_columns = pd.read_csv(io.StringIO(text), nrows=0).shape[1]
+        if n_columns > MAX_COLUMNS:
+            raise DatasetError(f"The file has {n_columns:,} columns; the limit is {MAX_COLUMNS}.",
+                               status_code=413)
         df = pd.read_csv(io.StringIO(text), low_memory=False)
+    except DatasetError:
+        raise
     except pd.errors.EmptyDataError:
         raise DatasetError("The file is empty.") from None
     except (pd.errors.ParserError, ValueError) as exc:

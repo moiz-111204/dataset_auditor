@@ -19,6 +19,9 @@ services:
       # Presidio + spaCy fit in the free 512 MB instance; set to "false" to run regex rules only.
       - key: PII_NER_ENABLED
         value: "true"
+      # Keep at most 10 analyses in memory (default 50), so large uploads cannot fill 512 MB.
+      - key: MAX_SESSIONS
+        value: "10"
       # Optional. Leave empty for template explanations.
       - key: ANTHROPIC_API_KEY
         sync: false

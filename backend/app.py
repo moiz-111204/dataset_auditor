@@ -33,7 +33,7 @@ from backend.analyzers.pii_scanner import detector_status  # noqa: E402
 from backend.generators.data_card import generate_html, generate_markdown  # noqa: E402
 from backend.models.schemas import AnalysisSettings  # noqa: E402
 from backend.orchestrator import MAX_BYTES, DatasetError, analyze_dataframe, run_analysis  # noqa: E402
-from backend.session_store import SessionStore  # noqa: E402
+from backend.session_store import SessionStore, max_sessions_from_env  # noqa: E402
 
 logger = logging.getLogger("dataset_auditor")
 
@@ -50,7 +50,7 @@ MAX_BODY_BYTES = MAX_BYTES + 64 * 1024
 MultiPartParser.spool_max_size = MAX_BODY_BYTES + 1
 MultiPartParser.max_part_size = 64 * 1024  # non-file form fields
 
-store = SessionStore()
+store = SessionStore(max_sessions=max_sessions_from_env())
 
 
 # --- Middleware and dependencies ---------------------------------------------------------

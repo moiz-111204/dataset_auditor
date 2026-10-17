@@ -8,7 +8,7 @@ from fastapi.testclient import TestClient
 from backend import app as app_module
 from backend.app import app, rate_limiter, store
 from backend.models.schemas import AnalysisReport, AnalysisSettings
-from backend.session_store import SessionStore
+from backend.session_store import SessionStore, max_sessions_from_env
 
 
 @pytest.fixture(autouse=True)
@@ -92,6 +92,13 @@ def test_upload_rejects_oversized_file(client):
     r = upload(client, just_over)
     assert r.status_code == 413
     assert "10 MB" in r.json()["detail"]
+
+
+def test_upload_rejects_too_many_columns(client):
+    header = ",".join(f"c{i}" for i in range(150))
+    r = upload(client, f"{header}\n{','.join('1' * 150)}\n".encode())
+    assert r.status_code == 413
+    assert "150 columns" in r.json()["detail"]
 
 
 def test_upload_rejects_empty_malformed_and_header_only(client):
@@ -223,3 +230,13 @@ def test_session_store_limits_and_lru():
     assert len(s) == 3 and s.get("s1") is None and s.get("s0") is not None
     now[0] = 61
     assert s.get("s0") is None and len(s) == 0
+
+
+def test_max_sessions_comes_from_env(monkeypatch):
+    assert store.max_sessions == max_sessions_from_env()  # the app's store uses the setting
+    monkeypatch.delenv("MAX_SESSIONS", raising=False)
+    assert max_sessions_from_env() == 50
+    monkeypatch.setenv("MAX_SESSIONS", "10")
+    assert max_sessions_from_env() == 10
+    monkeypatch.setenv("MAX_SESSIONS", "0")
+    assert max_sessions_from_env() == 1

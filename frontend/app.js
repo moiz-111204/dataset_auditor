@@ -48,7 +48,7 @@
 
   function friendlyError(status, body) {
     const detail = body && typeof body.detail === "string" ? body.detail : "";
-    if (status === 413) return detail || "That file is too large. The limit is 10 MB and 50,000 rows.";
+    if (status === 413) return detail || "That file is too large. The limit is 10 MB, 50,000 rows and 100 columns.";
     if (status === 415) return detail || "Please upload a .csv file.";
     if (status === 429) return "Too many requests in a short time. Please wait a minute and try again.";
     if (status === 404) return detail || "That analysis has expired. Please upload the file again.";

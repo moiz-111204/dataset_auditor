@@ -1,13 +1,14 @@
 """In-memory session store.
 
 Each analysis lives under a random uuid4 session id together with its DataFrame, settings and
-report. Sessions expire 30 minutes after their last use and at most 50 are kept (the least
-recently used is dropped first). Nothing is written to disk, and there is no global
-"latest result": every request must name its session.
+report. Sessions expire 30 minutes after their last use and at most MAX_SESSIONS are kept
+(default 50; the least recently used is dropped first). Nothing is written to disk, and there
+is no global "latest result": every request must name its session.
 """
 
 from __future__ import annotations
 
+import os
 import threading
 import time
 from collections import OrderedDict
@@ -20,6 +21,11 @@ from backend.models.schemas import AnalysisReport, AnalysisSettings
 
 DEFAULT_TTL_SECONDS = 30 * 60
 DEFAULT_MAX_SESSIONS = 50
+
+
+def max_sessions_from_env() -> int:
+    """MAX_SESSIONS from the environment (default 50, at least 1). Lower it on small hosts."""
+    return max(1, int(os.getenv("MAX_SESSIONS", str(DEFAULT_MAX_SESSIONS))))
 
 
 @dataclass
