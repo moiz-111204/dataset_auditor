@@ -24,6 +24,27 @@ Environment for the 2026-10-17 run: Windows 11, Python 3.12.10, local server
 | Incognito window | Open the app in a private window | Pending (to run against the deployed URL; see "Live deployment" below) | |
 | Two tabs, separate sessions | Analyze different files in two tabs, download each card | Pass (automated): `test_sessions_are_isolated`; the session id lives only in page memory. In-browser: Pending | 2026-10-17 |
 
+## Pre-deploy re-check (commit `5253e81`)
+
+Re-run on 2026-10-18 after the column limit, session cap and Chart.js integrity hash were added:
+`python -m pytest` (104 passed), then the local server in the Chromium-based browser pane, no
+`ANTHROPIC_API_KEY`, Presidio NER on.
+
+| Check | How | Result | Date |
+|---|---|---|---|
+| `/api/health` | Open `/api/health` | Pass: `status: ok`, Presidio NER on with `en_core_web_sm`, `ai_enabled: false` | 2026-10-18 |
+| Both samples | Click both sample buttons | Pass: hiring 100/100 Critical, 16 issues (Bias 8, Missing data 4, PII 4), every finding with an explanation and a recommendation; clean survey 0/100 Low, 0 issues | 2026-10-18 |
+| Charts | All three tabs after the hiring sample | Pass: class, group and missing-data charts drawn; Chart.js 4.4.4 loaded with its integrity hash | 2026-10-18 |
+| No raw PII on the page | Search the page text after the hiring sample | Pass: no `example.com` email, SSN-style or 555-01xx phone value shown | 2026-10-18 |
+| Settings re-run | Untick `age`, press "Re-run analysis" | Pass: same session id; Bias 8 -> 5, all three `age` findings removed | 2026-10-18 |
+| Data cards after re-run | Fetch HTML and Markdown cards for that session | Pass: HTTP 200, `problematic_hiring_data_card.html/.md`, 9 sections each, 5 columns "withheld (PII)", no `age` disparity, no raw PII; HTML card renders | 2026-10-18 |
+| Upload errors | Choose `notes.txt`, an empty CSV, a header-only CSV, a broken CSV | Pass: "Please choose a .csv file.", "That file is empty.", "The file has a header but no data rows.", "Could not parse the file as CSV: ..." | 2026-10-18 |
+| Column limit | Upload a 150-column CSV | Pass: "The file has 150 columns; the limit is 100." (HTTP 413) | 2026-10-18 |
+| NER on free text | Upload an 80-row CSV whose `notes` column mentions names ("Spoke with John Smith ...") | Pass: "Person names found in 1 column", 40 of 80 rows in `notes`, marked as a lower bound from the NER layer; no name shown on the page | 2026-10-18 |
+| Mobile layout at 375 px | Emulated 375x812 viewport, all three tabs | Pass: document width 375 px on every tab, no horizontal scroll | 2026-10-18 |
+| Light and dark themes | Theme toggle on the 375 px view | Pass: switches to light (`data-theme="light"`) and back | 2026-10-18 |
+| Errors in logs | Browser console and server log after all checks | Pass: only the expected 400/413 responses from the bad-file checks; no script errors, no server errors | 2026-10-18 |
+
 ## Live deployment (Render)
 
 Run these against the live URL after deploying (see "Deployment" in the README) and replace
