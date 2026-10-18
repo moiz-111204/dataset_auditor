@@ -9,6 +9,8 @@ Checks:
    as a pattern worth investigating, not as proof of any missingness mechanism.
 
 Empty strings and whitespace-only cells count as missing, as do values pandas reads as NaN.
+Uploaded CSVs also turn placeholders such as '?', '-' and 'unknown' into NaN when they are
+loaded (orchestrator.MISSING_MARKERS).
 """
 
 from __future__ import annotations

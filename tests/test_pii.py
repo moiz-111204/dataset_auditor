@@ -148,3 +148,37 @@ def test_findings_never_contain_raw_values():
                     assert token not in dumped, token
     for name in ["Priyanka", "Oluwaseun", "John Smith", "Maria Garcia"]:
         assert name not in dumped
+
+
+def test_pakistani_and_international_phone_formats(regex_only):
+    df = pd.DataFrame({"contact": ["0300-1234567", "0321 7654321", "03451234567", "+92 300 1234567",
+                                   "+923001234567", "+91 98765 43210", "no phone"]})
+    assert by_type(scan_pii(df))["phone"].details["rows_affected"] == 6
+
+
+def test_cnic_detected_and_not_counted_as_card_or_phone():
+    # 35202-1234567-6 passes the Luhn check, so it used to be reported as a payment card.
+    df = pd.DataFrame({"id_card": ["35202-1234567-6", "42101-7654321-3", "61101-1111111-1", "n/a"]})
+    findings = by_type(scan_pii(df))
+    assert findings["cnic"].severity == "critical"
+    assert findings["cnic"].details["rows_affected"] == 3
+    assert "credit_card" not in findings and "phone" not in findings
+
+
+def test_phone_and_cnic_columns_holding_plain_digits():
+    df = pd.DataFrame({"mobile_no": [5550101234, 3001234567, 3217654321],
+                       "cnic": [3520212345671, 4210176543213, 6110111111111],
+                       "order_number": [4829301723, 4829301724, 4829301725]})
+    findings = by_type(scan_pii(df))
+    assert findings["phone"].columns == ["mobile_no"]
+    assert findings["cnic"].columns == ["cnic"]
+
+
+def test_lookalikes_are_not_flagged():
+    df = pd.DataFrame({
+        "order_number": ["4829301723", "4829301724", "4829301725", "4829301726"],
+        "signup_date": ["2024-03-15", "2024-04-01", "2024-05-20", "2024-06-30"],
+        "sku": ["SKU-1234-567", "SKU-2345-678", "SKU-3456-789", "SKU-4567-890"],
+        "os_version": ["10.0.19045.1", "10.0.22631.2", "6.1.7601.3", "10.0.19044.4"],
+    })
+    assert scan_pii(df) == []

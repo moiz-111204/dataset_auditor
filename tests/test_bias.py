@@ -145,3 +145,54 @@ def test_resolve_settings_drops_unknown_columns():
     s = resolve_settings(disparity_df(), AnalysisSettings(label_column="hired",
                                                           protected_columns=["gender", "nope", "hired"]))
     assert s.protected_columns == ["gender"]
+
+
+def two_groups(rate_a, rate_b, positive, negative, label, n=200):
+    rows = []
+    for group, rate in (("A", rate_a), ("B", rate_b)):
+        k = int(rate * n)
+        rows += [(group, positive)] * k + [(group, negative)] * (n - k)
+    return pd.DataFrame(rows, columns=["group", label])
+
+
+def disparity_for(df, label):
+    findings = detect_bias(df, AnalysisSettings(label_column=label, protected_columns=["group"]))
+    return checks(findings, "demographic_disparity")[0]
+
+
+def test_adverse_label_name_makes_the_other_value_favourable():
+    # Group A defaults on 40% of loans, B on 10%: A gets the good outcome (0) less often.
+    f = disparity_for(two_groups(0.40, 0.10, 1, 0, "default"), "default")
+    assert f.details["positive_label"] == "0"
+    assert list(f.details["flagged_groups"]) == ["A"]
+    f = disparity_for(two_groups(0.40, 0.10, "yes", "no", "is_fraud"), "is_fraud")
+    assert f.details["positive_label"] == "no"
+    assert list(f.details["flagged_groups"]) == ["A"]
+
+
+def test_explicit_words_decide_the_favourable_value():
+    f = disparity_for(two_groups(0.45, 0.75, "good", "bad", "credit_risk"), "credit_risk")
+    assert f.details["positive_label"] == "good"
+    assert list(f.details["flagged_groups"]) == ["A"]
+    f = disparity_for(two_groups(0.30, 0.60, "Fully Paid", "Charged Off", "loan_status"), "loan_status")
+    assert f.details["positive_label"] == "Fully Paid"
+    # Words win over the column name: 'rejected' in the name does not flip approved/rejected.
+    f = disparity_for(two_groups(0.30, 0.60, "approved", "rejected", "rejected_or_approved"),
+                      "rejected_or_approved")
+    assert f.details["positive_label"] == "approved"
+
+
+def test_more_protected_attribute_names_detected():
+    protected = ["Sexual_Orientation", "religious_affiliation", "Citizenship", "caste",
+                 "pregnancy_status", "Disabilities", "native_country", "national_origin"]
+    not_protected = ["national_id", "country", "page_views", "language", "message"]
+    df = pd.DataFrame({c: ["a", "b"] for c in protected + not_protected})
+    assert detect_settings(df).protected_columns == protected
+
+
+def test_common_label_names_need_few_distinct_values():
+    for name in ["survived", "churn", "is_fraud", "two_year_recid", "Exited", "loan_status"]:
+        df = pd.DataFrame({name: [0, 1] * 10, "x": range(20)})
+        assert detect_settings(df).label_column == name, name
+    df = pd.DataFrame({"decision": [f"d{i}" for i in range(20)], "x": range(20)})
+    assert detect_settings(df).label_column is None  # 20 distinct values: not a label

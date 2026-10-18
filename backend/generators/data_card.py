@@ -39,16 +39,18 @@ LIMITATIONS = [
 METHODOLOGY = [
     ("Class imbalance", "Label class shares; flagged when a class is under 10% or the largest-"
      "to-smallest ratio exceeds 3:1 (critical > 10:1, high > 5:1)."),
-    ("Demographic disparity", "Positive-outcome rate per protected group (numeric attributes "
+    ("Demographic disparity", "Favourable-outcome rate per protected group (numeric attributes "
      "binned) compared with the four-fifths rule; critical below 0.6, high below 0.8. Groups "
-     "under 20 rows are skipped."),
+     "under 20 rows are skipped. For 1/0 labels named after a bad event (default, fraud, churn), "
+     "0 counts as favourable."),
     ("Proxy correlation", "Association of each feature with each protected attribute: Pearson r, "
      "bias-corrected Cramer's V or correlation ratio; medium above 0.5, high above 0.7. ID-like "
      "columns are skipped."),
     ("Missing data", "Missing share per column (medium > 5%, high > 20%, critical > 50%), rows "
      "with gaps (> 10%), chi-squared test plus rate ratio of missingness across protected groups, "
-     "and co-occurring gaps (phi > 0.5)."),
-    ("PII scan", "Regex and heuristic rules (emails, phones, SSN-style IDs, Luhn-checked card "
+     "and co-occurring gaps (phi > 0.5). Placeholders such as '?', '-' and 'unknown' count as "
+     "missing."),
+    ("PII scan", "Regex and heuristic rules (emails, phones, SSN-style IDs, Pakistani CNICs, Luhn-checked card "
      "numbers, addresses, IPs, name and date-of-birth columns) plus Presidio NER on up to 200 "
      "values per text column when available."),
     ("Risk score", "Critical 25 points each (max 60), high 10 (max 30), medium 3 (max 15), low 1 "

@@ -12,7 +12,21 @@ SEVERITY_ORDER = {"critical": 0, "high": 1, "medium": 2, "low": 3}
 
 POSITIVE_TOKENS = {
     "1", "1.0", "yes", "y", "true", "t", "hired", "approved", "accept", "accepted", "positive",
-    "pass", "passed", "granted", "admitted", "selected", "success", "eligible",
+    "pass", "passed", "granted", "admitted", "selected", "success", "eligible", "good", "promoted",
+    "graduated", "completed", "funded", "offered", "paid", "fully paid", "won",
+}
+NEGATIVE_TOKENS = {
+    "0", "0.0", "no", "n", "false", "f", "rejected", "reject", "denied", "declined", "negative",
+    "fail", "failed", "bad", "not hired", "charged off", "default", "defaulted", "dropped out",
+    "terminated", "lost",
+}
+# Generic yes/no style values: when a label's name says the event is adverse (a loan default,
+# fraud, re-offending), '1' / 'yes' marks the bad outcome, so the favourable outcome is the other.
+GENERIC_BINARY_TOKENS = {"0", "1", "0.0", "1.0", "yes", "no", "y", "n", "true", "false", "t", "f"}
+ADVERSE_LABEL_TOKENS = {
+    "default", "defaulted", "delinquent", "delinquency", "fraud", "fraudulent", "churn",
+    "churned", "exited", "attrition", "recid", "recidivism", "reoffend", "reoffended",
+    "readmitted", "readmission", "arrested", "rejected", "denied", "dropout", "terminated",
 }
 CATEGORICAL_NAME_TOKENS = {"zip", "zipcode", "postal", "postcode", "code", "id", "category", "type"}
 
@@ -95,13 +109,39 @@ def looks_positive(value: object) -> bool:
         return False
 
 
-def resolve_positive_label(labels: pd.Series) -> tuple[object, str]:
-    """Pick the label value treated as the positive outcome and say why."""
+def looks_negative(value: object) -> bool:
+    text = str(value).strip().lower()
+    if text in NEGATIVE_TOKENS:
+        return True
+    try:
+        return float(text) == 0.0
+    except ValueError:
+        return False
+
+
+def resolve_positive_label(labels: pd.Series, name: object = "") -> tuple[object, str]:
+    """Pick the label value treated as the favourable outcome and say why.
+
+    Explicit words decide first (approved/rejected, good/bad). For generic yes/no or 1/0 values
+    the column name decides the direction: in 'default' or 'is_fraud', 1 is the bad outcome.
+    """
     counts = labels.dropna().value_counts()
-    for value in counts.index:
+    values = list(counts.index)
+    generic = all(str(v).strip().lower() in GENERIC_BINARY_TOKENS for v in values)
+    if len(values) == 2 and generic and name_tokens(name) & ADVERSE_LABEL_TOKENS:
+        negative = [v for v in values if looks_negative(v)]
+        if len(negative) == 1:
+            return negative[0], (f"the column name '{name}' suggests the other value marks an adverse "
+                                 f"outcome, so this value is treated as favourable")
+    for value in values:
         if looks_positive(value):
             return value, "looks like a positive outcome"
-    return counts.index[-1], "least frequent value (no value looked like a positive outcome)"
+    if len(values) == 2:
+        negative = [v for v in values if looks_negative(v)]
+        if len(negative) == 1:
+            other = values[1] if negative[0] == values[0] else values[0]
+            return other, "the other value looks like a negative outcome"
+    return values[-1], "least frequent value (no value looked like a positive outcome)"
 
 
 def label_text(value: object) -> str:

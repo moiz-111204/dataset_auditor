@@ -323,6 +323,7 @@ def _template_text(f: Finding) -> tuple[str, str]:
     if check == "pii_scan":
         recs = {
             "ssn": "Remove the national ID column entirely; it is never a useful model feature.",
+            "cnic": "Remove the CNIC column entirely; it is never a useful model feature.",
             "credit_card": "Delete payment card numbers immediately and check how they got into "
                            "this dataset.",
             "email": "Drop email addresses or replace them with a salted hash if records must be "

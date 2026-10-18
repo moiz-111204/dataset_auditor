@@ -27,10 +27,20 @@ from backend.utils import (
 )
 
 LABEL_NAMES = ["label", "target", "class", "outcome", "y", "hired", "approved", "default"]
+# Common label names from public datasets; used only when the column has 2-10 distinct values.
+EXTRA_LABEL_NAMES = [
+    "survived", "churn", "churned", "exited", "attrition", "fraud", "is_fraud", "fraudulent",
+    "recid", "is_recid", "two_year_recid", "readmitted", "loan_status", "admitted", "accepted",
+    "passed", "promoted", "decision",
+]
 PROTECTED_KEYWORDS = {
-    "gender", "sex", "race", "ethnicity", "ethnic", "age", "religion", "disability", "disabled",
-    "nationality", "marital",
+    "gender", "sex", "sexual", "race", "ethnicity", "ethnic", "age", "religion", "religious",
+    "disability", "disabilities", "disabled", "nationality", "citizenship", "marital", "caste",
+    "pregnancy", "pregnant",
 }
+# Multi-word names, matched as whole tokens inside the normalized column name.
+PROTECTED_PHRASES = {"national_origin", "native_country", "country_of_birth", "birth_country",
+                     "country_of_origin"}
 FOUR_FIFTHS = 0.8
 PROXY_THRESHOLD = 0.5
 MAX_CATEGORIES = 100  # categorical features with more levels are skipped for proxy checks
@@ -39,8 +49,13 @@ MIN_PAIRED_ROWS = 20
 
 # --- Settings auto-detection -------------------------------------------------------------
 
+def is_protected_name(name: object) -> bool:
+    padded = f"_{normalize_column_name(name)}_"
+    return bool(name_tokens(name) & PROTECTED_KEYWORDS) or any(f"_{p}_" in padded for p in PROTECTED_PHRASES)
+
+
 def detect_protected_columns(df: pd.DataFrame) -> list[str]:
-    return [str(c) for c in df.columns if name_tokens(c) & PROTECTED_KEYWORDS]
+    return [str(c) for c in df.columns if is_protected_name(c)]
 
 
 def detect_label_column(df: pd.DataFrame, exclude: list[str] | None = None) -> str | None:
@@ -48,6 +63,11 @@ def detect_label_column(df: pd.DataFrame, exclude: list[str] | None = None) -> s
     for wanted in LABEL_NAMES:
         for col in df.columns:
             if normalize_column_name(col) == wanted and str(col) not in exclude:
+                return str(col)
+    for wanted in EXTRA_LABEL_NAMES:
+        for idx, col in enumerate(df.columns):
+            if normalize_column_name(col) == wanted and str(col) not in exclude \
+                    and 2 <= df.iloc[:, idx].nunique(dropna=True) <= 10:
                 return str(col)
     if df.shape[1] >= 2:
         last = df.columns[-1]
@@ -84,7 +104,7 @@ def group_positive_rates(df: pd.DataFrame, label: str, protected: str) -> dict |
     labels = df[label]
     if labels.nunique(dropna=True) < 2:
         return None
-    positive, reason = resolve_positive_label(labels)
+    positive, reason = resolve_positive_label(labels, label)
     groups = group_labels(df[protected], protected)
     mask = labels.notna() & groups.notna()
     groups, outcome = groups[mask], (labels[mask] == positive)

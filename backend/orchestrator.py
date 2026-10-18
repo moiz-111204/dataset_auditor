@@ -29,6 +29,11 @@ MAX_ROWS = 50_000
 # column count: 1,600 columns took over four minutes. The cap keeps one upload from tying up
 # the server.
 MAX_COLUMNS = 100
+# Whole-cell placeholders that mean "no value", on top of pandas' defaults (NA, N/A, NULL, nan,
+# None, empty). '?' marks gaps in UCI datasets such as Adult; 'unknown' in UCI Bank Marketing.
+# 'none' is deliberately absent: it is often a real answer (allergies: none).
+MISSING_MARKERS = ["?", "-", "--", "unknown", "Unknown", "UNKNOWN", "missing", "Missing", "MISSING",
+                   "na", "n.a.", "N.A.", "nil", "undefined"]
 ENCODINGS = ["utf-8", "utf-8-sig", "latin-1"]
 
 SCORE_RULES = {  # severity: (points each, cap)
@@ -87,7 +92,9 @@ def load_csv(data: bytes) -> pd.DataFrame:
         if n_columns > MAX_COLUMNS:
             raise DatasetError(f"The file has {n_columns:,} columns; the limit is {MAX_COLUMNS}.",
                                status_code=413)
-        df = pd.read_csv(io.StringIO(text), low_memory=False)
+        # skipinitialspace drops the space after each comma ("a, b"), so ' ?' is a marker too.
+        df = pd.read_csv(io.StringIO(text), low_memory=False, na_values=MISSING_MARKERS,
+                         skipinitialspace=True)
     except DatasetError:
         raise
     except pd.errors.EmptyDataError:

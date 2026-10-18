@@ -38,7 +38,8 @@ for the dataset). It answers three questions:
   attributes such as age are binned), proxy detection with Pearson r, Cramer's V or eta.
 - Missing-data checks: per column, per row, chi-squared test plus rate ratio across groups, and
   co-occurring gaps (reported as a pattern worth investigating, not as a proven cause).
-- PII scan: regex and heuristic rules plus optional Microsoft Presidio NER.
+- PII scan: regex and heuristic rules (including Pakistani CNIC and mobile number formats) plus
+  optional Microsoft Presidio NER.
 - 0-100 risk score with a level (Low / Medium / High / Critical).
 - Plain-language explanation and recommendation for every finding, an overall summary and the
   top 3 priority actions, written by Claude when an API key is set and by built-in templates
@@ -137,12 +138,19 @@ flowchart LR
    columns are rejected with a clear message. The column count is read from the header before the
    full parse: some checks compare every pair of columns, so time grows with the square of the
    column count (1,600 columns took over four minutes on a desktop PC). Duplicate column names
-   are renamed `name.1`, `name.2`.
+   are renamed `name.1`, `name.2`. Besides pandas' defaults (empty, NA, N/A, NULL, nan, None),
+   whole-cell placeholders `?`, `-`, `--`, `unknown`, `missing`, `na`, `n.a.`, `nil` and
+   `undefined` are read as missing, and the space after each comma is skipped, so UCI-style
+   `, ?` gaps are counted. `none` is kept, because it is often a real answer.
 3. **Settings detection** (`bias_detector.detect_settings`). Protected attributes are columns whose
-   name contains a word such as gender, sex, race, ethnicity, age, religion, disability,
-   nationality or marital (matched as whole words, so `page_views` and `wage` are not "age").
-   The label is a column named label/target/class/outcome/y/hired/approved/default, otherwise the
-   last column if it has 2-10 distinct values. The user can override both and re-run.
+   name contains a word such as gender, sex, sexual (orientation), race, ethnicity, age,
+   religion/religious, disability, nationality, citizenship, marital, caste or pregnancy, or a
+   phrase such as national_origin or native_country (matched as whole words, so `page_views` and
+   `wage` are not "age", and `national_id` is not "national origin"). The label is a column named
+   label/target/class/outcome/y/hired/approved/default; then a common label name such as survived,
+   churn, exited, is_fraud, two_year_recid or loan_status if that column has 2-10 distinct
+   values; otherwise the last column if it has 2-10 distinct values. The user can override both
+   and re-run.
 4. **Analyzers** (`backend/analyzers/`), described below.
 5. **Risk score** from the findings' severities.
 6. **AI explanation layer**, described above.
@@ -155,15 +163,15 @@ flowchart LR
 | Check | How | Severity |
 |---|---|---|
 | Class imbalance | Label class shares; flagged if a class is under 10% or largest:smallest > 3:1 | critical > 10:1, high > 5:1, medium > 3:1 |
-| Demographic disparity | Positive-outcome rate per protected group vs. the best group (four-fifths rule). The positive outcome is the value that looks positive (1/yes/true/hired/approved...), otherwise the least frequent value. Numeric attributes are binned (age: under 30, 30-50, over 50; others: tertiles). Groups under 20 rows are skipped and named in the finding. | critical if a group's ratio < 0.6, high < 0.8 |
+| Demographic disparity | Favourable-outcome rate per protected group vs. the best group (four-fifths rule). Which value is favourable: when the label is 1/0, yes/no or true/false and its name marks a bad event (default, fraud, churn, exited, recidivism, readmitted...), the 0/no value; otherwise a value that looks positive (1/yes/true/hired/approved/good/fully paid...); otherwise, with two values where one looks negative (rejected, bad, charged off), the other one; otherwise the least frequent value. Numeric attributes are binned (age: under 30, 30-50, over 50; others: tertiles). Groups under 20 rows are skipped and named in the finding. | critical if a group's ratio < 0.6, high < 0.8 |
 | Proxy correlation | Every non-protected, non-ID feature vs. each protected attribute: Pearson r (numeric-numeric), bias-corrected Cramer's V (categorical-categorical), correlation ratio eta (numeric-categorical). ZIP/ID/code columns are treated as categories. | high > 0.7, medium > 0.5 |
-| Column missingness | Share of empty cells (NaN, empty or whitespace-only strings) | critical > 50% or fully empty (drop), high > 20%, medium > 5% |
+| Column missingness | Share of empty cells (NaN, empty or whitespace-only strings, and placeholders such as `?`, `-` or `unknown`; see Load above) | critical > 50% or fully empty (drop), high > 20%, medium > 5% |
 | Row missingness | Rows with any gap, rows missing more than half their columns | flagged above 10% of rows |
 | Missingness by group | Chi-squared test (p < 0.01) **and** rate ratio between the groups with the highest and lowest missing rate | critical > 2x, high > 1.5x |
 | Co-occurring gaps | Phi coefficient between the missing-indicators of two columns (at least 5 shared rows) | medium > 0.8, low > 0.5 |
-| PII: SSN-style IDs, card numbers | Regex (`XXX-XX-XXXX` and spaced form); 13-19 digit candidates checked with the Luhn algorithm | critical |
-| PII: emails, phones | Regex (phones need separators, brackets or a leading +) | high |
-| PII: names, addresses, IPs, dates of birth | Name/DOB/address column-name rules, street-address regex, IPv4 (valid octets) and full IPv6 regex, Presidio NER | medium |
+| PII: SSN-style IDs, Pakistani CNICs, card numbers | Regex (`XXX-XX-XXXX` and spaced form; CNIC `12345-1234567-1`, or 13 digits in a column named cnic/nic); 13-19 digit candidates checked with the Luhn algorithm, with CNICs excluded so they are not reported as cards | critical |
+| PII: emails, phones | Regex. Phones need 8-15 digits and separators, brackets or a leading + (North American, international with or without spaces) or the Pakistani mobile prefix (`0300-1234567`, `03001234567`); plain 7-15 digit values also count in columns named like phone/mobile/contact. Presidio phone hits need 9+ digits, a separator, bracket or +, and no overlap with a CNIC or SSN | high |
+| PII: names, addresses, IPs, dates of birth | Name/DOB/address column-name rules, street-address regex, IPv4 (valid octets) and full IPv6 regex (not in columns named version/build/release/firmware), Presidio NER | medium |
 
 ### Risk score
 
@@ -369,10 +377,15 @@ TODO: add screenshots of the upload page, results dashboard, each tab and a data
   or coded values (`col_7`, `g`) are missed unless set manually in the settings panel. Attributes
   that are not in the data at all cannot be checked.
 - **False positives:** ID-like numbers can match phone or card patterns; NER can tag ordinary
-  words as names; proxy checks flag legitimate correlations (experience rises with age); the
-  "positive" label value is a guess when nothing looks like yes/1/hired.
-- **False negatives:** PII in unusual formats, non-US national IDs, other languages, or rare
-  values outside the NER sample of 200 can be missed. ZIP codes and other quasi-identifiers are
+  words as names; proxy checks flag legitimate correlations (experience rises with age); a name
+  such as `sex_offender_flag` is read as a protected attribute because it contains "sex".
+- **The favourable outcome is a guess.** It follows the rules in the table below and the finding
+  says which value was used (rules in "What each detector does" above), but it can be wrong for
+  unusual labels, and the settings panel
+  cannot change it.
+- **False negatives:** PII in unusual formats, national IDs other than US SSNs and Pakistani
+  CNICs, other languages, or rare values outside the NER sample of 200 can be missed. Phone
+  numbers stored as plain digits are only found in columns named like phone/mobile/contact. ZIP codes and other quasi-identifiers are
   not flagged as PII on their own. Combinations of features that together reveal a protected
   attribute are not detected (proxies are checked one feature at a time).
 - **Statistics need enough rows.** Groups under 20 rows are skipped, chi-squared tests are weak on

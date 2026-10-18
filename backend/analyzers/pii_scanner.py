@@ -50,6 +50,9 @@ PII_TYPES: dict[str, PIIType] = {
         PIIType("ssn", "SSN-style national ID numbers", "critical",
                 "National ID numbers are permanent identifiers. A leak enables identity theft, "
                 "and storing them is regulated in most jurisdictions."),
+        PIIType("cnic", "Pakistani CNIC numbers", "critical",
+                "A CNIC is a lifelong national identity number. A leak enables identity theft "
+                "and SIM or bank-account fraud in the holder's name."),
         PIIType("credit_card", "Payment card numbers", "critical",
                 "Card numbers enable direct financial fraud and fall under PCI DSS rules. They "
                 "have no place in a training dataset."),
@@ -78,14 +81,18 @@ PII_TYPES: dict[str, PIIType] = {
 # --- Layer 1: regex and heuristic rules -------------------------------------------------
 
 EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}")
-# Requires separators, parentheses or a leading + so bare 10-digit IDs are not flagged.
+# Requires separators, parentheses, a leading + or the Pakistani mobile prefix 03 so bare
+# 10-digit IDs are not flagged. A match must also hold 8-15 digits (_contains_phone).
 PHONE_RE = re.compile(
     r"(?<![\w-])(?:"
-    r"(?:\+?1[\s.-]?)?(?:\(\d{3}\)\s?|\d{3}[\s.-])\d{3}[\s.-]\d{4}"
-    r"|\+\d{1,3}[\s.-]?\d{1,4}(?:[\s.-]\d{2,4}){2,4}"
+    r"(?:\+?1[\s.-]?)?(?:\(\d{3}\)\s?|\d{3}[\s.-])\d{3}[\s.-]\d{4}"  # North America
+    r"|\+\d{1,3}[\s.-]?\d{2,5}(?:[\s.-]\d{2,7}){1,4}"  # international with separators
+    r"|\+[1-9]\d{9,14}"  # international without separators (E.164)
+    r"|03\d{2}[\s-]?\d{7}"  # Pakistani mobile: 0300-1234567, 03001234567
     r")(?![\w-])"
 )
 SSN_RE = re.compile(r"(?<![\d-])(?:\d{3}-\d{2}-\d{4}|\d{3} \d{2} \d{4})(?![\d-])")
+CNIC_RE = re.compile(r"(?<![\d-])\d{5}-\d{7}-\d(?![\d-])")  # Pakistani CNIC: 35202-1234567-1
 CARD_CANDIDATE_RE = re.compile(r"(?<!\d)(?:\d[ -]?){12,18}\d(?!\d)")
 STREET_SUFFIXES = (
     r"street|st|avenue|ave|road|rd|boulevard|blvd|lane|ln|drive|dr|court|ct|way|place|pl"
@@ -107,6 +114,15 @@ DOB_COLUMN_RE = re.compile(r"^(?:dob|d_o_b|birth_?date|date_?of_?birth|birthday|
 ADDRESS_COLUMN_RE = re.compile(
     r"^(?:(?:street|home|mailing|postal|billing|shipping)_?)?address(?:_?line_?\d)?$"
 )
+# Phone numbers are often stored as plain digits (or read as integers), which the regex rules
+# skip on purpose; a column named like a phone field is enough evidence for 7-15 digit values.
+PHONE_COLUMN_RE = re.compile(
+    r"^(?:[a-z]+_)?(?:phone|mobile|telephone|tel|whatsapp|cellphone|cell_phone|contact)"
+    r"(?:_?(?:no|num|number|nbr))?(?:_?\d)?$|^cell_?(?:no|num|number|nbr)$"
+)
+CNIC_COLUMN_RE = re.compile(r"^(?:cnic|nic)(?:_?(?:no|num|number))?$")
+# Version strings such as 10.0.19045.1 look exactly like IPv4 addresses.
+VERSION_COLUMN_RE = re.compile(r"(?:^|_)(?:version|ver|build|release|firmware)(?:_|$)")
 
 
 def luhn_valid(digits: str) -> bool:
@@ -122,11 +138,23 @@ def luhn_valid(digits: str) -> bool:
 
 
 def _contains_card(text: str) -> bool:
+    text = CNIC_RE.sub(" ", text)  # a CNIC has 13 digits and can pass the Luhn check by chance
     for match in CARD_CANDIDATE_RE.finditer(text):
         digits = re.sub(r"\D", "", match.group())
         if 13 <= len(digits) <= 19 and digits[0] in "23456" and luhn_valid(digits):
             return True
     return False
+
+
+def _contains_phone(text: str) -> bool:
+    return any(8 <= sum(ch.isdigit() for ch in m.group()) <= 15 for m in PHONE_RE.finditer(text))
+
+
+def _plain_digits(text: str) -> str:
+    """'0300-1234567' / '(555) 010 1234' / '5550101234.0' -> the digits alone, else ''."""
+    text = re.sub(r"\.0$", "", text.strip())
+    digits = re.sub(r"[\s().+-]", "", text)
+    return digits if digits.isdigit() else ""
 
 
 def _text_values(series: pd.Series) -> pd.Series:
@@ -142,10 +170,14 @@ def _is_text_column(series: pd.Series) -> bool:
 
 def _regex_masks(values: pd.Series) -> dict[str, pd.Series]:
     """Boolean mask per PII type over the given values (index preserved)."""
+    phone = values.str.contains(PHONE_RE)  # fast pre-filter; the digit count runs on hits only
+    if phone.any():
+        phone[phone] = values[phone].map(_contains_phone).astype(bool)
     masks = {
         "email": values.str.contains(EMAIL_RE),
-        "phone": values.str.contains(PHONE_RE),
+        "phone": phone,
         "ssn": values.str.contains(SSN_RE),
+        "cnic": values.str.contains(CNIC_RE),
         "address": values.str.contains(ADDRESS_RE),
         "ip_address": values.str.contains(IPV4_RE) | values.str.contains(IPV6_RE),
     }
@@ -229,6 +261,17 @@ def _plausible_name(span: str) -> bool:
     return not any(ch.isdigit() for ch in span) and re.search(r"[^\W\d_]{2,}", span) is not None
 
 
+def _plausible_phone(text: str, start: int, end: int) -> bool:
+    """Presidio's phone recognizer also tags short digit runs (SKU-1234-567), bare 10-digit
+    order numbers and parts of ID numbers. Like the regex rules, keep only spans with at least
+    9 digits, a separator, bracket or leading +, and no overlap with a CNIC or SSN."""
+    span = text[start:end]
+    if sum(ch.isdigit() for ch in span) < 9 or not re.search(r"[\s().+-]", span):
+        return False
+    return not any(m.start() < end and start < m.end()
+                   for pattern in (CNIC_RE, SSN_RE) for m in pattern.finditer(text))
+
+
 def _ner_matches(engine, values: pd.Series) -> dict[str, set[str]]:
     """Run NER on up to NER_SAMPLE_SIZE distinct values; return matched values per PII type."""
     uniques = pd.Series(pd.unique(values))
@@ -246,6 +289,8 @@ def _ner_matches(engine, values: pd.Series) -> dict[str, set[str]]:
         for res in found:
             key = PRESIDIO_ENTITY_MAP.get(res.entity_type)
             if key == "person_name" and not _plausible_name(text[res.start:res.end]):
+                continue
+            if key == "phone" and not _plausible_phone(text, res.start, res.end):
                 continue
             if key:
                 hits.setdefault(key, set()).add(text)
@@ -287,17 +332,26 @@ def scan_pii(df: pd.DataFrame) -> list[Finding]:
             record("date_of_birth", column, non_empty, "column_name")
         if ADDRESS_COLUMN_RE.match(norm) and text_column:
             record("address", column, non_empty, "column_name")
+        if PHONE_COLUMN_RE.match(norm):
+            digits = values.map(_plain_digits)
+            record("phone", column, full_mask(digits.str.len().between(7, 15)), "column_name")
+        if CNIC_COLUMN_RE.match(norm):
+            digits = values.map(_plain_digits)
+            record("cnic", column, full_mask(digits.str.len() == 13), "column_name")
+        skip = {"ip_address"} if VERSION_COLUMN_RE.search(norm) else set()
 
         if text_column:
             for key, value_mask in _regex_masks(values).items():
-                record(key, column, full_mask(value_mask), "regex")
+                if key not in skip:
+                    record(key, column, full_mask(value_mask), "regex")
         elif pd.api.types.is_integer_dtype(series):
             # Card numbers stored as plain integers.
             record("credit_card", column, full_mask(values.map(_contains_card)), "regex")
 
         if engine is not None and text_column:
             for key, matched in _ner_matches(engine, values).items():
-                record(key, column, full_mask(values.isin(matched)), "presidio_ner")
+                if key not in skip:
+                    record(key, column, full_mask(values.isin(matched)), "presidio_ner")
 
     findings = [_build_finding(key, columns, len(df)) for key, columns in hits.items()]
     findings.sort(key=lambda f: (SEVERITY_ORDER[f.severity], f.title))

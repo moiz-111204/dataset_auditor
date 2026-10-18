@@ -158,3 +158,13 @@ def test_report_serializes_to_json():
     report, _ = run_analysis(to_csv_bytes(small_df()), "../../etc/passwd")
     assert report.dataset_name == "passwd"
     json.loads(report.model_dump_json())
+
+
+def test_missing_markers_are_read_as_missing():
+    rows = ["?", " ?", "unknown", "Unknown", "-", "missing", "Private", "none"]
+    data = "id, workclass, hours\n" + "".join(
+        f"{i}, {v}, {'?' if i == 0 else 40}\n" for i, v in enumerate(rows))
+    df = load_csv(data.encode())
+    assert df["workclass"].isna().tolist() == [True] * 6 + [False, False]  # 'none' is an answer
+    assert list(df.columns) == ["id", "workclass", "hours"]
+    assert pd.api.types.is_numeric_dtype(df["hours"]) and df["hours"].isna().sum() == 1
