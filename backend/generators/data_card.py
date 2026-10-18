@@ -40,9 +40,10 @@ METHODOLOGY = [
     ("Class imbalance", "Label class shares; flagged when a class is under 10% or the largest-"
      "to-smallest ratio exceeds 3:1 (critical > 10:1, high > 5:1)."),
     ("Demographic disparity", "Favourable-outcome rate per protected group (numeric attributes "
-     "binned) compared with the four-fifths rule; critical below 0.6, high below 0.8. Groups "
-     "under 20 rows are skipped. For 1/0 labels named after a bad event (default, fraud, churn), "
-     "0 counts as favourable."),
+     "binned) compared with the four-fifths rule; critical below 0.6, high below 0.8, but only "
+     "for gaps that are statistically significant (Fisher's exact test, p < 0.05); other gaps "
+     "are low severity. Groups under 20 rows are skipped. For 1/0 labels named after a bad "
+     "event (default, fraud, churn), 0 counts as favourable."),
     ("Proxy correlation", "Association of each feature with each protected attribute: Pearson r, "
      "bias-corrected Cramer's V or correlation ratio; medium above 0.5, high above 0.7. ID-like "
      "columns are skipped."),

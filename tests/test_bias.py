@@ -59,10 +59,47 @@ def test_known_disparity_is_flagged_critical():
 
 
 def test_disparity_high_between_06_and_08():
-    gender = ["M"] * 50 + ["F"] * 50
-    hired = [1] * 25 + [0] * 25 + [1] * 18 + [0] * 32  # 0.36 / 0.50 = 0.72
+    gender = ["M"] * 250 + ["F"] * 250
+    hired = [1] * 125 + [0] * 125 + [1] * 90 + [0] * 160  # 0.36 / 0.50 = 0.72, p < 0.01
     findings = detect_bias(pd.DataFrame({"gender": gender, "hired": hired}))
-    assert checks(findings, "demographic_disparity")[0].severity == "high"
+    f = checks(findings, "demographic_disparity")[0]
+    assert f.severity == "high"
+    assert f.details["significant_groups"] == {"F": 0.72}
+    assert f.details["p_values"]["F"] < 0.01
+
+
+def test_gap_that_could_be_chance_is_low_severity_not_bias():
+    # 50 vs 50 rows, 50% vs 36%: ratio 0.72 is under four-fifths, but Fisher p is about 0.16.
+    gender = ["M"] * 50 + ["F"] * 50
+    hired = [1] * 25 + [0] * 25 + [1] * 18 + [0] * 32
+    f = checks(detect_bias(pd.DataFrame({"gender": gender, "hired": hired})), "demographic_disparity")[0]
+    assert f.severity == "low"
+    assert "could be chance" in f.title
+    assert f.details["significant_groups"] == {}
+    assert f.details["flagged_groups"] == {"F": 0.72}  # still listed for the chart
+    assert f.details["p_values"]["F"] > 0.05
+    assert "not statistically significant" in f.description
+
+
+def test_only_significant_groups_set_severity_and_chance_groups_are_noted():
+    # Reference group A is large. B is far below it (significant); C is below four-fifths too,
+    # but has only 20 rows, so its gap could be chance.
+    rows = ([("A", 1)] * 200 + [("A", 0)] * 200 + [("B", 1)] * 60 + [("B", 0)] * 340
+            + [("C", 1)] * 6 + [("C", 0)] * 14)
+    df = pd.DataFrame(rows, columns=["group", "hired"])
+    f = checks(detect_bias(df, AnalysisSettings(label_column="hired", protected_columns=["group"])),
+               "demographic_disparity")[0]
+    assert set(f.details["flagged_groups"]) == {"B", "C"}
+    assert list(f.details["significant_groups"]) == ["B"]
+    assert f.severity == "critical" and "ratio 0.30" in f.title  # B alone decides the severity
+    assert "possibly chance" in f.description and "'C'" in f.description
+
+
+def test_last_matching_label_column_wins():
+    df = pd.DataFrame({"is_recid": [0, 1] * 10, "x": range(20), "two_year_recid": [1, 0] * 10})
+    assert detect_settings(df).label_column == "two_year_recid"
+    df = df[["two_year_recid", "x", "is_recid"]]
+    assert detect_settings(df).label_column == "is_recid"
 
 
 def test_small_groups_ignored_and_mentioned():

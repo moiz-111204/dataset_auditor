@@ -45,6 +45,27 @@ Re-run on 2026-10-18 after the column limit, session cap and Chart.js integrity 
 | Light and dark themes | Theme toggle on the 375 px view | Pass: switches to light (`data-theme="light"`) and back | 2026-10-18 |
 | Errors in logs | Browser console and server log after all checks | Pass: only the expected 400/413 responses from the bad-file checks; no script errors, no server errors | 2026-10-18 |
 
+## Real-data accuracy check
+
+Run on 2026-10-18 with the user's approval to download two public files into a temporary folder
+outside the repository (not committed): `adult.zip` from archive.ics.uci.edu (620,237 bytes;
+`adult.data`, 32,561 rows, with a header row added) and `compas-scores-two-years.csv` from
+github.com/propublica/compas-analysis (2,546,489 bytes, 7,214 rows, 53 columns, holds real
+defendants' names and birth dates). Expected values were computed with plain pandas, not the
+app's code, then compared with `run_analysis` output. Personal-data values were never printed.
+Local run time: Adult 3.8 s, COMPAS 8.5 s. Full comparison table: README, "Accuracy check on
+real data".
+
+| Check | Result | Date |
+|---|---|---|
+| Adult: gap sizes (sex 0.358, race 0.347, under-30 0.158), `?` read as missing (workclass 5.6%, occupation 5.7%), class imbalance 3.2:1, `relationship` vs `sex` proxy 0.65, no PII | Pass: every number matched | 2026-10-18 |
+| COMPAS (first run, commit `4f2387d`): gaps, missing columns, proxies, `name`/`dob` | Pass: matched, with the exceptions below | 2026-10-18 |
+| COMPAS: label choice | Fail, fixed: picked `is_recid` instead of `two_year_recid` (97% agreement), which flagged a sex gap of 0.798 that is 0.819 on the published label. Now the last matching column wins | 2026-10-18 |
+| Adult `native-country`: small best group (Iran, 43 rows) | Fail, fixed: 9 of 25 flagged groups were not significant (Fisher p >= 0.05). Gaps now need p < 0.05 to count; others are noted as possibly chance, or low severity if none is significant | 2026-10-18 |
+| COMPAS: charge descriptions tagged as person names (3 columns) | Partly fixed: `c_charge_desc` and `r_charge_desc` no longer flagged; `vr_charge_desc` still is | 2026-10-18 |
+| COMPAS: columns `first` and `last` | Fail, fixed: found only by NER in 207 and 92 rows; now recognised by column name in all 7,214 | 2026-10-18 |
+| After the fixes: `python -m pytest`, both bundled samples, synthetic probes | Pass: 118 tests; samples give the same findings as before; probes 74 of 75 | 2026-10-18 |
+
 ## Live deployment (Render)
 
 Run these against the live URL after deploying (see "Deployment" in the README) and replace

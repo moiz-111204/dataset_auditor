@@ -34,6 +34,13 @@ NER_SAMPLE_SIZE = 200
 NER_MIN_FRACTION = 0.05
 NER_MIN_VALUES = 2
 NER_SCORE_THRESHOLD = 0.4
+# The small spaCy model tags Title Case category labels ("Disorderly Conduct", "Felony Battery")
+# as person names: 13-18% of the distinct charge descriptions in the COMPAS file. A column whose
+# values repeat a lot (at most 20% distinct, 50+ rows) is a category column more than free text,
+# so NER must find names in a quarter of the sampled values there instead of 5%.
+NER_LABEL_MIN_ROWS = 50
+NER_LABEL_MAX_DISTINCT = 0.2
+NER_LABEL_MIN_FRACTION = 0.25
 
 
 @dataclass(frozen=True)
@@ -107,7 +114,8 @@ IPV4_RE = re.compile(rf"(?<![\d.]){_OCTET}(?:\.{_OCTET}){{3}}(?![\d.])")
 IPV6_RE = re.compile(r"(?<![0-9A-Fa-f:])(?:[0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4}(?![0-9A-Fa-f:])")
 
 NAME_COLUMN_RE = re.compile(
-    r"^(?:(?:first|last|full|middle|given|family|maiden|sur)_?name|surname|name"
+    r"^(?:(?:first|last|full|middle|given|family|maiden|sur)_?name|surname|name|first|last"
+    r"|fname|lname|forename"
     r"|(?:customer|patient|employee|applicant|client|person|student|member|contact)_?name)$"
 )
 DOB_COLUMN_RE = re.compile(r"^(?:dob|d_o_b|birth_?date|date_?of_?birth|birthday|birth_?dt)$")
@@ -280,6 +288,7 @@ def _ner_matches(engine, values: pd.Series) -> dict[str, set[str]]:
     sample = [str(v) for v in uniques]
     if not sample:
         return {}
+    repetitive = len(values) >= NER_LABEL_MIN_ROWS and len(set(values)) / len(values) <= NER_LABEL_MAX_DISTINCT
     results = engine.analyze_iterator(
         texts=[v[:1000] for v in sample], language="en",
         entities=list(PRESIDIO_ENTITY_MAP), score_threshold=NER_SCORE_THRESHOLD, batch_size=64,
@@ -295,7 +304,9 @@ def _ner_matches(engine, values: pd.Series) -> dict[str, set[str]]:
             if key:
                 hits.setdefault(key, set()).add(text)
     threshold = max(NER_MIN_VALUES, NER_MIN_FRACTION * len(sample))
-    return {key: vals for key, vals in hits.items() if len(vals) >= threshold}
+    strict = max(threshold, NER_LABEL_MIN_FRACTION * len(sample))
+    return {key: vals for key, vals in hits.items()
+            if len(vals) >= (strict if repetitive and key == "person_name" else threshold)}
 
 
 # --- Scanner ----------------------------------------------------------------------------

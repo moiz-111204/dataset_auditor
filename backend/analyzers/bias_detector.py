@@ -18,7 +18,7 @@ import math
 
 import numpy as np
 import pandas as pd
-from scipy.stats import chi2_contingency
+from scipy.stats import chi2_contingency, fisher_exact
 
 from backend.models.schemas import AnalysisSettings, Finding
 from backend.utils import (
@@ -42,6 +42,10 @@ PROTECTED_KEYWORDS = {
 PROTECTED_PHRASES = {"national_origin", "native_country", "country_of_birth", "birth_country",
                      "country_of_origin"}
 FOUR_FIFTHS = 0.8
+# EEOC guidance: a gap under four-fifths may not be adverse impact when it rests on small
+# numbers and is not statistically significant. Each gap is tested against the best group
+# (Fisher's exact test); a gap above this p-value is reported as possible chance, not as bias.
+SIGNIFICANCE = 0.05
 PROXY_THRESHOLD = 0.5
 MAX_CATEGORIES = 100  # categorical features with more levels are skipped for proxy checks
 MIN_PAIRED_ROWS = 20
@@ -64,11 +68,15 @@ def detect_label_column(df: pd.DataFrame, exclude: list[str] | None = None) -> s
         for col in df.columns:
             if normalize_column_name(col) == wanted and str(col) not in exclude:
                 return str(col)
-    for wanted in EXTRA_LABEL_NAMES:
-        for idx, col in enumerate(df.columns):
-            if normalize_column_name(col) == wanted and str(col) not in exclude \
-                    and 2 <= df.iloc[:, idx].nunique(dropna=True) <= 10:
-                return str(col)
+    candidates = [
+        str(col) for idx, col in enumerate(df.columns)
+        if normalize_column_name(col) in EXTRA_LABEL_NAMES and str(col) not in exclude
+        and 2 <= df.iloc[:, idx].nunique(dropna=True) <= 10
+    ]
+    if candidates:
+        # Several may match (COMPAS has both is_recid and two_year_recid); the target is
+        # conventionally the last column, so take the last candidate.
+        return candidates[-1]
     if df.shape[1] >= 2:
         last = df.columns[-1]
         if str(last) not in exclude and 2 <= df.iloc[:, -1].nunique(dropna=True) <= 10:
@@ -169,6 +177,16 @@ def association(df: pd.DataFrame, feature: str, protected: str) -> tuple[float, 
     return correlation_ratio(categorical.astype(str), numeric), "correlation ratio (eta)"
 
 
+def gap_p_value(group: dict, best: dict) -> float:
+    """Fisher's exact test p-value for a group's favourable rate vs the best group's."""
+    def counts(g: dict) -> tuple[int, int]:
+        favourable = round(g["rate"] * g["count"])
+        return favourable, g["count"] - favourable
+
+    (a, b), (c, d) = counts(group), counts(best)
+    return float(fisher_exact([[a, b], [c, d]])[1])
+
+
 # --- Checks ------------------------------------------------------------------------------
 
 def check_class_imbalance(df: pd.DataFrame, label: str) -> list[Finding]:
@@ -245,28 +263,52 @@ def check_demographic_disparity(df: pd.DataFrame, label: str, protected: str) ->
     if best_rate == 0:
         return []
     ratios = {g: round(v["rate"] / best_rate, 3) for g, v in rates.items()}
-    flagged = {g: r for g, r in ratios.items() if r < FOUR_FIFTHS}
+    flagged = {g: r for g, r in ratios.items() if r < FOUR_FIFTHS}  # below four-fifths
     if not flagged:
         return []
-    worst = min(flagged, key=flagged.get)
-    worst_ratio = flagged[worst]
-    severity = "critical" if worst_ratio < 0.6 else "high"
+    p_values = {g: gap_p_value(rates[g], rates[best]) for g in flagged}
+    significant = {g: r for g, r in flagged.items() if p_values[g] < SIGNIFICANCE}
+    chance = {g: r for g, r in flagged.items() if g not in significant}
     positive = info["positive_label"]
-    group_text = "; ".join(
-        f"'{g}' {fmt_pct(rates[g]['rate'])} (ratio {flagged[g]:.2f})"
-        for g in sorted(flagged, key=flagged.get)
+
+    def groups_text(groups: dict) -> str:
+        return "; ".join(
+            f"'{g}' {fmt_pct(rates[g]['rate'])} (ratio {groups[g]:.2f}, {rates[g]['count']} rows)"
+            for g in sorted(groups, key=groups.get)
+        )
+
+    chance_note = (
+        f" Also below 80% but not statistically significant at these sample sizes, so possibly "
+        f"chance: {groups_text(chance)}."
+        if significant and chance else ""
     )
+    worst_ratio = min(flagged.values())
+    if significant:
+        worst_ratio = min(significant.values())
+        severity = "critical" if worst_ratio < 0.6 else "high"
+        title = f"Outcome disparity by '{protected}' (ratio {worst_ratio:.2f})"
+        description = (
+            f"Rows where '{label}' = '{positive}' are much rarer for some '{protected}' groups. "
+            f"The highest rate is {fmt_pct(best_rate)} for '{best}', but: {groups_text(significant)}. "
+            f"Under the four-fifths rule used in US hiring audits, a group whose rate is below "
+            f"80% of the top group's rate signals possible adverse impact. A model trained on "
+            f"this data is likely to learn and repeat the gap.{chance_note}{small_note}"
+        )
+    else:
+        severity = "low"
+        title = f"Possible outcome gap by '{protected}' (ratio {worst_ratio:.2f}, could be chance)"
+        description = (
+            f"Rows where '{label}' = '{positive}' are rarer for some '{protected}' groups than "
+            f"for '{best}' ({fmt_pct(best_rate)}): {groups_text(chance)}. That is below the "
+            f"four-fifths threshold, but with these few rows the gap is not statistically "
+            f"significant (Fisher's exact test, p >= {SIGNIFICANCE}), so it may be chance. "
+            f"Collect more data for these groups before drawing a conclusion.{small_note}"
+        )
     return [Finding(
         severity=severity,
         category="bias",
-        title=f"Outcome disparity by '{protected}' (ratio {worst_ratio:.2f})",
-        description=(
-            f"Rows where '{label}' = '{positive}' are much rarer for some '{protected}' groups. "
-            f"The highest rate is {fmt_pct(best_rate)} for '{best}', but: {group_text}. "
-            f"Under the four-fifths rule used in US hiring audits, a group whose rate is below "
-            f"80% of the top group's rate signals possible adverse impact. A model trained on "
-            f"this data is likely to learn and repeat the gap.{small_note}"
-        ),
+        title=title,
+        description=description,
         details={
             "check": "demographic_disparity",
             "protected_column": protected,
@@ -277,8 +319,11 @@ def check_demographic_disparity(df: pd.DataFrame, label: str, protected: str) ->
             "reference_group": best,
             "impact_ratios": ratios,
             "flagged_groups": flagged,
+            "significant_groups": significant,
+            "p_values": {g: round(p, 4) for g, p in p_values.items()},
             "min_impact_ratio": worst_ratio,
             "threshold": FOUR_FIFTHS,
+            "significance_level": SIGNIFICANCE,
             "ignored_groups": small,
         },
         columns=[protected, label],

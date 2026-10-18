@@ -1,4 +1,5 @@
 import json
+from types import SimpleNamespace
 import sys
 
 import pandas as pd
@@ -182,3 +183,43 @@ def test_lookalikes_are_not_flagged():
         "os_version": ["10.0.19045.1", "10.0.22631.2", "6.1.7601.3", "10.0.19044.4"],
     })
     assert scan_pii(df) == []
+
+
+def test_bare_first_and_last_columns_are_name_columns(regex_only):
+    # The COMPAS file calls its name columns just 'first' and 'last'.
+    df = pd.DataFrame({"first": ["miguel", "kevin", "ana"], "last": ["ito", "okafor", "silva"],
+                       "fname": ["Ben", "Chen", "Dee"], "lastly": ["a", "b", "c"]})
+    assert by_type(scan_pii(df))["person_name"].columns == ["first", "last", "fname"]
+
+
+class FakeNer:
+    """Tags the first `hit_share` of the distinct values as a PERSON spanning the whole value."""
+
+    def __init__(self, hit_share):
+        self.hit_share = hit_share
+
+    def analyze_iterator(self, texts, **_kwargs):
+        cut = self.hit_share * len(texts)
+        for i, text in enumerate(texts):
+            yield [SimpleNamespace(entity_type="PERSON", start=0, end=len(text), score=0.85)] if i < cut else []
+
+
+def ner_person_hits(hit_share, distinct, rows=200):
+    def label(i):  # letters only: the scanner ignores spans that contain digits
+        return f"Label {chr(97 + i % 26)}{chr(97 + i // 26)}x"
+
+    values = pd.Series([label(i % distinct) for i in range(rows)])
+    return "person_name" in pii_scanner._ner_matches(FakeNer(hit_share), values)
+
+
+def test_ner_needs_more_evidence_in_repetitive_category_columns():
+    # 20 distinct values in 200 rows is a category column: 15% hits is not enough, 30% is.
+    assert not ner_person_hits(0.15, distinct=20)
+    assert ner_person_hits(0.30, distinct=20)
+    # 200 distinct values in 200 rows is free text or a name column: the usual 5% is enough.
+    assert ner_person_hits(0.15, distinct=200)
+    assert not ner_person_hits(0.02, distinct=200)
+    # Under 50 rows a column is never treated as a category column: 2 of 9 distinct values is
+    # enough there, but not once the same values fill 90 rows.
+    assert ner_person_hits(0.2, distinct=9, rows=45)
+    assert not ner_person_hits(0.2, distinct=9, rows=90)

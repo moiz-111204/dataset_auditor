@@ -161,6 +161,7 @@ def finding_metrics(f: Finding) -> dict:
         flagged = d.get("flagged_groups", {})
         m.update(min_impact_ratio=d.get("min_impact_ratio"), threshold=d.get("threshold"),
                  groups_compared=len(rates), groups_below_threshold=len(flagged),
+                 groups_below_threshold_significant=len(d.get("significant_groups", flagged)),
                  highest_group_rate=max(rates) if rates else None,
                  lowest_group_rate=min(rates) if rates else None,
                  small_groups_ignored=len(d.get("ignored_groups", {})))
@@ -260,8 +261,18 @@ def _template_text(f: Finding) -> tuple[str, str]:
             "Report per-class precision and recall instead of accuracy, and consider collecting "
             "more minority-class examples, re-weighting, or stratified resampling.",
         )
-    if check == "demographic_disparity":
+    if check == "demographic_disparity" and d.get("significant_groups") == {}:
         flagged = ", ".join(f"'{g}'" for g in d["flagged_groups"])
+        return (
+            f"In '{d['protected_column']}', the group(s) {flagged} reach the positive outcome at "
+            f"under 80% of the rate of '{d['reference_group']}' (lowest ratio "
+            f"{d['min_impact_ratio']:.2f}), but with so few rows the gap is not statistically "
+            f"significant and may be chance. It is a reason to look closer, not evidence of bias.",
+            f"Collect more rows for these groups, then re-run the check before trusting a model "
+            f"on '{d['protected_column']}' groups.",
+        )
+    if check == "demographic_disparity":
+        flagged = ", ".join(f"'{g}'" for g in d.get("significant_groups", d["flagged_groups"]))
         return (
             f"In '{d['protected_column']}', the group(s) {flagged} reach the positive outcome at "
             f"under 80% of the rate of '{d['reference_group']}' (lowest ratio "

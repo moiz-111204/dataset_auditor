@@ -163,7 +163,7 @@ flowchart LR
 | Check | How | Severity |
 |---|---|---|
 | Class imbalance | Label class shares; flagged if a class is under 10% or largest:smallest > 3:1 | critical > 10:1, high > 5:1, medium > 3:1 |
-| Demographic disparity | Favourable-outcome rate per protected group vs. the best group (four-fifths rule). Which value is favourable: when the label is 1/0, yes/no or true/false and its name marks a bad event (default, fraud, churn, exited, recidivism, readmitted...), the 0/no value; otherwise a value that looks positive (1/yes/true/hired/approved/good/fully paid...); otherwise, with two values where one looks negative (rejected, bad, charged off), the other one; otherwise the least frequent value. Numeric attributes are binned (age: under 30, 30-50, over 50; others: tertiles). Groups under 20 rows are skipped and named in the finding. | critical if a group's ratio < 0.6, high < 0.8 |
+| Demographic disparity | Favourable-outcome rate per protected group vs. the best group (four-fifths rule). Which value is favourable: when the label is 1/0, yes/no or true/false and its name marks a bad event (default, fraud, churn, exited, recidivism, readmitted...), the 0/no value; otherwise a value that looks positive (1/yes/true/hired/approved/good/fully paid...); otherwise, with two values where one looks negative (rejected, bad, charged off), the other one; otherwise the least frequent value. Numeric attributes are binned (age: under 30, 30-50, over 50; others: tertiles). Groups under 20 rows are skipped and named in the finding. A group below 80% counts as a gap only if it differs from the best group significantly (Fisher's exact test, p < 0.05), following the EEOC note that small-number differences may be chance; other groups below 80% are listed as "possibly chance", and when no gap is significant the finding is low severity. | critical if a significant group's ratio < 0.6, high < 0.8, low when no gap is significant |
 | Proxy correlation | Every non-protected, non-ID feature vs. each protected attribute: Pearson r (numeric-numeric), bias-corrected Cramer's V (categorical-categorical), correlation ratio eta (numeric-categorical). ZIP/ID/code columns are treated as categories. | high > 0.7, medium > 0.5 |
 | Column missingness | Share of empty cells (NaN, empty or whitespace-only strings, and placeholders such as `?`, `-` or `unknown`; see Load above) | critical > 50% or fully empty (drop), high > 20%, medium > 5% |
 | Row missingness | Rows with any gap, rows missing more than half their columns | flagged above 10% of rows |
@@ -281,6 +281,49 @@ fictional 555-01xx range and SSN-style IDs start with 000, 666 or 9xx, which are
 - `clean_survey.csv` (300 rows): no PII, no protected attributes, balanced classes, under 2%
   missing. It produces no findings.
 
+### Accuracy check on real data
+
+The synthetic samples are built to trigger the detectors, so on 18 Oct 2026 the auditor was also
+run on two public datasets, downloaded for this test only (they are **not** in this repository):
+[UCI Adult](https://archive.ics.uci.edu/dataset/2/adult) (32,561 rows; the raw file has no
+header, so one was added) and ProPublica's
+[COMPAS two-year recidivism file](https://github.com/propublica/compas-analysis) (7,214 rows,
+which holds real defendants' names and birth dates). For each, the expected numbers were
+computed separately with plain pandas, without the app's code, and compared with the app's
+output:
+
+| Check | Plain pandas | Auditor |
+|---|---|---|
+| Adult: earning >50K, women vs men (rate ratio) | 0.358 (10.9% vs 30.6%) | 0.36, critical |
+| Adult: lowest race ratio / under-30 ratio | 0.347 / 0.158 | 0.35 / 0.16, critical |
+| Adult: missing `workclass` / `occupation` (`?` cells) | 5.6% / 5.7% | 5.6% / 5.7% |
+| Adult: strongest proxy | `relationship` vs `sex`, Cramer's V 0.65 | same, 0.65 |
+| Adult: personal data | none | none |
+| COMPAS: label | `two_year_recid` (last column) | `two_year_recid` |
+| COMPAS: not re-offending, race (African-American vs best group) | ratio 0.676 | 0.676, high |
+| COMPAS: not re-offending, `age_cat` | 0.790 and 0.636 | 0.79 and 0.64, high |
+| COMPAS: not re-offending, sex | 0.819 (above 0.8) | not flagged |
+| COMPAS: `violent_recid`, `c_arrest_date` | 100% / 84.2% missing | completely empty / 84.2% |
+| COMPAS: proxies of `age` | `decile_score` 0.50 and 0.50, `v_decile_score` 0.67 | same three |
+| COMPAS: personal data | `name`, `first`, `last`, `dob` | the same four, plus one false positive |
+
+The check found four real problems, all fixed: with both `is_recid` and `two_year_recid` present
+the app picked the wrong label (it now prefers the last matching column), which flagged a sex gap
+that is not there; groups with a few dozen rows were flagged as gaps when the best group was
+tiny (9 of 25 flagged `native-country` groups on Adult were not statistically significant, hence
+the significance test described above); the small spaCy model tagged charge descriptions such as
+"Disorderly Conduct" as person names (three columns); and columns named just `first` and `last`
+were found only by NER, in 207 and 92 rows instead of all 7,214.
+
+Still open: one charge-description column (`vr_charge_desc`) is still reported as person names.
+The auditor also gives COMPAS a risk score of 100/100 and about 60 "gaps occur together"
+findings, which are true but repetitive. Finally, the COMPAS rows above are about *outcome
+rates in the data*; they say nothing about the error rates of the COMPAS risk score, which is
+what ProPublica's well-known analysis examined, and the auditor does not evaluate model
+predictions. The expected numbers use the same definitions as the code (ratio to the best group,
+uncorrected Cramer's V), so this checks the implementation, not whether those definitions are
+the only valid ones. Raw results are in `tests/MANUAL_TEST_LOG.md`.
+
 ## Deployment
 
 The repository is set up for a **free Render web service** on Render's native Python runtime.
@@ -377,7 +420,9 @@ TODO: add screenshots of the upload page, results dashboard, each tab and a data
   or coded values (`col_7`, `g`) are missed unless set manually in the settings panel. Attributes
   that are not in the data at all cannot be checked.
 - **False positives:** ID-like numbers can match phone or card patterns; NER can tag ordinary
-  words as names; proxy checks flag legitimate correlations (experience rises with age); a name
+  words as names (on COMPAS it reported a column of charge descriptions such as "Battery" as
+  person names; it needs a quarter of the sampled values to look like names in columns where
+  values repeat a lot, but that does not catch every case); proxy checks flag legitimate correlations (experience rises with age); a name
   such as `sex_offender_flag` is read as a protected attribute because it contains "sex".
 - **The favourable outcome is a guess.** It follows the rules in the table below and the finding
   says which value was used (rules in "What each detector does" above), but it can be wrong for
@@ -389,7 +434,11 @@ TODO: add screenshots of the upload page, results dashboard, each tab and a data
   not flagged as PII on their own. Combinations of features that together reveal a protected
   attribute are not detected (proxies are checked one feature at a time).
 - **Statistics need enough rows.** Groups under 20 rows are skipped, chi-squared tests are weak on
-  small data, and Cramer's V / eta can be inflated by many categories.
+  small data, and Cramer's V / eta can be inflated by many categories. A gap below 80% that is
+  not statistically significant is reported as low severity ("could be chance"), so with few rows
+  a real disparity can show up only as a low-severity note. The best group is the one with the
+  highest rate even if it is small, which is how the four-fifths rule is written; the
+  significance test is what guards against a tiny best group.
 - **Not covered:** label quality, measurement bias, sampling bias against the real population,
   consent and data provenance, and intersectional groups (for example older women).
 - **Limits:** 10 MB / 50,000 rows / 100 columns per file; comma-separated files only; sessions live in one
