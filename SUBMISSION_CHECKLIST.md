@@ -9,7 +9,7 @@ OPEN: cannot be decided yet because it depends on the live URL, the team's names
 something that happens later. Re-check every row before the final push; the evidence column says
 where. More detail for the code-side items is in `AUDIT_REPORT.md`.
 
-**Count: 20 PASS, 2 FAIL, 9 OPEN (31 items).**
+**Count: 22 PASS, 2 FAIL, 7 OPEN (31 items).**
 
 ## Submission package
 
@@ -33,7 +33,7 @@ where. More detail for the code-side items is in `AUDIT_REPORT.md`.
 | AI methodology | PASS | README.md:65-110: what each component does, the Claude workflow, and the template fallback |
 | Model and API usage (every third-party AI API listed) | PASS | Presidio + spaCy `en_core_web_sm` and the Anthropic Claude API, each with the data it receives. Matches the code: the only AI imports are `anthropic` (explainer.py:140) and `presidio_analyzer` (pii_scanner.py:230) |
 | Screenshots | PASS | Six screenshots of the live site in `docs/screenshots/` (upload page, results dashboard, Bias, Missing data and PII tabs, HTML data card), embedded in the README "Screenshots" section |
-| Team contributions with real names and roles | OPEN | README.md:410-412 is a TODO, left open on purpose. Needs each member's real name and what they did |
+| Team contributions with real names and roles | PASS | README "Team Contributions": Team Doxa, Muhammad Moiz Ali Khan (backend, AI layer, deployment) and Rimsha (frontend, testing, demo video), as confirmed by the team |
 
 ## AI and quality
 
@@ -60,8 +60,8 @@ where. More detail for the code-side items is in `AUDIT_REPORT.md`.
 | Built for this hackathon; no old projects | PASS | The first commit is `db957a3` on 2026-10-17 08:08; nothing older in the history; README states it was built fresh |
 | No copied project, bought project, stolen code or existing commercial product | PASS | No foreign licence headers, "copied from" notes or vendored files. Limit: git cannot prove authorship, and the README discloses that Claude Code assisted |
 | Open-source libraries, templates, APIs and datasets are license-permitted and acknowledged | PASS | `THIRD_PARTY.md` lists all 14 libraries plus Chart.js, with versions and permissive licenses; the bundled sample data is synthetic. Note: the licence terms of UCI Adult and COMPAS (used only for local testing, linked in the README) are not recorded in `THIRD_PARTY.md`; check them and add a line if you want them listed |
-| Team has at most 5 members and each made a meaningful contribution | OPEN | Waiting for the team names and roles |
-| Team and participant information is accurate | OPEN | Waiting for the team names; also check the same details in the submission form |
+| Team has at most 5 members and each made a meaningful contribution | PASS | Two members, each with a stated role (README "Team Contributions") |
+| Team and participant information is accurate | OPEN | The README matches what the team confirmed; enter exactly the same names, team name and roles in the submission form |
 
 ## Deadline and conduct
 
@@ -74,15 +74,15 @@ where. More detail for the code-side items is in `AUDIT_REPORT.md`.
 
 ## Order of work
 
-Done: live deploy on Railway, live checks, URL and screenshots in the README, clone line fixed.
+Done: live deploy on Railway, live checks, URL and screenshots in the README, clone line fixed,
+team Doxa's names and roles in the README.
 
 1. **You:** make the repository public, or invite the judges.
-2. **You:** send the team's real names and roles; I put them in the README.
-3. **You:** open the live link in an incognito window and on a real phone.
-4. **You:** record the video from `DEMO_SCRIPT.md`; send me the link for the README.
-5. **You:** fill in the official form.
-6. **Final audit and push by 11:00 PM PKT.** Update the OPEN rows above, commit this file, and stop
+2. **You:** open the live link in an incognito window and on a real phone.
+3. **Rimsha:** record the video from `DEMO_SCRIPT.md`; send me the link for the README.
+4. **You:** fill in the official form, with the same team details as the README.
+5. **Final audit and push by 11:00 PM PKT.** Update the OPEN rows above, commit this file, and stop
    committing.
 
-`DEMO_SCRIPT.md`, this file and `AUDIT_REPORT.md` are not committed yet. Decide whether the audit
-report should be public before running `git add -A`.
+`AUDIT_REPORT.md` is not committed. Decide whether it should be public before running
+`git add -A`.

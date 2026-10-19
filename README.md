@@ -460,8 +460,8 @@ explanations come from the built-in templates).
 
 | Member | Role |
 |---|---|
-| Muhammad Moiz Ali Khan | TODO: role |
-| Rimsha | TODO: role |
+| Muhammad Moiz Ali Khan | Backend, AI layer and deployment |
+| Rimsha | Frontend, testing and the demo video |
 
 ## Limitations
 

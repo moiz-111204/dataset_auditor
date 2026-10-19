@@ -3,7 +3,7 @@
 Covers the seven topics the rulebook asks for: problem, main features, technical approach, AI
 component, challenges, limitations, future improvements. The spoken text is about 255 words,
 roughly 105 seconds at a steady pace, so with the on-screen clicks it runs close to 2:00.
-Presenter: **[name to add]**.
+Presenter: **Rimsha** (Team Doxa).
 
 ## Before you record
 
