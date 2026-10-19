@@ -2,7 +2,8 @@
 
 > Screen a dataset for bias, missing data and personal data **before** it is used to train a model.
 
-- **Live demo:** TODO: add the Render URL after deploying (see [Deployment](#deployment))
+- **Live demo:** https://dataset-auditor-production.up.railway.app/ (Railway free trial; see
+  [Deployment](#deployment))
 - **Demo video:** TODO: add the video link
 - **Hackathon:** NYLP AI Hackathon 2026
 
@@ -210,7 +211,7 @@ by exception type only, because exception messages can echo cell values.
 Requirements: Python 3.11 or newer and Git.
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/moiz-111204/dataset_auditor.git
 cd dataset_auditor
 python -m venv venv
 ```
@@ -326,8 +327,29 @@ the only valid ones. Raw results are in `tests/MANUAL_TEST_LOG.md`.
 
 ## Deployment
 
-The repository is set up for a **free Render web service** on Render's native Python runtime.
-The Blueprint file [`render.yaml`](render.yaml) describes it, and no Docker image is needed.
+**The live demo runs on Railway's free trial:**
+https://dataset-auditor-production.up.railway.app/. The plan was Render (below), but Render's
+card verification did not go through for us, and Railway's trial needs no card. It builds the
+app from `requirements.txt` and runs the same `python backend/app.py` command. The live demo
+has no `ANTHROPIC_API_KEY` set, so it shows the built-in template explanations.
+
+To reproduce it: sign up at railway.com with GitHub, then **New Project > Deploy from GitHub
+repo** and pick this repository. Under **Variables** add `PORT=8080`,
+`FORWARDED_ALLOW_IPS=*`, `PII_NER_ENABLED=true` and `MAX_SESSIONS=10`; under **Settings**, set
+the start command to `python backend/app.py` and generate a public domain on port 8080.
+
+Railway trial terms, from Railway's docs (19 Oct 2026): a one-time $5 credit that expires after
+30 days, with up to 1 GB of RAM and shared vCPUs. After that the account falls back to the Free
+plan's $1 of credit per month, which is unlikely to keep this app running all month, so the
+demo may stop after the trial. Accounts that Railway has not verified get a "Limited Trial"
+with restricted outbound network access, which would block calls to the Claude API (the app
+then falls back to templates).
+
+### Render (the original plan)
+
+The repository is also set up for a **free Render web service** on Render's native Python
+runtime. The Blueprint file [`render.yaml`](render.yaml) describes it, and no Docker image is
+needed.
 
 ### Why Render
 
@@ -404,8 +426,32 @@ instances in production.
 
 ## Screenshots
 
-TODO: add screenshots of the upload page, results dashboard, each tab and a data card
-(`docs/screenshots/`).
+Taken from the live demo on 19 Oct 2026 with the bundled hiring sample (no API key set, so the
+explanations come from the built-in templates).
+
+**Upload page**
+
+![Upload page with drag-and-drop area and the two sample buttons](docs/screenshots/01-upload.jpg)
+
+**Results dashboard:** risk gauge, issue counts, summary, top actions and data card downloads
+
+![Results dashboard showing 100/100 Critical risk and 16 issues](docs/screenshots/02-results.jpg)
+
+**Bias tab:** class distribution, outcome rate per group with the 80% line, and a finding
+
+![Bias tab with charts and the gender disparity finding](docs/screenshots/03-bias-tab.jpg)
+
+**Missing data tab**
+
+![Missing data tab with the missing-share chart and the income finding](docs/screenshots/04-missing-data-tab.jpg)
+
+**PII tab:** which detectors ran, a summary table, and findings without any raw values
+
+![PII tab with the detector line and the PII summary table](docs/screenshots/05-pii-tab.jpg)
+
+**HTML data card**
+
+![HTML data card with the dataset overview and feature table, PII columns withheld](docs/screenshots/06-data-card.jpg)
 
 ## Team Contributions
 

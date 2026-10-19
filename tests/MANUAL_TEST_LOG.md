@@ -66,19 +66,22 @@ real data".
 | COMPAS: columns `first` and `last` | Fail, fixed: found only by NER in 207 and 92 rows; now recognised by column name in all 7,214 | 2026-10-18 |
 | After the fixes: `python -m pytest`, both bundled samples, synthetic probes | Pass: 118 tests; samples give the same findings as before; probes 74 of 75 | 2026-10-18 |
 
-## Live deployment (Render)
+## Live deployment (Railway)
 
-Run these against the live URL after deploying (see "Deployment" in the README) and replace
-**Pending** with the real result and date.
+The live demo runs on Railway's free trial at https://dataset-auditor-production.up.railway.app/
+(Render's card verification did not go through). Checked on 2026-10-19 at about 19:50 PKT,
+with plain HTTP requests and in the Chromium-based browser pane (a fresh tab, not signed in).
 
 | Check | How | Result | Date |
 |---|---|---|---|
 | Clean build as on Render | Fresh `git clone`, new Python 3.12 venv, `pip install -r requirements.txt`, then `python backend/app.py` with `PORT=10000` and `FORWARDED_ALLOW_IPS=*` | Pass on Windows 11 (Render builds on Linux, so this is not the real build): `en_core_web_sm-3.8.0` installed from its GitHub wheel; `/api/health` showed Presidio NER on with `en_core_web_sm`; hiring sample 16 findings, risk 100; clean survey 0 findings; all four data cards downloaded with no SSN-shaped value in them; with `RATE_LIMIT_PER_MINUTE=3`, four requests with one `X-Forwarded-For` address gave 200, 200, 200, 429 and a different address got 200 | 2026-10-17 |
-| Render build | Render's build log for the first deploy | Pending. Expected: Python 3.12 and `en_core_web_sm-3.8.0` installed, health check on `/api/health` passes | |
-| `/api/health` on the live URL | Open `<live URL>/api/health` | Pending. Expected: `"status": "ok"`, `presidio_ner: true` (unless `PII_NER_ENABLED=false` was set), `ai_enabled` true only if a key was entered | |
-| Incognito window | Open the live URL in a private window | Pending | |
-| Phone | Open the live URL on a real phone (mobile data or Wi-Fi) | Pending | |
-| Both samples on the live site | Click "Problematic hiring" and "Clean survey" | Pending. Expected: hiring 16 issues, risk 100/100 Critical; clean survey 0 issues, risk 0/100 Low | |
-| Both data cards on the live site | Download the HTML and Markdown cards after the hiring sample | Pending. Expected: both download; PII columns show "withheld (PII)" | |
-| Memory on Render | Service **Metrics** page after running both samples | Pending. Must stay under 512 MB; if not, set `PII_NER_ENABLED=false` | |
-| Cold start | Open the live URL after more than 15 minutes without traffic | Pending. Expected: about a minute's wait, then the dashboard loads | |
+| Live site runs the latest code | Page text and API behaviour from the newest commits | Pass: page shows "100 columns" and loads Chart.js with its integrity hash; a 150-column upload gets HTTP 413 "The file has 150 columns; the limit is 100."; with `is_recid` and `two_year_recid` the label picked is `two_year_recid` | 2026-10-19 |
+| `/api/health` on the live URL | GET `/api/health` | Pass: HTTP 200 in 0.8 s, `status: ok`, Presidio NER on with `en_core_web_sm`, `ai_enabled: false` (no API key set) | 2026-10-19 |
+| Security headers | HEAD `/` | Pass: Content-Security-Policy, `X-Content-Type-Options: nosniff`, `Referrer-Policy: no-referrer` | 2026-10-19 |
+| Both samples on the live site | `/api/analyze-sample/...` and the sample buttons | Pass: hiring 100/100 Critical, 16 findings (bias 8, missing data 4, PII 4) in 1.2 s; clean survey 0 findings, 0/100 Low, in 0.5 s | 2026-10-19 |
+| Both data cards on the live site | Download HTML and Markdown for both samples | Pass: HTTP 200, `*_data_card.html/.md` file names, no email, SSN-style or 555-01xx value in any of the four cards; the HTML card renders with "withheld (PII)" | 2026-10-19 |
+| Mobile layout at 375 px | Emulated 375x812 viewport, all three tabs, hiring sample | Pass: document width 375 px on every tab, all three charts drawn, no console errors, no raw PII on the page | 2026-10-19 |
+| Incognito window | Open the live URL in a private window | Pending (a person on a real browser) | |
+| Phone | Open the live URL on a real phone (mobile data or Wi-Fi) | Pending (a person on a real phone) | |
+| Memory and usage on Railway | The service's Metrics page | Pending: needs the Railway login; the trial allows up to 1 GB | |
+| Run with an API key | Set `ANTHROPIC_API_KEY` on Railway, analyse the hiring sample | Pending: no key set; the site shows "Template explanations" | |

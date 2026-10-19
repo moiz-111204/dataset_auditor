@@ -1,23 +1,23 @@
 # Submission checklist: NYLP AI Hackathon 2026
 
-Items come from the rulebook checklist. Checked on 19 Oct 2026 at about 14:00 PKT by this
-computer's clock, at commit `9a6db86` (18 commits, all pushed). Final push target: 11:00 PM PKT;
-the submission form closes at 11:59 PM PKT on 19 Oct 2026.
+Items come from the rulebook checklist. First checked on 19 Oct 2026 at about 18:56 PKT at
+commit `9a6db86`, then updated at about 19:55 PKT after the live deploy on Railway. Final push
+target: 11:00 PM PKT; the submission form closes at 11:59 PM PKT on 19 Oct 2026.
 
 **Status meanings.** PASS: checked today, with evidence. FAIL: checked and not met yet.
 OPEN: cannot be decided yet because it depends on the live URL, the team's names, a person, or
 something that happens later. Re-check every row before the final push; the evidence column says
 where. More detail for the code-side items is in `AUDIT_REPORT.md`.
 
-**Count: 18 PASS, 4 FAIL, 9 OPEN (31 items).**
+**Count: 20 PASS, 2 FAIL, 9 OPEN (31 items).**
 
 ## Submission package
 
 | Item | Status | Evidence / what is left |
 |---|---|---|
 | Core features work end to end | PASS | 118 tests pass, including 6 end-to-end tests that start the real server. Hiring sample: 8 bias, 4 missing-data and 4 PII findings, risk 100/100; clean sample: 0 findings. Browser re-check on 18 Oct in `tests/MANUAL_TEST_LOG.md` |
-| Working product link (live URL opens in an incognito window and on a phone) | OPEN | No live URL yet; README.md:5 is a TODO. Deploy on Render, then run the "Live deployment (Render)" rows of `tests/MANUAL_TEST_LOG.md` |
-| Demo: video link or live link, opens without login | FAIL | No video is recorded (README.md:6 is a TODO) and there is no live link yet. `DEMO_SCRIPT.md` is ready. Becomes PASS when either opens in an incognito window without logging in |
+| Working product link (live URL opens in an incognito window and on a phone) | OPEN | https://dataset-auditor-production.up.railway.app/ works: health ok, both samples, both data cards, 375 px layout, no console errors (`tests/MANUAL_TEST_LOG.md`, "Live deployment"). Still to do by a person: open it in an incognito window and on a real phone |
+| Demo: video link or live link, opens without login | PASS | The live link needs no login (checked in a fresh browser tab and with plain HTTP requests). No video yet (README.md:6 is a TODO); `DEMO_SCRIPT.md` is ready |
 | Written description of the project | PASS | README.md "Problem" (l.11) and "Solution" (l.18). Paste a short version into the form |
 | Repository is public, or judges have access | FAIL | Private: an anonymous request to the GitHub API returns 404. On GitHub: Settings > General > Danger Zone > Change repository visibility > Make public, or Settings > Collaborators to invite each judge. Then open the URL in incognito |
 | Official submission form completed | FAIL | Not started. Needs the repository URL, live URL, video link, team details and the description |
@@ -29,10 +29,10 @@ where. More detail for the code-side items is in `AUDIT_REPORT.md`.
 | Problem | PASS | README.md:11 |
 | Solution | PASS | README.md:18 |
 | Tech stack | PASS | README.md:53 |
-| Setup steps | PASS | README.md:208. One placeholder remains: `git clone <repository-url>` at README.md:213; replace it with `https://github.com/moiz-111204/dataset_auditor.git` once the repo is public |
+| Setup steps | PASS | README "Setup Instructions", with the real clone URL `https://github.com/moiz-111204/dataset_auditor.git` (works once the repo is public) |
 | AI methodology | PASS | README.md:65-110: what each component does, the Claude workflow, and the template fallback |
 | Model and API usage (every third-party AI API listed) | PASS | Presidio + spaCy `en_core_web_sm` and the Anthropic Claude API, each with the data it receives. Matches the code: the only AI imports are `anthropic` (explainer.py:140) and `presidio_analyzer` (pii_scanner.py:230) |
-| Screenshots | FAIL | `docs/screenshots/` holds only `.gitkeep`; README.md:405-407 is a TODO. Take them from the live site: upload page, results dashboard, each of the three tabs, a data card; link them in the README |
+| Screenshots | PASS | Six screenshots of the live site in `docs/screenshots/` (upload page, results dashboard, Bias, Missing data and PII tabs, HTML data card), embedded in the README "Screenshots" section |
 | Team contributions with real names and roles | OPEN | README.md:410-412 is a TODO, left open on purpose. Needs each member's real name and what they did |
 
 ## AI and quality
@@ -74,14 +74,14 @@ where. More detail for the code-side items is in `AUDIT_REPORT.md`.
 
 ## Order of work
 
-1. **You:** finish the Render deploy and send me the URL.
-2. **You:** make the repository public, or invite the judges.
-3. **You:** send the team's real names and roles; I put them in the README.
-4. **Me, once I have the URL:** run the live checks, put the URL in the README, fix the clone line.
-5. **Screenshots** of the live site into `docs/screenshots/` and the README.
-6. **You:** record the video from `DEMO_SCRIPT.md`; send me the link for the README.
-7. **You:** fill in the official form.
-8. **Final audit and push by 11:00 PM PKT.** Update the OPEN rows above, commit this file, and stop
+Done: live deploy on Railway, live checks, URL and screenshots in the README, clone line fixed.
+
+1. **You:** make the repository public, or invite the judges.
+2. **You:** send the team's real names and roles; I put them in the README.
+3. **You:** open the live link in an incognito window and on a real phone.
+4. **You:** record the video from `DEMO_SCRIPT.md`; send me the link for the README.
+5. **You:** fill in the official form.
+6. **Final audit and push by 11:00 PM PKT.** Update the OPEN rows above, commit this file, and stop
    committing.
 
 `DEMO_SCRIPT.md`, this file and `AUDIT_REPORT.md` are not committed yet. Decide whether the audit
