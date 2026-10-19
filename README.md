@@ -458,8 +458,10 @@ explanations come from the built-in templates).
 
 **Team Doxa**
 
-> **TODO: real names and roles.** This section must list the actual team members and what each
-> person did. It is intentionally left blank rather than filled with invented names.
+| Member | Role |
+|---|---|
+| Muhammad Moiz Ali Khan | TODO: role |
+| Rimsha | TODO: role |
 
 ## Limitations
 
