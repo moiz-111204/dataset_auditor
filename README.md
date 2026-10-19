@@ -6,6 +6,7 @@
   [Deployment](#deployment))
 - **Demo video:** TODO: add the video link
 - **Hackathon:** NYLP AI Hackathon 2026
+- **Team:** Doxa
 
 ---
 
@@ -454,6 +455,8 @@ explanations come from the built-in templates).
 ![HTML data card with the dataset overview and feature table, PII columns withheld](docs/screenshots/06-data-card.jpg)
 
 ## Team Contributions
+
+**Team Doxa**
 
 > **TODO: real names and roles.** This section must list the actual team members and what each
 > person did. It is intentionally left blank rather than filled with invented names.
